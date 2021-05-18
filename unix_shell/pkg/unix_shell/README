@@ -11,3 +11,4 @@ Currently, the following binaries are built-in:
 - tar
 - which
 - diff
+- less

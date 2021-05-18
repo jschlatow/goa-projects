@@ -40,6 +40,7 @@
 		<rom label="tar.tar"/>
 		<rom label="diffutils.tar"/>
 		<rom label="which.tar"/>
+		<rom label="less.tar"/>
 
 		<!-- data -->
 		<rom label="VeraMono.ttf"/>
