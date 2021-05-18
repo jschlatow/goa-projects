@@ -46,6 +46,8 @@
 		<rom label="sed.tar"/>
 		<rom label="grep.tar"/>
 		<rom label="tar.tar"/>
+		<rom label="diffutils.tar"/>
+		<rom label="which.tar"/>
 
 	</content>
 

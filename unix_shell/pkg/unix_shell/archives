@@ -14,3 +14,5 @@ skalk/src/pcre
 cnuke/src/sed
 cnuke/src/grep
 cnuke/src/findutils
+jschlatow/src/diffutils
+jschlatow/src/which

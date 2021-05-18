@@ -5,3 +5,5 @@ set version(cnuke/src/grep) 2021-02-22
 set version(alex-ab/src/which) 2021-02-22
 set version(skalk/src/tar) 2020-02-19
 set version(skalk/src/pcre) 2020-02-19
+set version(jschlatow/src/which) 2021-02-22
+set version(jschlatow/src/diffutils) 2021-05-18

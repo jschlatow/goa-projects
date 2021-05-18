@@ -9,3 +9,5 @@ Currently, the following binaries are built-in:
 - grep
 - sed
 - tar
+- which
+- diff
