@@ -1,0 +1,11 @@
+Sophisticated unix runtime featuring bash and the most common tools
+
+Currently, the following binaries are built-in:
+
+- bash
+- coreutils
+- findutils
+- vim
+- grep
+- sed
+- tar

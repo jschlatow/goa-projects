@@ -1,0 +1,16 @@
+genodelabs/pkg/terminal
+nfeske/src/init
+nfeske/src/posix
+nfeske/src/ncurses
+nfeske/src/libc
+nfeske/src/vim
+nfeske/src/bash
+nfeske/src/coreutils
+nfeske/src/vfs
+nfeske/src/vfs_pipe
+nfeske/src/fs_rom
+skalk/src/tar
+skalk/src/pcre
+cnuke/src/sed
+cnuke/src/grep
+cnuke/src/findutils

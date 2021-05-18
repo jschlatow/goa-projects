@@ -1,0 +1,7 @@
+set version(genodelabs/pkg/terminal) 2021-03-22
+set version(cnuke/src/sed) 2021-02-22
+set version(cnuke/src/findutils) 2021-02-22
+set version(cnuke/src/grep) 2021-02-22
+set version(alex-ab/src/which) 2021-02-22
+set version(skalk/src/tar) 2020-02-19
+set version(skalk/src/pcre) 2020-02-19
