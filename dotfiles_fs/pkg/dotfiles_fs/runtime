@@ -1,0 +1,32 @@
+<runtime ram="2M" caps="100" binary="vfs">
+
+	<requires>
+		<file_system writeable="no" label="dotfiles"/>
+		<rom label="vimrc"/>
+	</requires>
+
+	<provides> <file_system/> </provides>
+
+	<config>
+		<vfs>
+			<fs label="dotfiles"/>
+			<import>
+				<dir name="vim">
+					<rom name="vimrc"/>
+				</dir>
+				<dir name="bash">
+					<rom name="bashrc"/>
+				</dir>
+			</import>
+		</vfs>
+		<default-policy root="/" writeable="no"/>
+	</config>
+
+	<content>
+		<rom label="vfs"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_import.lib.so"/>
+		<rom label="bashrc"/>
+	</content>
+
+</runtime>

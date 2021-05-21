@@ -1,3 +1,4 @@
+set version(jschlatow/src/vfs_import) 2021-02-22
 set version(genodelabs/pkg/terminal) 2021-03-22
 set version(cnuke/src/sed) 2021-02-22
 set version(cnuke/src/findutils) 2021-02-22
