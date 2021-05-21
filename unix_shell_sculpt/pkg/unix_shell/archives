@@ -4,7 +4,7 @@ nfeske/src/posix
 nfeske/src/ncurses
 nfeske/src/libc
 nfeske/src/vim
-nfeske/src/bash
+jschlatow/src/bash
 nfeske/src/coreutils
 nfeske/src/vfs
 nfeske/src/vfs_pipe

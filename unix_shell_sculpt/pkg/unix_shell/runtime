@@ -5,12 +5,10 @@
 		<timer/>
 		<rtc/>
 
-		<file_system label="home"/>
-		<file_system label="ro" writeable="no"/>
-		<file_system label="fonts" writeable="no"/>
-
-		<rom label="vimrc"/>
-		<rom label="bashrc"/>
+		<file_system label="home"     writeable="yes"/>
+		<file_system label="ro"       writeable="no"/>
+		<file_system label="fonts"    writeable="no"/>
+		<file_system label="dotfiles" writeable="no"/>
 
 		<rom    label="clipboard"/>
 		<report label="clipboard"/>
