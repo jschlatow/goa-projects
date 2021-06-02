@@ -1,0 +1,35 @@
+<runtime ram="130M" caps="1000" binary="init" config="vnc.config">
+
+	<requires>
+		<capture/>
+		<event/>
+		<nic/>
+		<rm/>
+	</requires>
+
+	<content>
+
+		<!-- configuration -->
+		<rom label="event.config"/>
+		<rom label="vnc.config"/>
+
+		<!-- components -->
+		<rom label="vnc_server"/>
+		<rom label="init"/>
+		<rom label="event_filter"/>
+
+		<!-- libraries -->
+		<rom label="ld.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="lxip.lib.so"/>
+		<rom label="jpeg.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="libpng.lib.so"/>
+		<rom label="vncserver.lib.so"/>
+
+	</content>
+
+</runtime>

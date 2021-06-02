@@ -1,0 +1,10 @@
+nfeske/src/libc
+nfeske/src/vfs
+nfeske/src/jpeg
+nfeske/src/libpng
+nfeske/src/init
+jschlatow/src/event_filter
+genodelabs/src/zlib
+genodelabs/src/vfs_lxip
+jschlatow/src/libvnc
+jschlatow/src/vnc_server

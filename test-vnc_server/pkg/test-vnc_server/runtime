@@ -1,0 +1,131 @@
+<runtime ram="250M" caps="2000" binary="init">
+
+	<requires>
+		<capture/>
+		<event/>
+		<uplink label="tap_goa"/>
+		<rm/>
+	</requires>
+
+	<config verbose="yes">
+		<parent-provides>
+			<service name="ROM"/>
+			<service name="LOG"/>
+			<service name="RM"/>
+			<service name="CPU"/>
+			<service name="PD"/>
+			<service name="Gui"/>
+			<service name="Timer"/>
+			<service name="Capture"/>
+			<service name="Event"/>
+		</parent-provides>
+
+		<service name="Uplink">
+			<default-policy> <child name="nic_router"/> </default-policy>
+		</service>
+
+		<default caps="300"/>
+
+		<start name="vnc_server" caps="1000">
+			<binary name="init"/>
+			<resource name="RAM" quantum="130M"/>
+			<route>
+				<service name="ROM" label="config">
+					<parent label="vnc.config"/>
+				</service>
+				<service name="ROM" label="event.config">
+					<parent label="event.config"/>
+				</service>
+				<service name="Nic"> <child name="nic_router"/> </service>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+
+		<start name="nic_router">
+			<resource name="RAM" quantum="10M"/>
+			<provides>
+				<service name="Nic"/>
+				<service name="Uplink"/>
+			</provides>
+			<config>
+				<default-policy domain="default"/>
+				<policy label="nic_drv -> " domain="uplink"/>
+				<domain name="uplink" interface="10.0.11.12/24">
+					<nat domain="default" tcp-ports="1000" udp-ports="1000" icmp-ports="1000"/>
+					<tcp-forward port="5900" domain="default" to="10.0.1.2"/>
+				</domain>
+				<domain name="default" interface="10.0.1.1/24">
+					<dhcp-server ip_first="10.0.1.2" ip_last="10.0.1.3"/>
+					<tcp dst="0.0.0.0/0">
+						<permit-any domain="uplink"/>
+					</tcp>
+					<udp dst="0.0.0.0/0">
+						<permit-any domain="uplink"/>
+					</udp>
+					<icmp dst="0.0.0.0/0" domain="uplink"/>
+				</domain>
+			</config>
+			<route>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+
+		<start name="textedit">
+			<resource name="RAM" quantum="100M"/>
+			<route>
+				<service name="ROM" label="config">
+					<parent label="textedit.config"/>
+				</service>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+	</config>
+
+	<content>
+
+		<!-- configurations -->
+		<rom label="textedit.config"/>
+		<rom label="vnc.config"/>
+		<rom label="event.config"/>
+
+		<!-- components -->
+		<rom label="vnc_server"/>
+		<rom label="event_filter"/>
+		<rom label="init"/>
+		<rom label="textedit"/>
+		<rom label="nic_router"/>
+
+		<!-- libraries -->
+		<rom label="ld.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="lxip.lib.so"/>
+		<rom label="jpeg.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="libpng.lib.so"/>
+		<rom label="vncserver.lib.so"/>
+
+		<!-- textedit libraries -->
+		<rom label="egl.lib.so"/>
+		<rom label="expat.lib.so"/>
+		<rom label="freetype.lib.so"/>
+		<rom label="glapi.lib.so"/>
+		<rom label="jpeg.lib.so"/>
+		<rom label="libQt5Core.lib.so"/>
+		<rom label="libQt5Gui.lib.so"/>
+		<rom label="libpng.lib.so"/>
+		<rom label="libqgenode.lib.so"/>
+		<rom label="mesa.lib.so"/>
+		<rom label="qt5_dejavusans.tar"/>
+		<rom label="qt5_libqgenode.tar"/>
+		<rom label="stdcxx.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="qt5_component.lib.so"/>
+		<rom label="libQt5PrintSupport.lib.so"/>
+		<rom label="libQt5Widgets.lib.so"/>
+
+	</content>
+
+</runtime>
