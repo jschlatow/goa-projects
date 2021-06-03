@@ -29,3 +29,9 @@ set version(jschlatow/api/libc) 2021-02-22
 set version(jschlatow/src/linux_nic_drv) 2021-06-03
 set version(jschlatow/src/vnc_server) 2021-06-02-b
 set version(jschlatow/pkg/vnc_server) 2021-06-02-b
+
+
+set verbose 1
+set depot_dir      ../genode/depot
+set public_dir     ../genode/public
+set common_var_dir var/projects
