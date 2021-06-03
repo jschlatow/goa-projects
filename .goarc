@@ -1,12 +1,31 @@
-set version(jschlatow/src/bash) 2021-05-21
-set version(jschlatow/src/vfs_import) 2021-02-22
+# official depots from genodelabs and nfeske
 set version(genodelabs/pkg/terminal) 2021-03-22
+set version(nfeske/api/zlib) 2019-02-25
+set version(nfeske/src/zlib) 2019-02-25
+set version(nfeske/src/jpeg) 2021-02-22
+set version(nfeske/src/libpng) 2021-02-22
+set version(nfeske/src/event_filter) 2021-03-20
+set version(nfeske/pkg/qt5_textedit) 2021-03-22
+set version(nfeske/src/nic_router) 2021-03-11
+set version(genodelabs/src/vfs_lxip) 2021-04-26
+
+# 3rd party depots
 set version(cnuke/src/sed) 2021-02-22
 set version(cnuke/src/findutils) 2021-02-22
 set version(cnuke/src/grep) 2021-02-22
 set version(alex-ab/src/which) 2021-02-22
 set version(skalk/src/tar) 2020-02-19
 set version(skalk/src/pcre) 2020-02-19
+
+# own depot
+set version(jschlatow/src/bash) 2021-05-21
+set version(jschlatow/src/vfs_import) 2021-02-22
 set version(jschlatow/src/which) 2021-02-22
 set version(jschlatow/src/diffutils) 2021-05-18
 set version(jschlatow/src/less) 2021-05-18
+set version(jschlatow/api/libvnc) 2021-06-01
+set version(jschlatow/src/libvnc) 2021-06-01
+set version(jschlatow/api/libc) 2021-02-22
+set version(jschlatow/src/linux_nic_drv) 2021-06-03
+set version(jschlatow/src/vnc_server) 2021-06-02-b
+set version(jschlatow/pkg/vnc_server) 2021-06-02-b
