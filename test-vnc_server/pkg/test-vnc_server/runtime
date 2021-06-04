@@ -106,6 +106,7 @@
 		<rom label="zlib.lib.so"/>
 		<rom label="libpng.lib.so"/>
 		<rom label="vncserver.lib.so"/>
+		<rom label="sandbox.lib.so"/>
 
 		<!-- textedit libraries -->
 		<rom label="egl.lib.so"/>

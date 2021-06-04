@@ -1,5 +1,4 @@
-jschlatow/src/libvnc
-jschlatow/src/vnc_server
+jschlatow/src/libvncserver
 nfeske/src/event_filter
 nfeske/src/libc
 nfeske/src/vfs
@@ -8,3 +7,4 @@ nfeske/src/jpeg
 nfeske/src/libpng
 nfeske/src/zlib
 genodelabs/src/vfs_lxip
+genodelabs/src/sandbox
