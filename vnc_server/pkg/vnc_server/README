@@ -1,1 +1,15 @@
-VNC server connecting to Capture and Event session
+
+            VNC server connecting to Capture and Event session
+
+
+This package can be deployed on Sculpt to provide remote desktop functionality.
+Simply connect the Capture and Event sessions to the system GUI and add a
+forwarding route for TCP port 5900 to your nic_router.
+
+By default, the vnc server polls the Capture session every 40ms. You can change
+this by supplying a 'period_ms' attribute in the config node.
+
+! <config period_ms="20"/>
+
+You can also restrict the area and position that is copied from the Capture
+session by setting the attributes 'width', 'height', 'xpos' and 'ypos'.
