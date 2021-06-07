@@ -1,0 +1,17 @@
+
+                  Component for taking screenshots
+
+This component connects to a capture session, takes a screenshot and writes
+it to a png file on the connected file system.
+The screenshot-taking is triggered by the 'trigger' ROM session, which must
+contain a single XML node.
+The node's name is used a file name (in conjunction with the current time).
+Optionally, one can provide a 'width', 'height', 'xpos' and 'ypos' attribute
+to constrain the captured area of the screen.
+
+The ready-to-use package comes with an instance global_keys_handler that
+updates the 'screenshot' report on key presses of 'KEY_PRINT'. To deploy the
+package in Sculpt, connect the Gui and Capture services to the system GUI.
+Also add the following line to your nitpicker config:
+
+! <global-key name="KEY_PRINT"     label="runtime -> screenshot -> keys -> input" />

@@ -4,6 +4,7 @@ set version(nfeske/api/zlib) 2019-02-25
 set version(nfeske/src/zlib) 2019-02-25
 set version(nfeske/src/jpeg) 2021-02-22
 set version(nfeske/src/libpng) 2021-02-22
+set version(nfeske/api/libpng) 2019-02-25
 set version(nfeske/src/event_filter) 2021-03-20
 set version(nfeske/pkg/qt5_textedit) 2021-03-22
 set version(nfeske/src/nic_router) 2021-03-11
@@ -11,6 +12,7 @@ set version(nfeske/api/capture_session) 2020-07-12
 set version(nfeske/api/event_session) 2020-08-24
 set version(genodelabs/src/vfs_lxip) 2021-04-26
 set version(genodelabs/src/sandbox) 2021-04-23
+set version(genodelabs/src/global_keys_handler) 2021-02-22
 
 # 3rd party depots
 set version(cnuke/src/sed) 2021-02-22
@@ -32,7 +34,9 @@ set version(jschlatow/api/libc) 2021-02-22
 set version(jschlatow/src/linux_nic_drv) 2021-06-03
 set version(jschlatow/pkg/vnc_server) 2021-06-04
 set version(jschlatow/src/blit) 2021-06-03
-
+set version(jschlatow/src/lx_fs) 2021-06-07
+set version(jschlatow/pkg/screenshot) 2021-06-07
+set version(jschlatow/src/linux_rtc_drv) 2021-06-07
 
 set verbose 1
 set depot_dir      ../genode/depot
