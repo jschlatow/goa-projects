@@ -73,7 +73,6 @@ class Vncserver::Output
 
 		using Pixel          = Capture::Pixel;
 		using Area           = Capture::Area;
-		using Affected_rects = Capture::Session::Affected_rects;
 
 	private:
 		/*
@@ -136,8 +135,8 @@ class Vncserver::Output
 
 			if (oldfb) {
 				rfbNewFramebuffer(_screen, newfb,
-					               _area.w(), _area.h(),
-					               8, 3, sizeof(Pixel));
+				                  _area.w(), _area.h(),
+				                  8, 3, sizeof(Pixel));
 				destroy(_alloc, oldfb);
 			}
 			else
@@ -167,8 +166,8 @@ class Vncserver::Output
 			populate_args_and_env(_env, argc, argv, envp);
 
 			_screen = rfbGetScreen(&argc, argv,
-				                    _area.w(), _area.h(),
-				                    8, 3, sizeof(Pixel));
+			                       _area.w(), _area.h(),
+			                       8, 3, sizeof(Pixel));
 			if (!_screen)
 				throw Libvnc_error();
 
@@ -315,7 +314,7 @@ class Vncserver::Output
 		{
 			Libc::with_libc([&] () {
 				rfbMarkRectAsModified(_screen, rect.x1(), rect.y1(),
-					                            rect.x2(), rect.y2());
+				                               rect.x2(), rect.y2());
 			});
 		}
 

@@ -17,7 +17,6 @@
 #include <base/log.h>
 #include <base/attached_rom_dataspace.h>
 #include <base/heap.h>
-/*#include <base/registry.h>*/
 #include <capture_session/connection.h>
 #include <timer_session/connection.h>
 
@@ -45,13 +44,13 @@ struct Vncserver::Main
 	static Capture::Point _point_from_xml(Xml_node node)
 	{
 		return Capture::Point(node.attribute_value("xpos", 0L),
-		                  node.attribute_value("ypos", 0L));
+		                      node.attribute_value("ypos", 0L));
 	}
 
 	static Area _area_from_xml(Xml_node node, Area default_area)
 	{
 		return Area(node.attribute_value("width",  default_area.w()),
-			         node.attribute_value("height", default_area.h()));
+		            node.attribute_value("height", default_area.h()));
 	}
 
 	Capture::Connection  _capture    { _env };
@@ -110,7 +109,6 @@ struct Vncserver::Main
 		_capture_input->with_texture([&] (Texture<Pixel> const &texture) {
 
 			_output.with_surface([&] (Surface<Pixel> &surface) {
-
 				Affected_rects const affected = _capture_input->capture();
 
 				affected.for_each_rect([&] (Capture::Rect const rect) {
