@@ -6,7 +6,9 @@
 		<rtc/>
 
 		<file_system label="home"     writeable="yes"/>
-		<file_system label="ro"       writeable="no"/>
+		<file_system label="report"   writeable="no"/>
+		<file_system label="config"   writeable="yes"/>
+		<file_system label="shared"   writeable="yes"/>
 		<file_system label="fonts"    writeable="no"/>
 		<file_system label="dotfiles" writeable="no"/>
 
