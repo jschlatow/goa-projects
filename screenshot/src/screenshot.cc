@@ -1,5 +1,5 @@
 /*
- * \brief  Vnc server using libvnc
+ * \brief  Screenshot component using capture session and libpng
  * \author Johannes Schlatow
  * \date   2021-06-04
  */
