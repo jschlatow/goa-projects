@@ -13,6 +13,7 @@ set version(nfeske/api/event_session) 2020-08-24
 set version(genodelabs/src/vfs_lxip) 2021-04-26
 set version(genodelabs/src/sandbox) 2021-04-23
 set version(genodelabs/src/global_keys_handler) 2021-02-22
+set version(genodelabs/src/vfs_import) 2021-02-22
 
 # 3rd party depots
 set version(cnuke/src/sed) 2021-02-22
@@ -21,6 +22,17 @@ set version(cnuke/src/grep) 2021-02-22
 set version(alex-ab/src/which) 2021-02-22
 set version(skalk/src/tar) 2020-02-19
 set version(skalk/src/pcre) 2020-02-19
+set version(ssumpf/src/vbox5-nova) 2021-06-10
+set version(ssumpf/src/base-nova) 2021-04-23
+set version(ssumpf/src/libc) 2021-03-22
+set version(ssumpf/src/init) 2021-04-23
+set version(ssumpf/src/posix) 2021-02-22
+set version(ssumpf/src/zlib) 2021-02-22
+set version(ssumpf/src/libiconv) 2021-02-22
+set version(ssumpf/src/libyuv) 2021-06-10
+set version(ssumpf/src/stdcxx) 2021-02-22
+set version(ssumpf/src/vfs) 2021-02-22
+set version(ssumpf/src/jpeg) 2021-06-10
 
 # own depot
 set version(jschlatow/src/bash) 2021-05-21
@@ -37,6 +49,8 @@ set version(jschlatow/src/blit) 2021-06-03
 set version(jschlatow/src/lx_fs) 2021-06-07
 set version(jschlatow/pkg/screenshot) 2021-06-07
 set version(jschlatow/src/linux_rtc_drv) 2021-06-07
+set version(jschlatow/src/vbox5-nova) 2021-07-08-a
+set version(jschlatow/src/vm-tc-firefox-av) 2021-07-08
 
 set verbose 1
 set depot_dir      ../genode/depot

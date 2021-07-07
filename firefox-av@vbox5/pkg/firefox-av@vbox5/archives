@@ -1,0 +1,13 @@
+jschlatow/src/vbox5-nova
+jschlatow/src/vm-tc-firefox-av
+ssumpf/src/base-nova
+ssumpf/src/libc
+ssumpf/src/init
+ssumpf/src/posix
+ssumpf/src/zlib
+ssumpf/src/libiconv
+ssumpf/src/libyuv
+ssumpf/src/stdcxx
+ssumpf/src/vfs
+ssumpf/src/jpeg
+genodelabs/src/vfs_import

@@ -1,0 +1,7 @@
+LICENSE   := GPLv2
+VERSION   := master
+DOWNLOADS := firefox-av.git
+
+URL(firefox-av) := https://github.com/jschlatow/tinycore-remaster.git
+REV(firefox-av) := 85aa65674aca0b1861b2803bb1e6344a799abc1d
+DIR(firefox-av) := src
