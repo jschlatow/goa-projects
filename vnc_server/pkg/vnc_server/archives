@@ -1,10 +1,9 @@
 jschlatow/src/libvncserver
-nfeske/src/event_filter
-nfeske/src/libc
-nfeske/src/vfs
-nfeske/src/init
-nfeske/src/jpeg
-nfeske/src/libpng
-nfeske/src/zlib
+genodelabs/src/event_filter
+genodelabs/src/libc
+genodelabs/src/vfs
+genodelabs/src/init
+genodelabs/src/jpeg
+genodelabs/src/libpng
+genodelabs/src/zlib
 genodelabs/src/vfs_lxip
-genodelabs/src/sandbox

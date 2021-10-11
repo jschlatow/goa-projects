@@ -1,8 +1,8 @@
-nfeske/src/init
-nfeske/src/libpng
-nfeske/src/zlib
-nfeske/src/libc
-nfeske/src/vfs
-nfeske/src/report_rom
+genodelabs/src/init
+genodelabs/src/libpng
+genodelabs/src/zlib
+genodelabs/src/libc
+genodelabs/src/vfs
+genodelabs/src/report_rom
 genodelabs/src/global_keys_handler
 genodelabs/src/sandbox

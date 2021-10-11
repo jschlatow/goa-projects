@@ -1,8 +1,8 @@
 jschlatow/api/libvncserver
-nfeske/api/libc
-nfeske/api/base
-nfeske/api/capture_session
-nfeske/api/event_session
-nfeske/api/blit
-nfeske/api/os
-nfeske/api/zlib
+genodelabs/api/libc
+genodelabs/api/base
+genodelabs/api/capture_session
+genodelabs/api/event_session
+genodelabs/api/os
+genodelabs/api/blit
+genodelabs/api/zlib
