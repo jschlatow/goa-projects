@@ -1,8 +1,8 @@
 jschlatow/api/libvncserver
-genodelabs/api/libc
-genodelabs/api/base
-genodelabs/api/capture_session
-genodelabs/api/event_session
-genodelabs/api/os
-genodelabs/api/blit
-genodelabs/api/zlib
+jschlatow/api/libc
+jschlatow/api/base
+jschlatow/api/capture_session
+jschlatow/api/event_session
+jschlatow/api/os
+jschlatow/api/blit
+jschlatow/api/zlib

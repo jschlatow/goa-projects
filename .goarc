@@ -62,6 +62,8 @@ set version(jschlatow/src/libvncserver) 2021-10-18
 #set version(jschlatow/src/vbox5-nova) 2021-07-13
 #set version(jschlatow/src/vm-tc-firefox-av) 2021-07-08
 
+set version(jschlatow/src/vm-tc-firefox-av) 2022-04-05
+
 set verbose 1
 set depot_dir      ../genode/depot
 set public_dir     ../genode/public
