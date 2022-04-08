@@ -1,4 +1,4 @@
-jschlatow/pkg/terminal
+jschlatow/src/terminal
 jschlatow/src/init
 jschlatow/src/posix
 jschlatow/src/ncurses
@@ -10,7 +10,7 @@ jschlatow/src/vfs
 jschlatow/src/vfs_pipe
 jschlatow/src/fs_rom
 jschlatow/src/pcre
-cnuke/src/sed
+jschlatow/src/sed
 jschlatow/src/grep
 jschlatow/src/findutils
 jschlatow/src/diffutils

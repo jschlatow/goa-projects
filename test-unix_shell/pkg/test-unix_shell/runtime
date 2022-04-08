@@ -3,25 +3,16 @@
 	<requires>
 		<gui/>
 		<timer/>
-		<rtc/>
-
-		<file_system label="home"     writeable="yes"/>
-		<file_system label="report"   writeable="no"/>
-		<file_system label="config"   writeable="yes"/>
-		<file_system label="shared"   writeable="yes"/>
-		<file_system label="fonts"    writeable="no"/>
-		<file_system label="dotfiles" writeable="no"/>
-
-		<rom    label="clipboard"/>
-		<report label="clipboard"/>
 	</requires>
 
 	<content>
+
 		<!-- configurations -->
 		<rom label="unix.config"/>
 		<rom label="terminal.config"/>
 		<rom label="vfs.config"/>
 		<rom label="bash.config"/>
+		<rom label="vimrc"/>
 
 		<!-- components -->
 		<rom label="init"/>
@@ -31,6 +22,7 @@
 
 		<!-- libraries -->
 		<rom label="vfs.lib.so"/>
+		<rom label="vfs_ttf.lib.so"/>
 		<rom label="vfs_pipe.lib.so"/>
 		<rom label="libc.lib.so"/>
 		<rom label="libm.lib.so"/>
@@ -48,6 +40,9 @@
 		<rom label="diffutils.tar"/>
 		<rom label="which.tar"/>
 		<rom label="less.tar"/>
+
+		<!-- data -->
+		<rom label="VeraMono.ttf"/>
 
 	</content>
 
