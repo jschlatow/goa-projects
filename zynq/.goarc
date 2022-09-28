@@ -1,0 +1,3 @@
+set arch arm_v7a
+set ld_march ""
+#set cross_dev_prefix "/usr/local/genode/tool/current/bin/genode-arm-"
