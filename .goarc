@@ -1,7 +1,7 @@
 set version(jschlatow/pkg/screenshot) 2022-04-27
 set version(jschlatow/pkg/unix_shell) 2022-04-27
 
-set version(jschlatow/src/vm-tc-firefox-av) 2022-04-27
+set version(jschlatow/src/vm-tc13-firefox-av) 2022-10-20
 
 set verbose 1
 set depot_dir      ../genode/depot

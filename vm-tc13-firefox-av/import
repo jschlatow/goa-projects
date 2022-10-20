@@ -3,5 +3,5 @@ VERSION   := master
 DOWNLOADS := firefox-av.git
 
 URL(firefox-av) := https://github.com/jschlatow/tinycore-remaster.git
-REV(firefox-av) := 85aa65674aca0b1861b2803bb1e6344a799abc1d
+REV(firefox-av) := b1ede1711bc70adfcce1e0d5881abc66405974a8
 DIR(firefox-av) := src

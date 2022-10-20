@@ -1,0 +1,54 @@
+<runtime ram="1800M" caps="1500" binary="init" config="init.config">
+
+	<requires>
+		<file_system label="vm"/>
+		<file_system label="shared"/>
+		<vm/>
+		<timer/>
+		<gui/>
+		<nic/>
+		<rom label="capslock"/>
+		<rom label="platform_info"/>
+		<report label="shape"/>
+		<report label="clipboard"/>
+		<rom    label="clipboard"/>
+		<rm/>
+		<rtc/>
+		<rom label="usb_devices"/>
+		<usb/>
+		<audio_in/>
+		<audio_out/>
+		<capture/>
+	</requires>
+
+	<content>
+		<rom label="ld.lib.so"/>
+		<rom label="init"/>
+		<rom label="init.config"/>
+		<rom label="virtualbox6"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="libiconv.lib.so"/>
+		<rom label="libyuv.lib.so"/>
+		<rom label="qemu-usb.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_import.lib.so"/>
+		<rom label="jpeg.lib.so"/>
+		<rom label="mesa.lib.so"/>
+		<rom label="egl.lib.so"/>
+		<rom label="glapi.lib.so"/>
+		<rom label="expat.lib.so"/>
+		<rom label="libdrm.lib.so"/>
+		<rom label="vfs_gpu.lib.so"/>
+		<rom label="vfs_oss.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="virtualbox6-shaderlib.lib.so"/>
+		<rom label="virtualbox6-sharedfolders.lib.so"/>
+		<rom label="virtualbox6-sharedclipboard.lib.so"/>
+		<rom label="firefox-av-tc13.iso"/>
+		<rom label="machine.vbox6"/>
+	</content>
+
+</runtime>
