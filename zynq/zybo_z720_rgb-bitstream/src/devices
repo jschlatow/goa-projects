@@ -1,0 +1,5 @@
+<devices>
+	<device type="my_rgbleds">
+		<io_mem address="0x43c00000" size="0x1000"/>
+	</device>
+</devices>
