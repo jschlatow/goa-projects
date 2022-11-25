@@ -41,6 +41,8 @@ struct Screenshot::Main
 	Attached_rom_dataspace _rom   { _env, "trigger" };
 	Heap                   _heap  { _env.ram(), _env.rm() };
 
+	bool                   _last_state { false };
+
 	static Capture::Point _point_from_xml(Xml_node node)
 	{
 		return Capture::Point(node.attribute_value("xpos", 0L),
@@ -221,7 +223,9 @@ struct Screenshot::Main
 
 		Xml_node xml = _rom.xml();
 
-		if (!xml.attribute_value("enabled", false)) return;
+		if (xml.attribute_value("enabled", _last_state) == _last_state) return;
+
+		_last_state = !_last_state;
 
 		_capture_input.construct(_env, xml);
 		_output.       construct(_heap, _capture_input->area());

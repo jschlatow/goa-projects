@@ -55,8 +55,7 @@
 			<resource name="RAM" quantum="1M"/>
 			<config>
 				<bool name="screenshot" initial="no"/>
-				<press   name="KEY_PRINT" bool="screenshot" change="off"/>
-				<release name="KEY_PRINT" bool="screenshot" change="on"/>
+				<press   name="KEY_PRINT" bool="screenshot" change="toggle"/>
 				<report name="screenshot"> <bool name="screenshot"/> </report>
 			</config>
 			<route>
