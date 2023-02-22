@@ -1,0 +1,42 @@
+<devices>
+    <device name="axi_dma_0" >
+        <irq number="61"/>
+        <irq number="62"/>
+        <control_device name="dma_guard_0"/>
+        <property name="XPAR_AXI_DMA__SG_INCLUDE_STSCNTRL_STRM" />
+        <property name="XPAR_AXI_DMA__INCLUDE_MM2S" />
+        <property name="XPAR_AXI_DMA__INCLUDE_MM2S_DRE" />
+        <property name="XPAR_AXI_DMA__M_AXI_MM2S_DATA_WIDTH" />
+        <property name="XPAR_AXI_DMA__INCLUDE_S2MM" />
+        <property name="XPAR_AXI_DMA__INCLUDE_S2MM_DRE" />
+        <property name="XPAR_AXI_DMA__M_AXI_S2MM_DATA_WIDTH" />
+        <property name="XPAR_AXI_DMA__INCLUDE_SG" />
+        <property name="XPAR_AXI_DMA__NUM_MM2S_CHANNELS" />
+        <property name="XPAR_AXI_DMA__NUM_S2MM_CHANNELS" />
+        <property name="XPAR_AXI_DMA__MM2S_BURST_SIZE" />
+        <property name="XPAR_AXI_DMA__S2MM_BURST_SIZE" />
+        <property name="XPAR_AXI_DMA__MICRO_DMA" />
+        <property name="XPAR_AXI_DMA__SG_LENGTH_WIDTH" />
+    </device>
+    <device name="axi_dma_1" >
+        <irq number="63"/>
+        <irq number="64"/>
+        <control_device name="dma_guard_1"/>
+        <property name="XPAR_AXI_DMA__SG_INCLUDE_STSCNTRL_STRM" />
+        <property name="XPAR_AXI_DMA__INCLUDE_MM2S" />
+        <property name="XPAR_AXI_DMA__INCLUDE_MM2S_DRE" />
+        <property name="XPAR_AXI_DMA__M_AXI_MM2S_DATA_WIDTH" />
+        <property name="XPAR_AXI_DMA__INCLUDE_S2MM" />
+        <property name="XPAR_AXI_DMA__INCLUDE_S2MM_DRE" />
+        <property name="XPAR_AXI_DMA__M_AXI_S2MM_DATA_WIDTH" />
+        <property name="XPAR_AXI_DMA__INCLUDE_SG" />
+        <property name="XPAR_AXI_DMA__NUM_MM2S_CHANNELS" />
+        <property name="XPAR_AXI_DMA__NUM_S2MM_CHANNELS" />
+        <property name="XPAR_AXI_DMA__MM2S_BURST_SIZE" />
+        <property name="XPAR_AXI_DMA__S2MM_BURST_SIZE" />
+        <property name="XPAR_AXI_DMA__MICRO_DMA" />
+        <property name="XPAR_AXI_DMA__SG_LENGTH_WIDTH" />
+    </device>
+    <device name="dma_guard_0"/>
+    <device name="dma_guard_1"/>
+</devices>
