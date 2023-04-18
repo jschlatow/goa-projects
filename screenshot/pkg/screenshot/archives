@@ -1,8 +1,8 @@
-jschlatow/src/init
-jschlatow/src/libpng
-jschlatow/src/zlib
-jschlatow/src/libc
-jschlatow/src/vfs
-jschlatow/src/report_rom
-jschlatow/src/global_keys_handler
-jschlatow/src/sandbox
+genodelabs/src/init
+genodelabs/src/libpng
+genodelabs/src/zlib
+genodelabs/src/libc
+genodelabs/src/vfs
+genodelabs/src/report_rom
+genodelabs/src/global_keys_handler
+genodelabs/src/sandbox

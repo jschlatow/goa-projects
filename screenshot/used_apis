@@ -1,7 +1,7 @@
-jschlatow/api/libpng
-jschlatow/api/libc
-jschlatow/api/base
-jschlatow/api/capture_session
-jschlatow/api/rtc_session
-jschlatow/api/blit
-jschlatow/api/os
+genodelabs/api/libpng
+genodelabs/api/libc
+genodelabs/api/base
+genodelabs/api/capture_session
+genodelabs/api/rtc_session
+genodelabs/api/blit
+genodelabs/api/os
