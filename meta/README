@@ -1,0 +1,6 @@
+This is a meta package that simplifies updating the blessed versions during a
+Goa release.
+
+goa archive-versions | column -t > /tmp/current
+# remove unwanted lines from /tmp/current
+vimdiff /path/to/goa/share/goa/goarc /tmp/current
