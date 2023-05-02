@@ -1,4 +1,4 @@
-<runtime ram="20M" caps="500" binary="init">
+<runtime ram="50M" caps="500" binary="init">
 
 	<requires>
 		<capture/>
@@ -22,7 +22,7 @@
 		<default caps="100"/>
 
 		<start name="screenshot">
-			<resource name="RAM" quantum="12M"/>
+			<resource name="RAM" quantum="32M"/>
 			<config>
 				<libc stdin="/dev/null" stdout="/dev/log" stderr="/dev/log"/>
 				<vfs>
@@ -46,7 +46,7 @@
 					<sleep milliseconds="100"/>
 					<inline> <testfile enabled="yes"/> </inline>
 					<sleep milliseconds="2000"/>
-					<inline> <testfile1234 enabled="yes"/> </inline>
+					<inline> <testfile1234 enabled="no"/> </inline>
 					<sleep milliseconds="10000"/>
 					<empty />
 				</rom>

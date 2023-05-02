@@ -180,13 +180,21 @@ struct Screenshot::Main
 
 	struct Capture_input
 	{
+		struct Invalid_screen_size : Genode::Exception { };
+
 		Env &_env;
 
 		Capture::Connection _capture;
 
 		Area const _area;
 
-		bool _capture_buffer_init = ( _capture.buffer(_area), true );
+		void _check_area()
+		{
+			if (!_area.w() || !_area.h())
+				throw Invalid_screen_size();
+		}
+
+		bool _capture_buffer_init = ( _check_area(), _capture.buffer(_area), true );
 
 		Attached_dataspace _capture_ds { _env.rm(), _capture.dataspace() };
 
@@ -227,8 +235,13 @@ struct Screenshot::Main
 
 		_last_state = !_last_state;
 
-		_capture_input.construct(_env, xml);
-		_output.       construct(_heap, _capture_input->area());
+		try {
+			_capture_input.construct(_env, xml);
+			_output.       construct(_heap, _capture_input->area());
+		} catch (Capture_input::Invalid_screen_size & e) {
+			error("Invalid screen size");
+			return;
+		}
 
 		/* copy image data from capture session to image buffer */
 		_capture_input->with_texture([&] (Texture<Pixel> const &texture) {
