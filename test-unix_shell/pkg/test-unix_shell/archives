@@ -1,4 +1,4 @@
 jschlatow/pkg/unix_shell
-jschlatow/raw/terminal
-jschlatow/raw/ttf-bitstream-vera-minimal
-jschlatow/src/vfs_ttf
+genodelabs/raw/terminal
+genodelabs/raw/ttf-bitstream-vera-minimal
+genodelabs/src/vfs_ttf
