@@ -5,6 +5,7 @@
 		<event/>
 		<uplink label="tap_goa"/>
 		<rm/>
+		<gpu/>
 	</requires>
 
 	<config verbose="yes">
@@ -25,6 +26,18 @@
 		</service>
 
 		<default caps="300"/>
+
+		<start name="vfs">
+			<resource name="RAM" quantum="2M"/>
+			<provides> <service name="File_system"/> </provides>
+			<config>
+				<vfs> <ram/> </vfs>
+				<default-policy root="/" writeable="yes" />
+			</config>
+			<route>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
 
 		<start name="vnc_server" caps="1000">
 			<binary name="init"/>
@@ -76,6 +89,9 @@
 				<service name="ROM" label="config">
 					<parent label="textedit.config"/>
 				</service>
+				<service name="ROM" label="mesa_gpu_drv.lib.so">
+					<parent label="mesa_gpu_drv.lib.so"/>
+				</service>
 				<any-service> <parent/> <any-child/> </any-service>
 			</route>
 		</start>
@@ -94,6 +110,7 @@
 		<rom label="init"/>
 		<rom label="textedit"/>
 		<rom label="nic_router"/>
+		<rom label="vfs"/>
 
 		<!-- libraries -->
 		<rom label="ld.lib.so"/>
@@ -119,9 +136,11 @@
 		<rom label="libpng.lib.so"/>
 		<rom label="libqgenode.lib.so"/>
 		<rom label="mesa.lib.so"/>
+		<rom label="libdrm.lib.so"/>
 		<rom label="qt5_dejavusans.tar"/>
 		<rom label="qt5_libqgenode.tar"/>
 		<rom label="stdcxx.lib.so"/>
+		<rom label="vfs_gpu.lib.so"/>
 		<rom label="vfs_pipe.lib.so"/>
 		<rom label="qt5_component.lib.so"/>
 		<rom label="libQt5PrintSupport.lib.so"/>

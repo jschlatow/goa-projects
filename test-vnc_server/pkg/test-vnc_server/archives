@@ -1,4 +1,5 @@
 jschlatow/pkg/vnc_server
-nfeske/pkg/qt5_textedit
-nfeske/src/init
-nfeske/src/nic_router
+genodelabs/pkg/qt5_textedit
+genodelabs/src/init
+genodelabs/src/nic_router
+genodelabs/src/vfs
