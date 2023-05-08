@@ -2,7 +2,7 @@
     <device name="axi_dma_0" >
         <irq number="61"/>
         <irq number="62"/>
-        <control_device name="dma_guard_0"/>
+        <io_mmu name="dma_guard_0"/>
         <property name="XPAR_AXI_DMA__SG_INCLUDE_STSCNTRL_STRM" />
         <property name="XPAR_AXI_DMA__INCLUDE_MM2S" />
         <property name="XPAR_AXI_DMA__INCLUDE_MM2S_DRE" />
@@ -21,7 +21,7 @@
     <device name="axi_dma_1" >
         <irq number="63"/>
         <irq number="64"/>
-        <control_device name="dma_guard_1"/>
+        <io_mmu name="dma_guard_1"/>
         <property name="XPAR_AXI_DMA__SG_INCLUDE_STSCNTRL_STRM" />
         <property name="XPAR_AXI_DMA__INCLUDE_MM2S" />
         <property name="XPAR_AXI_DMA__INCLUDE_MM2S_DRE" />
