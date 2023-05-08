@@ -12,12 +12,15 @@ genodelabs/api/gems
 genodelabs/api/gui_session
 genodelabs/api/input_session
 genodelabs/api/libc
+genodelabs/api/mesa
 genodelabs/api/ncurses
 genodelabs/api/nitpicker_gfx
 genodelabs/api/noux
 genodelabs/api/os
 genodelabs/api/pcre
 genodelabs/api/posix
+genodelabs/api/qt5
+genodelabs/api/qt5_component
 genodelabs/api/report_session
 genodelabs/api/rtc_session
 genodelabs/api/sdl
