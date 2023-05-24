@@ -1,5 +1,6 @@
 <devices>
     <device name="axi_dma_0" >
+        <clock name="fpga0" driver_name="fpga0" rate="167000000"/>
         <irq number="61"/>
         <irq number="62"/>
         <io_mmu name="dma_guard_0"/>
@@ -19,6 +20,7 @@
         <property name="XPAR_AXI_DMA__SG_LENGTH_WIDTH" />
     </device>
     <device name="axi_dma_1" >
+        <clock name="fpga0" driver_name="fpga0" rate="167000000"/>
         <irq number="63"/>
         <irq number="64"/>
         <io_mmu name="dma_guard_1"/>
@@ -37,6 +39,10 @@
         <property name="XPAR_AXI_DMA__MICRO_DMA" />
         <property name="XPAR_AXI_DMA__SG_LENGTH_WIDTH" />
     </device>
-    <device name="dma_guard_0"/>
-    <device name="dma_guard_1"/>
+    <device name="dma_guard_0">
+        <clock name="fpga0" driver_name="fpga0" rate="167000000"/>
+    </device>
+    <device name="dma_guard_1">
+        <clock name="fpga0" driver_name="fpga0" rate="167000000"/>
+    </device>
 </devices>
