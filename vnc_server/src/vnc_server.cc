@@ -53,12 +53,20 @@ struct Vncserver::Main
 		            node.attribute_value("height", default_area.h()));
 	}
 
+	static Area _safe_screen_size(Area default_area)
+	{
+		if (default_area.w() > 0 && default_area.h() > 0)
+			return default_area;
+		else
+			return Area(320, 240);
+	}
+
 	Capture::Connection  _capture    { _env };
 	Timer::Connection    _timer      { _env };
 	Timer_ctrl           _timer_ctrl { _timer };
 	Output               _output     { _env,
 	                                   _heap,
-	                                   _capture.screen_size(),
+	                                   _safe_screen_size(_capture.screen_size()),
 	                                   _timer_ctrl };
 
 	struct Capture_input
@@ -130,7 +138,7 @@ struct Vncserver::Main
 	{
 		Xml_node const config = _config.xml();
 
-		Area area = _area_from_xml(config, _capture.screen_size());
+		Area area = _area_from_xml(config, _safe_screen_size(_capture.screen_size()));
 
 		_output.resize(area);
 
