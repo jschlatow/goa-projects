@@ -6,6 +6,7 @@ genodelabs/src/zlib
 genodelabs/pkg/drivers_interactive-linux
 genodelabs/src/base-linux
 genodelabs/src/bash
+genodelabs/src/black_hole
 genodelabs/src/coreutils
 genodelabs/src/event_filter
 genodelabs/src/fb_sdl
@@ -17,6 +18,7 @@ genodelabs/src/linux_nic_drv
 genodelabs/src/linux_rtc_drv
 genodelabs/src/lx_fs
 genodelabs/src/ncurses
+genodelabs/src/nic_router
 genodelabs/src/nitpicker
 genodelabs/src/pcre
 genodelabs/src/posix
