@@ -68,7 +68,7 @@
 				<default-policy domain="default"/>
 				<policy label="nic_drv -> " domain="uplink"/>
 				<domain name="uplink" interface="10.0.11.12/24">
-					<nat domain="default" tcp-ports="1000" udp-ports="1000" icmp-ports="1000"/>
+					<nat domain="default" tcp-ports="1000" udp-ports="1000" icmp-ids="1000"/>
 					<tcp-forward port="5900" domain="default" to="10.0.1.2"/>
 				</domain>
 				<domain name="default" interface="10.0.1.1/24">

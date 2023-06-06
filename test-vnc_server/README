@@ -6,7 +6,8 @@ Instructions:
 	- make sure tap device "tap_goa" exists
 	- assign 10.0.11.1 to tap_goa
 
-	  | sudo ip addr add 10.0.11.1 dev tap_goa
+	  | sudo ip addr add 10.0.11.1/24 dev tap_goa
+	  | sudo ip link set dev tap_goa up
 
 	- run project ('goa run')
 	- run vncviewer (gtk-vnc)
