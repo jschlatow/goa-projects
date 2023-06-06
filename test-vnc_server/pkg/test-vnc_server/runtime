@@ -6,6 +6,9 @@
 		<uplink label="tap_goa"/>
 		<rm/>
 		<gpu/>
+		<report label="shape"/>
+		<report label="clipboard"/>
+		<rom label="clipboard"/>
 	</requires>
 
 	<config verbose="yes">
@@ -19,6 +22,7 @@
 			<service name="Timer"/>
 			<service name="Capture"/>
 			<service name="Event"/>
+			<service name="Report"/>
 		</parent-provides>
 
 		<service name="Uplink">
@@ -91,6 +95,12 @@
 				</service>
 				<service name="ROM" label="mesa_gpu_drv.lib.so">
 					<parent label="mesa_gpu_drv.lib.so"/>
+				</service>
+				<service name="ROM" label="clipboard">
+					<parent label="clipboard"/>
+				</service>
+				<service name="Report" label="clipboard">
+					<parent label="clipboard"/>
 				</service>
 				<any-service> <parent/> <any-child/> </any-service>
 			</route>
