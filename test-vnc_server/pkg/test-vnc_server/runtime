@@ -1,14 +1,18 @@
 <runtime ram="250M" caps="2000" binary="init">
 
+	<provides>
+		<uplink label="tap_goa"/>
+	</provides>
+
 	<requires>
 		<capture/>
 		<event/>
-		<uplink label="tap_goa"/>
-		<rm/>
-		<gpu/>
+		<gui/>
 		<report label="shape"/>
 		<report label="clipboard"/>
 		<rom label="clipboard"/>
+		<rom label="mesa_gpu_drv.lib.so"/>
+		<timer/>
 	</requires>
 
 	<config verbose="yes">
@@ -102,6 +106,9 @@
 				<service name="Report" label="clipboard">
 					<parent label="clipboard"/>
 				</service>
+				<service name="Report" label="shape">
+					<parent label="shape"/>
+				</service>
 				<any-service> <parent/> <any-child/> </any-service>
 			</route>
 		</start>
@@ -133,7 +140,6 @@
 		<rom label="zlib.lib.so"/>
 		<rom label="libpng.lib.so"/>
 		<rom label="vncserver.lib.so"/>
-		<rom label="sandbox.lib.so"/>
 
 		<!-- textedit libraries -->
 		<rom label="egl.lib.so"/>

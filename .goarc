@@ -9,7 +9,6 @@ set  version(genodelabs/api/event_session)       2023-03-12
 set  version(genodelabs/src/jpeg)                2023-01-23
 set  version(genodelabs/src/vfs_lxip)            2023-04-25
 set  version(genodelabs/pkg/qt5_textedit)        2023-04-25
-set  version(genodelabs/src/nic_router)          2023-04-25
 set  version(genodelabs/src/expat)               2023-01-23
 set  version(genodelabs/src/libdrm)              2023-04-25
 set  version(genodelabs/src/libiconv)            2023-01-23

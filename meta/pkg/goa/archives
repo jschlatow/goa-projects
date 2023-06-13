@@ -4,6 +4,7 @@ genodelabs/src/vfs_lwip
 genodelabs/src/openssl
 genodelabs/src/zlib
 genodelabs/pkg/drivers_interactive-linux
+genodelabs/pkg/fonts_fs
 genodelabs/src/base-linux
 genodelabs/src/bash
 genodelabs/src/black_hole

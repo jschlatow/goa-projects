@@ -5,6 +5,7 @@
 		<event/>
 		<nic/>
 		<rm/>
+		<timer/>
 	</requires>
 
 	<content>

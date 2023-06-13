@@ -4,13 +4,13 @@
 		<capture/>
 		<file_system label="target" writeable="yes"/>
 		<rtc/>
+		<timer/>
 	</requires>
 
 	<config verbose="yes">
 		<parent-provides>
 			<service name="ROM"/>
 			<service name="LOG"/>
-			<service name="RM"/>
 			<service name="CPU"/>
 			<service name="PD"/>
 			<service name="Timer"/>
