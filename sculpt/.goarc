@@ -1,0 +1,4 @@
+set depot_dir ./depot
+set public_dir ./public
+set common_var_dir ./var
+set depot_user jschlatow

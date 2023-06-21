@@ -1,0 +1,62 @@
+<index>
+
+  <supports arch="x86_64"/>
+  <supports arch="arm_v8a"/>
+
+  <index name="GUI" arch="x86_64">
+    <pkg path="sticks_blue_backdrop" info="default desktop background"/>
+    <pkg path="themed_wm"            info="ready-to-use window manager"/>
+    <pkg path="fonts_fs"             info="font provider"/>
+    <pkg path="wm"                   info="window manager"/>
+    <pkg path="motif_decorator"      info="Motif-style window decorator"/>
+    <pkg path="themed_decorator"     info="modern-looking window decorator"/>
+    <pkg path="window_layouter"      info="default window layouter"/>
+    <pkg path="user_keys"            info="user-defined global keys"/>
+  </index>
+
+  <index name="Tools" arch="x86_64">
+    <pkg path="fs_report"       info="write report to file system"/>
+    <pkg path="system_shell"    info="command-line interface to the system"/>
+    <pkg path="system_clock-pc" info="real-time-clock service" arch="x86_64"/>
+    <pkg path="report_dump"     info="save periodic snapshots of the report fs"/>
+    <pkg path="recall_fs"       info="component-specific file-system view"/>
+    <pkg path="file_vault"      info="encrypted file store"/>
+    <pkg path="black_hole"      info="pseudo service provider"/>
+    <pkg path="usb_webcam"      info="USB webcam"/>
+    <pkg path="bsd_audio_drv"   info="audio driver" arch="x86_64"/>
+    <pkg path="mixer"           info="audio mixer"/>
+  </index>
+
+  <index name="Demos" arch="x86_64">
+    <pkg path="nano3d"       info="simple software-rendering demo"/>
+    <pkg path="mesa_gears"   info="Mesa gears demo"/>
+    <pkg path="test-capture" info="test for displaying a capture session"/>
+  </index>
+
+  <index name="Virtual machines" arch="x86_64">
+    <pkg path="vbox6"             info="VBox6 for running Linux"/>
+    <pkg path="firefox-av@vbox6"  info="Firefox kiosk VM with audio/video support"/>
+  </index>
+
+  <index name="Mesa 3D" arch="x86_64">
+    <pkg path="mesa_gpu-cpu"   info="software-rendering driver"/>
+    <pkg path="mesa_gpu-intel" info="Intel GPU driver (IRIS)" arch="x86_64"/>
+  </index>
+
+  <index name="Applications">
+    <pkg path="vnc_server" info="vnc server" arch="x86_64"/>
+    <pkg path="sdl_vnc"    info="vnc client" arch="x86_64"/>
+    <pkg path="screenshot" info="screenshot utility"/>
+    <pkg path="unix_shell"  info="unix shell" arch="x86_64"/>
+    <pkg path="dotfiles_fs" info="dot files for unix shell"/>
+    <pkg path="trace_recorder"  info="record traces in CTF and pcapng" arch="x86_64"/>
+  </index>
+
+  <index name="Network" arch="x86_64">
+    <pkg path="mobile_network" info="all-in-one package for mobile network support"/>
+    <pkg path="usb_modem_drv"  info="usb modem driver"/>
+    <pkg path="mbimcli"        info="MBIM control app for usb_modem_drv"/>
+  </index>
+
+</index>
+

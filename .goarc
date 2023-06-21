@@ -38,13 +38,7 @@ set  version(jschlatow/src/vfs)                  2023-04-25
 set  version(jschlatow/src/vfs_pipe)             2023-04-25
 set  version(jschlatow/src/vim)                  2023-02-26
 set  version(jschlatow/src/which)                2023-04-27
-
-# goa packages
-set  version(jschlatow/pkg/screenshot)           2023-05-02
-set  version(jschlatow/pkg/unix_shell)           2023-05-02
-set  version(jschlatow/pkg/vnc_server)           2023-05-31
-
-set  version(jschlatow/src/vm-tc13-firefox-av)   2022-10-20
+set  version(jschlatow/src/wireguard)            2023-04-25
 
 set verbose 0
 set depot_dir      ../genode/depot
