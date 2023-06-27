@@ -1,0 +1,96 @@
+<runtime ram="40M" caps="2000" binary="init">
+
+	<requires>
+		<nic/>
+		<file_system label="config" writeable="yes"/>
+		<timer/>
+		<rtc/>
+	</requires>
+
+	<config>
+		<parent-provides>
+			<service name="ROM"/>
+			<service name="PD"/>
+			<service name="CPU"/>
+			<service name="LOG"/>
+			<service name="Timer"/>
+			<service name="File_system"/>
+			<service name="Nic"/>
+			<service name="Rtc"/>
+		</parent-provides>
+
+		<default-route>
+			<service name="Report"> <child name="report_rom"/> </service>
+			<service name="Nic"> <child name="wireguard_tunnel"/> </service>
+			<any-service> <parent/> </any-service>
+		</default-route>
+
+		<default caps="100"/>
+
+		<start name="report_rom">
+			<resource name="RAM" quantum="1M"/>
+			<provides>
+				<service name="ROM"/>
+				<service name="Report"/>
+			</provides>
+			<config verbose="yes"/>
+		</start>
+
+		<start name="fetchurl" caps="150">
+			<resource name="RAM" quantum="10M"/>
+			<config>
+				<libc stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc" socket="/socket"/>
+				<vfs>
+					<dir name="dev">
+						<log/> <null/>
+						<inline name="rtc">2000-01-01 00:00</inline>
+						<inline name="random">01234567890123456789</inline>
+					</dir>
+					<dir name="socket"> <lwip dhcp="yes"/> </dir>
+				</vfs>
+				<fetch url="https://genode.org/about/LICENSE" path="/dev/log" retry="3"/>
+				<report progress="yes"/>
+			</config>
+		</start>
+
+
+		<start name="wireguard_tunnel" caps="1000">
+			<binary name="init"/>
+			<resource name="RAM" quantum="20M"/>
+			<provides>
+				<service name="Nic"/>
+			</provides>
+			<route>
+				<service name="ROM" label="config">
+					<parent label="wireguard_tunnel.config"/>
+				</service>
+				<service name="ROM" label="wireguard.config">
+					<parent label="wireguard.config"/>
+				</service>
+				<service name="ROM" label="nic_router.config">
+					<parent label="nic_router.config"/>
+				</service>
+				<service name="Report"> <child name="report_rom"/> </service>
+				<service name="File_system"> <parent label="config"/> </service>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+
+	</config>
+
+
+	<content>
+		<rom label="init"/>
+		<rom label="report_rom"/>
+		<rom label="fetchurl"/>
+		<rom label="curl.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libssh.lib.so"/>
+		<rom label="libssl.lib.so"/>
+		<rom label="libcrypto.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="vfs_lwip.lib.so"/>
+	</content>
+
+
+</runtime>

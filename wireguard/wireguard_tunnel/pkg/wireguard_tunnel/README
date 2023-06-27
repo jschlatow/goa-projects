@@ -1,0 +1,8 @@
+
+      Combine wireguard component with NIC router to setup a tunnel
+
+This pkg requires a route to a NIC service for the public interface of
+wireguard. It also requires a File_system service where it stores a
+wireguard.config and nic_router.config file. In return, it provides a NIC
+service that routes to the pkg-internal NIC router which forwards all network
+packets to the private interface of wireguard.

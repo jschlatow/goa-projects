@@ -1,0 +1,13 @@
+Run the following commands to setup a tap device, setup wireguard and start a
+DHCP and DNS server. You may use
+`grep -G '^!.*' README | sed 's/^! //' | bash` from your shell to do so.
+
+! sudo ip tuntap add dev tap0 mode tap user $(whoami);
+! sudo ip addr add 10.0.100.1/24 dev tap0;
+! sudo ip link set dev tap0 up;
+! sudo wg-quick up ./wg-test.conf
+! sudo dnsmasq -C dnsmasq.conf;
+! sudo sysctl net.ipv4.ip_forward=1
+! sudo iptables -A FORWARD -i wg-test -j ACCEPT
+! sudo iptables -t nat -A POSTROUTING -o $(ip route | grep default | cut -d" " -f5) -j MASQUERADE
+! sudo iptables -t nat -A PREROUTING -p UDP -i wg-test -d 192.168.21.32 --dport 53 -j DNAT --to-destination 192.168.21.32:5353

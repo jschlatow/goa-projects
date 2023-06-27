@@ -1,0 +1,28 @@
+<runtime ram="20M" caps="1000" binary="init" config="wireguard_tunnel.config">
+
+	<requires>
+		<nic/>
+		<file_system label="config" writeable="yes"/>
+		<timer/>
+		<report label="state"/>
+		<rtc/>
+	</requires>
+
+	<provides>
+		<nic/>
+	</provides>
+
+	<content>
+		<rom label="wireguard"/>
+		<rom label="nic_router"/>
+		<rom label="fs_rom"/>
+		<rom label="vfs"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_import.lib.so"/>
+		<rom label="nic_router.config"/>
+		<rom label="wireguard.config"/>
+		<rom label="wireguard_tunnel.config"/>
+	</content>
+
+
+</runtime>
