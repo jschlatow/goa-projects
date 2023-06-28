@@ -1,0 +1,10 @@
+LICENSE   := MIT
+VERSION   := 8.3.2
+DOWNLOADS := lvgl.archive
+
+BASE_URL  := https://github.com/lvgl/lvgl/archive/refs/tags
+URL(lvgl) := $(BASE_URL)/v$(VERSION).tar.gz
+SHA(lvgl) := e4611f8f020995fbbfc6e0add57de397f406882ef202992a5e2d8d9b1b458ca4
+DIR(lvgl) := src
+
+PATCHES   := patches/lv_conf.patch patches/cmake.patch
