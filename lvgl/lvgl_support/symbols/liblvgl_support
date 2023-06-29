@@ -1,0 +1,4 @@
+_ZN4Lvgl4initERN6Genode3EnvENS_6ConfigE T
+_ZN4Lvgl4tickEj T
+__gnu_Unwind_Find_exidx T
+dl_unwind_find_exidx W
