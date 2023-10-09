@@ -6,6 +6,7 @@ genodelabs/api/base
 genodelabs/api/base-linux
 genodelabs/api/blit
 genodelabs/api/block_session
+genodelabs/api/compat-libc
 genodelabs/api/file_system_session
 genodelabs/api/framebuffer_session
 genodelabs/api/gems

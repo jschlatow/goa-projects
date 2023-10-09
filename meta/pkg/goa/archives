@@ -25,6 +25,7 @@ genodelabs/src/pcre
 genodelabs/src/posix
 genodelabs/src/report_rom
 genodelabs/src/rom_filter
+genodelabs/src/rom_reporter
 genodelabs/src/sdl
 genodelabs/src/sed
 genodelabs/src/stdcxx
