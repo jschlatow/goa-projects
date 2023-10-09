@@ -1,0 +1,4 @@
+set depot_dir ../../genode/depot
+set public_dir ../../genode/public
+set common_var_dir ./var
+set depot_user jschlatow
