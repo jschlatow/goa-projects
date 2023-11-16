@@ -20,7 +20,7 @@ genodelabs/api/noux
 genodelabs/api/os
 genodelabs/api/pcre
 genodelabs/api/posix
-genodelabs/api/qt5
+genodelabs/api/qt5_base
 genodelabs/api/qt5_component
 genodelabs/api/report_session
 genodelabs/api/rtc_session
