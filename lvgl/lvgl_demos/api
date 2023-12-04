@@ -1,0 +1,10 @@
+install/include/lvgl.h
+install/include/demos/
+install/include/demos/stress/
+install/include/demos/widgets/
+install/include/demos/widgets/assets/
+install/include/demos/music/
+install/include/demos/music/assets/
+install/include/demos/benchmark/
+install/include/demos/benchmark/assets/
+install/include/demos/keypad_encoder/

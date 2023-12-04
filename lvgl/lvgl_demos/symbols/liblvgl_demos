@@ -1,0 +1,89 @@
+__gnu_Unwind_Find_exidx T
+_lv_demo_music_album_next T
+_lv_demo_music_get_artist T
+_lv_demo_music_get_genre T
+_lv_demo_music_get_title T
+_lv_demo_music_get_track_length T
+_lv_demo_music_list_btn_check T
+_lv_demo_music_list_create T
+_lv_demo_music_main_create T
+_lv_demo_music_pause T
+_lv_demo_music_play T
+_lv_demo_music_resume T
+dl_unwind_find_exidx W
+img_benchmark_cogwheel_alpha16 D 16
+img_benchmark_cogwheel_alpha16_map R 5000
+img_benchmark_cogwheel_argb D 16
+img_benchmark_cogwheel_argb_map R 40000
+img_benchmark_cogwheel_chroma_keyed D 16
+img_benchmark_cogwheel_chroma_keyed_map R 40000
+img_benchmark_cogwheel_indexed16 D 16
+img_benchmark_cogwheel_indexed16_map R 5064
+img_benchmark_cogwheel_rgb D 16
+img_benchmark_cogwheel_rgb565a8 D 16
+img_benchmark_cogwheel_rgb565a8_map R 30000
+img_benchmark_cogwheel_rgb_map R 40000
+img_clothes D 16
+img_clothes_map R 12544
+img_demo_widgets_avatar D 16
+img_demo_widgets_avatar_map R 94864
+img_lv_demo_music_btn_list_pause D 16
+img_lv_demo_music_btn_list_pause_map R 13920
+img_lv_demo_music_btn_list_play D 16
+img_lv_demo_music_btn_list_play_map R 13920
+img_lv_demo_music_btn_loop D 16
+img_lv_demo_music_btn_loop_map R 2304
+img_lv_demo_music_btn_next D 16
+img_lv_demo_music_btn_next_map R 15376
+img_lv_demo_music_btn_pause D 16
+img_lv_demo_music_btn_pause_map R 24332
+img_lv_demo_music_btn_play D 16
+img_lv_demo_music_btn_play_map R 24332
+img_lv_demo_music_btn_prev D 16
+img_lv_demo_music_btn_prev_map R 15376
+img_lv_demo_music_btn_rnd D 16
+img_lv_demo_music_btn_rnd_map R 2304
+img_lv_demo_music_corner_left D 16
+img_lv_demo_music_corner_left_map R 1296
+img_lv_demo_music_corner_right D 16
+img_lv_demo_music_corner_right_map R 1296
+img_lv_demo_music_cover_1 D 16
+img_lv_demo_music_cover_1_map R 123200
+img_lv_demo_music_cover_2 D 16
+img_lv_demo_music_cover_2_map R 123200
+img_lv_demo_music_cover_3 D 16
+img_lv_demo_music_cover_3_map R 123200
+img_lv_demo_music_icon_1 D 16
+img_lv_demo_music_icon_1_map R 2304
+img_lv_demo_music_icon_2 D 16
+img_lv_demo_music_icon_2_map R 2304
+img_lv_demo_music_icon_3 D 16
+img_lv_demo_music_icon_3_map R 2304
+img_lv_demo_music_icon_4 D 16
+img_lv_demo_music_icon_4_map R 2304
+img_lv_demo_music_list_border D 16
+img_lv_demo_music_list_border_map R 4352
+img_lv_demo_music_logo D 16
+img_lv_demo_music_logo_map R 37636
+img_lv_demo_music_slider_knob D 16
+img_lv_demo_music_slider_knob_map R 5472
+img_lv_demo_music_wave_bottom D 16
+img_lv_demo_music_wave_bottom_map R 45696
+img_lv_demo_music_wave_top D 16
+img_lv_demo_music_wave_top_map R 45696
+img_lvgl_logo D 16
+img_lvgl_logo_map R 7224
+lv_demo_benchmark T
+lv_demo_benchmark_run_scene T
+lv_demo_benchmark_set_finished_cb T
+lv_demo_benchmark_set_max_speed T
+lv_demo_keypad_encoder T
+lv_demo_music T
+lv_demo_stress T
+lv_demo_widgets T
+lv_font_benchmark_montserrat_12_compr_az D 48
+lv_font_benchmark_montserrat_16_compr_az D 48
+lv_font_benchmark_montserrat_28_compr_az D 48
+spectrum_1 R 3552
+spectrum_2 R 6240
+spectrum_3 R 8184
