@@ -1,0 +1,108 @@
+
+                               System Info
+
+The system-info component draws a custom set status widgets on screen. By
+default, it displays the current time, a calendar, IP addresses and IOMMU
+state.
+
+Configuration
+=============
+
+A typical configuration looks as follows:
+
+! <config default_timezone="CET-1CEST,M3.5.0,M10.5.0">
+!
+!   <!-- VFS and Libc setup -->
+!   <vfs> <dir name="dev"> <log/> <rtc/> </dir> </vfs>
+!   <libc stdout="/dev/log" rtc="/dev/rtc"/>
+!
+!   <!-- Widget definition -->
+!   <clock/>
+!   <calendar/>
+!   <tabular rom="runtime/nic_router/state">
+!     <node type="domain" name="uplink">
+!       <row label="Uplink" attribute="ipv4"/>
+!     </node>
+!     <node type="domain" name="default">
+!       <row label="Default" attribute="ipv4"/>
+!     </node>
+!   </tabular>
+!
+! </config>
+
+The config node supports the following attributes:
+
+:default_timezone (default is "UTC-01"):
+
+  Defines the default POSIX timezone for clock and calendar widgets.
+
+:background_color (default is "#115588"):
+
+  Defines the background color as #rrbbgg or #rrbbggaa.
+
+
+The config node contains an arbitrary number of widgets that are arranged in
+a column from top to bottom. A new column is started if a widget does not
+fit into the current column.
+
+Label widget
+~~~~~~~~~~~~
+
+This widget is instantiated by a '<label>' node. The content of the node is
+shown as plain text. An optional 'size' attribute may be provided to adjust
+the font size (supported values: 8 to 48).
+
+Example:
+
+! <label>Show this text</label>
+
+Clock widget
+~~~~~~~~~~~~
+
+This widget is instantiated by a '<clock/>' node.
+It shows a digital clock in 24h-format. Optionally, a POSIX timezone can be
+specified via a 'timezone' attribute.
+
+Calendar widget
+~~~~~~~~~~~~~~~
+
+This widget is instantiated by a '<calendar/>' node.
+It displays a calendar showing the current month and the current date. An
+optional 'timezone' attribute can be specified to override the default timezone.
+
+Battery widget
+~~~~~~~~~~~~~~
+
+This widget is instantiated by a '<battery/>' node.
+It displays the remaining percental capacity of each detected battery. The
+battery state is parsed from the ROM whose label is specified by the mandatory
+'rom' attribute. The widget is compatible with the state reported by the acpica
+component.
+
+Example:
+
+! <battery rom="runtime/acpica/acpi_battery"/>
+
+Tabular widget
+~~~~~~~~~~~~~~
+
+This widget is instantiated by a '<tabular>' node.
+It displays a table showing selected state from a ROM containing XML data. The
+ROM label is specified by the mandatory 'rom' attribute. An optional 'alt'
+attribute specifies the text to show if no data could be extracted from the XML.
+A hierarchy of '<node>' and '<row>' sub-nodes specifies how the state is
+extracted from the XML.
+
+:<node type="foobar">:
+
+Finds XML nodes of the given type at the current hierarchy-level in the source
+ROM. Additional attributes can be specified to further constrain the processing
+of the matching nodes. E.g. '<node type="domain" name="uplink">' looks for
+'<domain>' nodes with a 'name="uplink"' attribute.
+
+:<row label="Foo" attribute="bar">:
+
+Creates a row in the table, showing the label "Foo" in its left cell and the
+value of the 'bar' attribute of the current XML node in its right cell. An
+optional 'highlight' attribute can be specified to highlight the row as a
+(sub)header of the table.
