@@ -1,0 +1,46 @@
+<runtime ram="25M" caps="2000" binary="system_info">
+
+	<requires>
+		<gui/>
+		<timer/>
+		<rtc/>
+		<rom label="drivers/iommu"/>
+		<rom label="runtime/nic_router/state"/>
+		<rom label="runtime/acpica/acpi_battery"/>
+	</requires>
+
+	<config default_timezone="CET-1CEST,M3.5.0,M10.5.0">
+		<vfs> <dir name="dev"> <log/> <rtc/> </dir> </vfs>
+		<libc stdout="/dev/log" rtc="/dev/rtc"/>
+		<clock/>
+		<calendar/>
+		<battery rom="runtime/acpica/acpi_battery"/>
+		<tabular rom="runtime/nic_router/state" alt="no IP found">
+			<node type="domain" name="uplink">
+				<row label="Uplink" attribute="ipv4"/>
+			</node>
+			<node type="domain" name="default">
+				<row label="Default" attribute="ipv4"/>
+			</node>
+		</tabular>
+		<tabular rom="drivers/iommu" alt="no IOMMU present">
+			<node type="intel">
+				<row label="IOMMU" attribute="name" highlight="yes"/>
+				<row label="DMA Remapping" attribute="dma_remapping"/>
+				<row label="IRQ Remapping" attribute="irq_remapping"/>
+			</node>
+		</tabular>
+	</config>
+
+	<content>
+		<rom label="system_info"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="liblvgl.lib.so"/>
+		<rom label="liblvgl_support.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+	</content>
+
+</runtime>
