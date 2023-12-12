@@ -4,6 +4,7 @@
   <supports arch="arm_v8a"/>
 
   <index name="GUI" arch="x86_64">
+    <pkg path="system_info"          info="dynamic desktop background with system info"/>
     <pkg path="sticks_blue_backdrop" info="default desktop background"/>
     <pkg path="themed_wm"            info="ready-to-use window manager"/>
     <pkg path="fonts_fs"             info="font provider"/>
@@ -15,6 +16,7 @@
   </index>
 
   <index name="Tools" arch="x86_64">
+    <pkg path="fs_rom"          info="translate file system to ROM"/>
     <pkg path="fs_report"       info="write report to file system"/>
     <pkg path="system_shell"    info="command-line interface to the system"/>
     <pkg path="system_clock-pc" info="real-time-clock service" arch="x86_64"/>
