@@ -1,0 +1,8 @@
+Run the following commands to setup a tap device and start a
+DHCP and DNS server. You may use
+`grep -G '^!.*' README | sed 's/^! //' | bash` from your shell to do so.
+
+! sudo ip tuntap add dev tap0 mode tap user $(whoami);
+! sudo ip addr add 10.0.100.1/24 dev tap0;
+! sudo ip link set dev tap0 up;
+! sudo dnsmasq -C dnsmasq.conf;

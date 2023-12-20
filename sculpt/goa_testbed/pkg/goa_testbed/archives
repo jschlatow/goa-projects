@@ -1,0 +1,17 @@
+genodelabs/src/init
+genodelabs/src/fs_rom
+genodelabs/src/fs_report
+genodelabs/src/terminal_log
+genodelabs/src/file_terminal
+genodelabs/src/stdin2out
+genodelabs/src/libc
+genodelabs/src/openssl
+genodelabs/src/posix
+jschlatow/src/vfs
+genodelabs/src/vfs_import
+genodelabs/src/vfs_lwip
+genodelabs/src/vfs_pipe
+genodelabs/src/vfs_jitterentropy
+genodelabs/src/zlib
+jschlatow/src/lighttpd
+jschlatow/src/tcp_terminal
