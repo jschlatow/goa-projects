@@ -51,6 +51,7 @@
     <pkg path="unix_shell"  info="unix shell" arch="x86_64"/>
     <pkg path="dotfiles_fs" info="dot files for unix shell"/>
     <pkg path="trace_recorder"  info="record traces in CTF and pcapng" arch="x86_64"/>
+    <pkg path="goa_testbed" info="runtime for executing Goa projects"/>
   </index>
 
   <index name="Network" arch="x86_64">
