@@ -1,0 +1,8 @@
+LICENSE   := GPLv3
+VERSION   := 3.3.7
+DOWNLOADS := calc.archive
+
+BASE_URL  := https://gitlab.com/ubports/development/apps/lomiri-calculator-app/-/archive/
+URL(calc) := $(BASE_URL)/v$(VERSION)/lomiri-calculator-app-v$(VERSION).tar.gz
+SHA(calc) := 821f045e9cdb5f26145f60c53bf92f96ba81a563c0a0fec72ee1cdfccc0a9f88
+DIR(calc) := src

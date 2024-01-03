@@ -1,0 +1,54 @@
+<runtime ram="200M" caps="1000" binary="ubuntu-ui-toolkit-launcher">
+
+	<requires>
+		<gui/>
+		<rom label="mesa_gpu_drv.lib.so"/>
+		<gpu/>
+		<rtc/>
+		<timer/>
+		<report label="shape"/>
+	</requires>
+
+	<config>
+		<vfs>
+			<dir name="dev">
+				<log/> <gpu/> <rtc/>
+			</dir>
+			<dir name=".local"> <ram/> </dir>
+			<dir name="pipe"> <pipe/> </dir>
+			<tar name="qt5_declarative_qml.tar"/>
+			<tar name="qt5_dejavusans.tar"/>
+			<tar name="qt5_graphicaleffects_qml.tar"/>
+			<tar name="qt5_libqgenode.tar"/>
+			<tar name="qt5_libqjpeg.tar"/>
+			<tar name="qt5_libqsvg.tar"/>
+			<tar name="ubuntu-ui-toolkit_qml.tar"/>
+			<tar name="ubuntu-themes.tar"/>
+
+			<tar name="qt5_quickcontrols2_suru_qml.tar"/>
+			<tar name="qt5_libqsqlite.tar"/>
+
+			<!-- change to you projects tar file here -->
+			<tar name="ubuntu-calculator-app.tar"/>
+
+		</vfs>
+		<libc stdout="/dev/log" stderr="/dev/log" pipe="/pipe" rtc="/dev/rtc"/>
+		<arg value="ubuntu-ui-toolkit-launcher"/>
+
+		<!-- add you startup QML file here -->
+		<arg value="/share/ubuntu-calculator-app/ubuntu-calculator-app.qml"/>
+
+		<env key="QT_SCALE_FACTOR" value="1"/>
+	</config>
+
+	<content>
+		<!-- adjust to your tar -->
+		<rom label="ubuntu-calculator-app.tar"/>
+
+		<!-- requirements (suru style and qsqlite) -->
+		<rom label="qt5_quickcontrols2_suru_qml.tar"/>
+		<rom label="libqtquickcontrols2surustyleplugin.lib.so"/>
+		<rom label="qt5_libqsqlite.tar"/>
+		<rom label="libqsqlite.lib.so"/>
+	</content>
+</runtime>
