@@ -1,0 +1,8 @@
+genodelabs/api/stdcxx
+genodelabs/api/libc
+genodelabs/api/mesa
+genodelabs/api/so
+genodelabs/api/qt5_base
+genodelabs/api/qt5_component
+ssumpf/api/qt5_declarative
+ssumpf/api/qt5_quickcontrols2

@@ -1,0 +1,7 @@
+LICENSE   := GPLv2
+VERSION   := main
+DOWNLOADS := suru.git
+
+URL(suru) := https://gitlab.com/ubports/development/core/qqc2-suru-style.git
+REV(suru) := c0cf2007
+DIR(suru) := src
