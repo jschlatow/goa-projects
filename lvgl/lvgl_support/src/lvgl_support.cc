@@ -36,18 +36,6 @@ namespace Util {
 	template <typename T1, typename T2>
 	static constexpr T1 min(T1 v1, T2 v2) { return v1 < v2 ? v1 : v2; }
 
-	template <typename T1, typename T2>
-	static constexpr T1 clamp_greater(T1 v1, T2 v2) { return v1 > v2 ? v2 : v1; }
-
-	template <typename T1, typename T2>
-	static constexpr T1 clamp_lesser(T1 v1, T2 v2) { return v1 < v2 ? v2 : v1; }
-
-	template <typename T>
-	static constexpr T abs(T value) { return value >= 0 ? value : -value; }
-
-	template <typename T>
-	static constexpr bool unsigned_overflow(T x, T y) { return (y && x > (T)-1/y); }
-
 	template <typename T>
 	static constexpr T delta(T x, T y) { return max(x, y) - min(x, y); }
 
@@ -103,11 +91,8 @@ struct Attached_framebuffer
 		_env.rm().detach(_fb_ds.local_addr<void>());
 	}
 
-	template <typename FN>
-	void with_framebuffer(FN const &fn)
-	{
-		fn(_fb_ds.local_addr<unsigned int>(), _size);
-	}
+	void  *base() { return _fb_ds.local_addr<void>(); }
+	size_t size() { return _size; }
 };
 
 
@@ -199,9 +184,9 @@ struct Platform
 	}
 
 	template <typename FN>
-	void with_framebuffer(FN const &fn)
+	void framebuffer(FN const & fn)
 	{
-		_fb->with_framebuffer(fn);
+		fn(_fb->base(), _fb->size());
 	}
 
 	void update_input()
@@ -277,32 +262,9 @@ struct Platform
 
 static void genode_disp_flush(lv_disp_drv_t       *disp_drv,
                               lv_area_t     const *area,
-                              lv_color_t          *color_p)
+                              lv_color_t          *)
 {
 	Platform &platform = *static_cast<Platform*>(disp_drv->user_data);
-
-	platform.with_framebuffer([&] (unsigned int *dst, size_t size) {
-
-		unsigned const width  = disp_drv->hor_res;
-		unsigned const height = disp_drv->ver_res;
-
-		if (size < (width * height * sizeof(unsigned int))) {
-			Genode::warning("do not update display, framebuffer too small");
-			return;
-		}
-
-		int32_t const act_x1 = Util::clamp_lesser(area->x1, 0);
-		int32_t const act_y1 = Util::clamp_lesser(area->y1, 0);
-		int32_t const act_x2 = Util::clamp_greater(area->x2, (int32_t)width - 1);
-		int32_t const act_y2 = Util::clamp_greater(area->y2, (int32_t)height - 1);
-		lv_coord_t const line_width = (act_x2 - act_x1 + 1);
-
-		for(int32_t y = act_y1; y <= act_y2; y++) {
-			long int const location = y * width /* line */ + act_x1 /* offset */;
-			memcpy(&dst[location], (unsigned int *)color_p, line_width * 4);
-			color_p += line_width;
-		}
-	});
 
 	platform.refresh(area->x1, area->y1, area->x2, area->y2);
 	lv_disp_flush_ready(disp_drv);
@@ -357,8 +319,14 @@ class Lvgl_support
 		lv_indev_t    *_mouse_indev  { nullptr };
 		lv_obj_t      *_mouse_cursor { nullptr };
 
-		lv_disp_draw_buf_t  _disp_buf1         { };
-		lv_color_t         *_disp_buf1_backing { nullptr };
+		lv_disp_draw_buf_t  _disp_buf1 { };
+
+		void _setup_draw_buffer(lv_disp_draw_buf_t &buffer)
+		{
+			_platform.framebuffer([&] (void *base, size_t size) {
+				lv_disp_draw_buf_init(&buffer, base, NULL, size);
+			});
+		}
 
 		lv_indev_drv_t _keyboard_drv   { };
 		lv_indev_t    *_keyboard_indev { nullptr };
@@ -398,9 +366,10 @@ class Lvgl_support
 
 			_platform.update_mode(req_mode);
 
-			// XXX _disp_buf1 resizing?
 			_disp_drv.hor_res = req_mode.area.w();
 			_disp_drv.ver_res = req_mode.area.h();
+
+			_setup_draw_buffer(_disp_buf1);
 
 			lv_disp_drv_update(_disp, &_disp_drv);
 			_mode = req_mode;
@@ -471,12 +440,10 @@ class Lvgl_support
 			_platform { _env, _gui, _mode, config.allow_resize, config.title },
 			_config { config }
 		{
-			unsigned long num_pixels = _mode.area.w() * 10;
-			_disp_buf1_backing = (lv_color_t*)_heap.alloc(num_pixels * sizeof(lv_color_t));
 
 			lv_init();
 
-			lv_disp_draw_buf_init(&_disp_buf1, _disp_buf1_backing, NULL, num_pixels);
+			_setup_draw_buffer(_disp_buf1);
 
 			lv_disp_drv_init(&_disp_drv);
 			_disp_drv.draw_buf = &_disp_buf1;
