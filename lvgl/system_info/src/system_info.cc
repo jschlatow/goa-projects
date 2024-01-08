@@ -79,6 +79,7 @@ struct Main
 	                            .initial_height     = 600,
 	                            .allow_resize       = true,
 	                            .use_refresh_sync   = true,
+	                            .use_alpha          = true,
 	                            .use_keyboard       = false,
 	                            .use_mouse          = false,
 	                            .use_periodic_timer = true,

@@ -1,0 +1,93 @@
+<runtime ram="100M" caps="1000" binary="init">
+
+	<requires>
+		<gui label="backdrop"/>
+		<gui/>
+		<timer/>
+		<rtc/>
+		<rom label="drivers/iommu"/>
+		<rom label="runtime/nic_router/state"/>
+		<rom label="runtime/acpica/acpi_battery"/>
+	</requires>
+
+	<config verbose="yes">
+		<parent-provides>
+			<service name="PD"/>
+			<service name="CPU"/>
+			<service name="LOG"/>
+			<service name="Gui"/>
+			<service name="ROM"/>
+			<service name="Rtc"/>
+			<service name="Timer"/>
+		</parent-provides>
+
+		<default-route> <any-service> <parent/> </any-service> </default-route>
+
+		<start name="backdrop" caps="300">
+			<resource name="RAM" quantum="80M"/>
+			<route>
+				<service name="ROM" label="config">
+					<parent label="backdrop.config"/> </service>
+				<service name="Gui">
+					<parent label="backdrop"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+		<start name="system_info" caps="150">
+			<resource name="RAM" quantum="20M"/>
+			<route>
+				<service name="ROM" label_suffix="router">
+					<parent label="runtime/nic_router/state"/> </service>
+				<service name="ROM" label_suffix="battery">
+					<parent label="runtime/acpica/acpi_battery"/> </service>
+				<service name="ROM" label_suffix="iommu">
+					<parent label="drivers/iommu"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+			<config default_timezone="CET-1CEST,M3.5.0,M10.5.0" background_color="#11558888">
+				<vfs> <dir name="dev"> <log/> <rtc/> </dir> </vfs>
+				<libc stdout="/dev/log" rtc="/dev/rtc"/>
+				<clock/>
+				<calendar/>
+				<battery rom="battery"/>
+				<tabular rom="router" alt="no IP found">
+					<node type="domain" name="uplink">
+						<row label="Uplink" attribute="ipv4"/>
+					</node>
+					<node type="domain" name="default">
+						<row label="Default" attribute="ipv4"/>
+					</node>
+				</tabular>
+				<tabular rom="iommu" alt="no IOMMU present">
+					<node type="intel">
+						<row label="IOMMU" attribute="name" highlight="yes"/>
+						<row label="DMA Remapping" attribute="dma_remapping"/>
+						<row label="IRQ Remapping" attribute="irq_remapping"/>
+					</node>
+				</tabular>
+			</config>
+		</start>
+	</config>
+
+
+	<content>
+		<rom label="init"/>
+		<rom label="backdrop"/>
+		<rom label="libpng.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="backdrop.config"/>
+		<rom label="sticks_blue.png"/>
+		<rom label="grid.png"/>
+		<rom label="genode_logo.png"/>
+		<rom label="system_info"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="liblvgl.lib.so"/>
+		<rom label="liblvgl_support.lib.so"/>
+		<rom label="stdcxx.lib.so"/>
+	</content>
+
+</runtime>
