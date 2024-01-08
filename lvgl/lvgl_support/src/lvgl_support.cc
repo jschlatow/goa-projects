@@ -76,15 +76,22 @@ struct Attached_framebuffer
 {
 	Genode::Env                &_env;
 	Genode::Attached_dataspace  _fb_ds;
+	size_t                      _count;
 	size_t                      _size;
 
 	Attached_framebuffer(Genode::Env                & env,
 	                     Framebuffer::Mode            mode,
-	                     Genode::Dataspace_capability ds)
+	                     Genode::Dataspace_capability ds,
+	                     bool                         use_alpha)
 	: _env(env),
 	  _fb_ds(_env.rm(), ds),
-	  _size(mode.area.w() * mode.area.h() * 4)
-	{ }
+	  _count(mode.area.w() * mode.area.h()),
+	  _size(_count * mode.bytes_per_pixel())
+	{
+		/* initialise input mask (after pixel array and alpha array) */
+		if (use_alpha)
+			memset((uint8_t*)base() + size() + _count, 0x1, _count);
+	}
 
 	~Attached_framebuffer()
 	{
@@ -103,6 +110,7 @@ struct Platform
 	Gui::Connection         & _gui;
 	Gui::Session::View_handle _view { _gui.create_view() };
 	Framebuffer::Mode         _mode;
+	bool                      _use_alpha;
 
 	Input::Session_client &_input { *_gui.input() };
 
@@ -136,19 +144,21 @@ struct Platform
 	         Gui::Connection   &gui,
 	         Framebuffer::Mode  mode,
 	         bool               allow_resize,
-	         char const        *title)
+	         char const        *title,
+	         bool               use_alpha)
 	:
 		_env { env },
 		_gui { gui },
-		_mode { mode }
+		_mode { mode },
+		_use_alpha { use_alpha }
 	{
 		/* register handler early, otherwise resizing seems to has issues */
 		if (allow_resize)
 			_gui.mode_sigh(_sigh);
 
-		_gui.buffer(_mode, false);
+		_gui.buffer(_mode, _use_alpha);
 
-		_fb.construct(_env, mode, _gui.framebuffer()->dataspace());
+		_fb.construct(_env, mode, _gui.framebuffer()->dataspace(), _use_alpha);
 
 		using Command = Gui::Session::Command;
 		using namespace Gui;
@@ -165,9 +175,9 @@ struct Platform
 		if (_fb.constructed())
 			_fb.destruct();
 
-		_gui.buffer(mode, false);
+		_gui.buffer(mode, _use_alpha);
 
-		_fb.construct(_env, mode, _gui.framebuffer()->dataspace());
+		_fb.construct(_env, mode, _gui.framebuffer()->dataspace(), _use_alpha);
 		_mode = mode;
 
 		using Command = Gui::Session::Command;
@@ -180,6 +190,20 @@ struct Platform
 
 	void refresh(int x, int y, int w, int h)
 	{
+		if (_use_alpha) {
+			/* fill alpha array from rgba values */
+			uint32_t *rgba  = (uint32_t*)_fb->base() + _mode.area.w()*y + x;
+			uint8_t  *alpha = (uint8_t*)_fb->base() + _fb->size();
+
+			for (int row=y; row < y+h; row++,
+			                           rgba  += _mode.area.w(),
+			                           alpha += _mode.area.w())
+			{
+				for (int col=x; col < x+w; col++)
+					alpha[col] = (rgba[col] >> 24) & 0xff;
+			}
+		}
+
 		_gui.framebuffer()->refresh(x, y, w, h);
 	}
 
@@ -258,6 +282,10 @@ struct Platform
 		fn(_mouse_event);
 	}
 };
+
+static void genode_disp_clear(lv_disp_drv_t *,
+                              uint8_t       *,
+                              uint32_t       ) { /* not needed */ }
 
 
 static void genode_disp_flush(lv_disp_drv_t       *disp_drv,
@@ -437,10 +465,11 @@ class Lvgl_support
 			_env  { env },
 			_gui  { env, config.title ? config.title : "LVGL" },
 			_mode { _initial_mode(_gui, config) },
-			_platform { _env, _gui, _mode, config.allow_resize, config.title },
+			_platform { _env, _gui, _mode, config.allow_resize,
+			                               config.title,
+			                               config.use_alpha },
 			_config { config }
 		{
-
 			lv_init();
 
 			_setup_draw_buffer(_disp_buf1);
@@ -448,8 +477,12 @@ class Lvgl_support
 			lv_disp_drv_init(&_disp_drv);
 			_disp_drv.draw_buf = &_disp_buf1;
 			_disp_drv.flush_cb = genode_disp_flush;
+			_disp_drv.clear_cb = genode_disp_clear;
 			_disp_drv.hor_res = _mode.area.w();
 			_disp_drv.ver_res = _mode.area.h();
+			_disp_drv.screen_transp = config.use_alpha;
+			_disp_drv.direct_mode = true;
+			_disp_drv.full_refresh = true;
 			_disp_drv.user_data = &_platform;
 
 			_disp = lv_disp_drv_register(&_disp_drv);

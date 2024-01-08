@@ -35,6 +35,7 @@ namespace Lvgl {
 		/* frame buffer */
 		bool allow_resize;
 		bool use_refresh_sync;
+		bool use_alpha;
 
 		/* input */
 		bool use_keyboard;
