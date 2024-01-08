@@ -590,9 +590,6 @@ void Info::set_background(lv_color_t color, unsigned opacity)
 {
 	lv_obj_set_style_bg_color(lv_scr_act(), color,   LV_PART_MAIN);
 	lv_obj_set_style_bg_opa  (lv_scr_act(), opacity, LV_PART_MAIN);
-
-	if (opacity < LV_OPA_COVER)
-		lv_disp_set_bg_opa(NULL, LV_OPA_TRANSP);
 }
 
 
