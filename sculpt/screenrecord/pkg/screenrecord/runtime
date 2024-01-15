@@ -1,0 +1,31 @@
+<runtime ram="128M" caps="300" binary="avconv">
+
+	<requires>
+		<timer/>
+		<capture/>
+		<file_system label="output" writeable="yes"/>
+		<rtc/>
+	</requires>
+
+	<content>
+		<rom label="vfs_capture.lib.so"/>
+	</content>
+
+	<config>
+		<arg value="avconv"/>
+<!--		<arg value="-v"/> <arg value="100"/> -->
+		<arg value="-f"/> <arg value="fbdev"/>
+		<arg value="-r"/> <arg value="20"/>
+		<arg value="-i"/> <arg value="/dev/capture"/>
+		<arg value="-y"/>
+<!--		<arg value="-t"/> <arg value="30"/> -->
+		<arg value="-qscale"/> <arg value="1"/>
+		<arg value="vfs/out.avi"/>
+		<libc stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc"/>
+		<vfs>
+			<dir name="dev"> <log/> <rtc/> <capture/> </dir>
+			<dir name="vfs"><fs label="output"/></dir>
+		</vfs>
+	</config>
+
+</runtime>
