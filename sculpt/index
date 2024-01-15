@@ -48,6 +48,7 @@
     <pkg path="vnc_server" info="vnc server" arch="x86_64"/>
     <pkg path="sdl_vnc"    info="vnc client" arch="x86_64"/>
     <pkg path="screenshot" info="screenshot utility"/>
+    <pkg path="screenrecord" info="screen-capture utility" arch="x86_64"/>
     <pkg path="unix_shell"  info="unix shell" arch="x86_64"/>
     <pkg path="dotfiles_fs" info="dot files for unix shell"/>
     <pkg path="trace_recorder"  info="record traces in CTF and pcapng" arch="x86_64"/>
