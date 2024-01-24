@@ -15,16 +15,26 @@
     <pkg path="user_keys"            info="user-defined global keys"/>
   </index>
 
-  <index name="Tools" arch="x86_64">
-    <pkg path="fs_rom"          info="translate file system to ROM"/>
-    <pkg path="fs_report"       info="write report to file system"/>
-    <pkg path="system_shell"    info="command-line interface to the system"/>
-    <pkg path="system_clock-pc" info="real-time-clock service" arch="x86_64"/>
-    <pkg path="qt5_textedit"    info="Qt5-based text editor"/>
-    <pkg path="report_dump"     info="save periodic snapshots of the report fs"/>
-    <pkg path="recall_fs"       info="component-specific file-system view"/>
-    <pkg path="file_vault"      info="encrypted file store"/>
-    <pkg path="black_hole"      info="pseudo service provider"/>
+  <index name="Tools">
+    <index name="Shells" arch="x86_64">
+      <pkg path="system_shell" info="command-line interface to the system"/>
+      <pkg path="unix_shell"   info="unix shell"/>
+      <pkg path="dotfiles_fs"  info="dot files for unix shell"/>
+    </index>
+    <index name="Utilities">
+      <pkg path="fs_rom"          info="translate file system to ROM"/>
+      <pkg path="fs_report"       info="write report to file system"/>
+      <pkg path="system_clock-pc" info="real-time-clock service" arch="x86_64"/>
+      <pkg path="black_hole"      info="pseudo service provider"/>
+      <pkg path="recall_fs"       info="component-specific file-system view"/>
+    </index>
+    <pkg path="screenshot"   info="screenshot utility"/>
+    <pkg path="screenrecord" info="screen-capture utility" arch="x86_64"/>
+    <pkg path="file_vault"   info="encrypted file store" arch="x86_64"/>
+    <pkg path="qt5_textedit" info="Qt5-based text editor" arch="x86_64"/>
+  </index>
+
+  <index name="Audio/Video" arch="x86_64">
     <pkg path="usb_webcam"      info="USB webcam"/>
     <pkg path="bsd_audio_drv"   info="audio driver" arch="x86_64"/>
     <pkg path="mixer"           info="audio mixer"/>
@@ -46,21 +56,18 @@
     <pkg path="mesa_gpu-intel" info="Intel GPU driver (IRIS)" arch="x86_64"/>
   </index>
 
-  <index name="Applications">
-    <pkg path="vnc_server" info="vnc server" arch="x86_64"/>
-    <pkg path="sdl_vnc"    info="vnc client" arch="x86_64"/>
-    <pkg path="screenshot" info="screenshot utility"/>
-    <pkg path="screenrecord" info="screen-capture utility" arch="x86_64"/>
-    <pkg path="unix_shell"  info="unix shell" arch="x86_64"/>
-    <pkg path="dotfiles_fs" info="dot files for unix shell"/>
-    <pkg path="trace_recorder"  info="record traces in CTF and pcapng" arch="x86_64"/>
-    <pkg path="goa_testbed" info="runtime for executing Goa projects"/>
+  <index name="Devtools">
+      <pkg path="report_dump"     info="save periodic snapshots of the report fs" arch="x86_64"/>
+      <pkg path="trace_recorder"  info="record traces in CTF and pcapng" arch="x86_64"/>
+      <pkg path="goa_testbed"     info="runtime for executing Goa projects"/>
   </index>
 
   <index name="Network" arch="x86_64">
     <pkg path="mobile_network" info="all-in-one package for mobile network support"/>
     <pkg path="usb_modem_drv"  info="usb modem driver"/>
     <pkg path="mbimcli"        info="MBIM control app for usb_modem_drv"/>
+    <pkg path="vnc_server"     info="vnc server"/>
+    <pkg path="sdl_vnc"        info="vnc client"/>
   </index>
 
 </index>
