@@ -1,13 +1,16 @@
 <runtime ram="250M" caps="2000" binary="init">
 
-	<provides>
-		<uplink label="tap_goa"/>
-	</provides>
-
 	<requires>
 		<capture/>
 		<event/>
 		<gui/>
+		<nic tap_name="tap_goa">
+			<policy label_suffix="vnc" domain="vnc"/>
+			<domain name="vnc" interface="10.0.59.1/24">
+				<dhcp-server ip_first="10.0.59.2" ip_last="10.0.59.2" dns_config_from="uplink"/>
+			</domain>
+			<tcp-forward port="5900" domain="vnc" to="10.0.59.2"/>
+		</nic>
 		<report label="shape"/>
 		<report label="clipboard"/>
 		<rom label="clipboard"/>
@@ -27,11 +30,8 @@
 			<service name="Capture"/>
 			<service name="Event"/>
 			<service name="Report"/>
+			<service name="Nic"/>
 		</parent-provides>
-
-		<service name="Uplink">
-			<default-policy> <child name="nic_router"/> </default-policy>
-		</service>
 
 		<default caps="300"/>
 
@@ -57,36 +57,9 @@
 				<service name="ROM" label="event.config">
 					<parent label="event.config"/>
 				</service>
-				<service name="Nic"> <child name="nic_router"/> </service>
-				<any-service> <parent/> <any-child/> </any-service>
-			</route>
-		</start>
-
-		<start name="nic_router">
-			<resource name="RAM" quantum="10M"/>
-			<provides>
-				<service name="Nic"/>
-				<service name="Uplink"/>
-			</provides>
-			<config>
-				<default-policy domain="default"/>
-				<policy label="nic_drv -> " domain="uplink"/>
-				<domain name="uplink" interface="10.0.11.12/24">
-					<nat domain="default" tcp-ports="1000" udp-ports="1000" icmp-ids="1000"/>
-					<tcp-forward port="5900" domain="default" to="10.0.1.2"/>
-				</domain>
-				<domain name="default" interface="10.0.1.1/24">
-					<dhcp-server ip_first="10.0.1.2" ip_last="10.0.1.3"/>
-					<tcp dst="0.0.0.0/0">
-						<permit-any domain="uplink"/>
-					</tcp>
-					<udp dst="0.0.0.0/0">
-						<permit-any domain="uplink"/>
-					</udp>
-					<icmp dst="0.0.0.0/0" domain="uplink"/>
-				</domain>
-			</config>
-			<route>
+				<service name="Nic">
+					<parent label="vnc"/>
+				</service>
 				<any-service> <parent/> <any-child/> </any-service>
 			</route>
 		</start>
@@ -126,7 +99,6 @@
 		<rom label="event_filter"/>
 		<rom label="init"/>
 		<rom label="textedit"/>
-		<rom label="nic_router"/>
 		<rom label="vfs"/>
 
 		<!-- libraries -->
