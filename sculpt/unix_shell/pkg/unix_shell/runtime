@@ -48,6 +48,7 @@
 		<rom label="diffutils.tar"/>
 		<rom label="which.tar"/>
 		<rom label="less.tar"/>
+		<rom label="make.tar"/>
 
 	</content>
 

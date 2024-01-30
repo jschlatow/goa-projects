@@ -20,6 +20,7 @@ jschlatow/src/coreutils
 jschlatow/src/diffutils
 jschlatow/src/findutils
 jschlatow/src/fs_rom
+jschlatow/src/gnumake
 jschlatow/src/grep
 jschlatow/src/init
 jschlatow/src/less
