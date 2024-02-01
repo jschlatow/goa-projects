@@ -21,10 +21,11 @@
       <pkg path="unix_shell"   info="unix shell"/>
       <pkg path="dotfiles_fs"  info="dot files for unix shell"/>
     </index>
-    <index name="Utilities">
+    <index name="Utilities" arch="x86_64">
       <pkg path="fs_rom"          info="translate file system to ROM"/>
       <pkg path="fs_report"       info="write report to file system"/>
-      <pkg path="system_clock-pc" info="real-time-clock service" arch="x86_64"/>
+      <pkg path="system_clock_rw-pc" info="real-time-clock service"/>
+      <pkg path="sntp_client"     info="clock synchronisation via NTP"/>
       <pkg path="black_hole"      info="pseudo service provider"/>
       <pkg path="recall_fs"       info="component-specific file-system view"/>
     </index>
