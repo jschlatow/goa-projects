@@ -27,7 +27,7 @@ set  version(jschlatow/src/gnumake)                      2023-10-25
 set  version(jschlatow/src/grep)                         2023-10-25
 set  version(jschlatow/src/init)                         2023-10-24
 set  version(jschlatow/src/less)                         2023-10-03
-set  version(jschlatow/src/libc)                         2023-10-24
+set  version(jschlatow/src/libc)                         2024-02-01
 set  version(jschlatow/src/libvncserver)                 2023-10-03
 set  version(jschlatow/src/ncurses)                      2023-10-03
 set  version(jschlatow/src/pcre)                         2023-10-25
