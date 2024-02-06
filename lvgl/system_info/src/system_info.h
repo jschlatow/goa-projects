@@ -228,7 +228,12 @@ struct Info::Bar : Widget
 	lv_obj_t * _bar          { };
 	lv_obj_t * _label        { };
 	lv_obj_t * _shadow       { };
-	char       _title[64]    { };
+	char       _title[32]    { };
+
+	enum {
+		INCREASING = LV_STATE_USER_1,
+		DECREASING = LV_STATE_USER_2
+	};
 
 	/* Noncopyable */
 	Bar(Bar const &) = delete;
@@ -237,6 +242,17 @@ struct Info::Bar : Widget
 	void value(unsigned val)
 	{
 		lv_bar_set_value(_bar, val, LV_ANIM_OFF);
+	}
+
+	void rate(int r)
+	{
+		lv_obj_clear_state(_bar, INCREASING);
+		lv_obj_clear_state(_bar, DECREASING);
+
+		if (r > 0)
+			lv_obj_add_state(_bar, INCREASING);
+		else if (r < 0)
+			lv_obj_add_state(_bar, DECREASING);
 	}
 
 	void handle_resize() override
@@ -262,8 +278,14 @@ struct Info::Bar : Widget
 		lv_draw_label_dsc_init(&label_dsc);
 		label_dsc.font = &lv_font_montserrat_16;
 
+		char state = '\0';
+		if (lv_obj_has_state(obj, INCREASING))
+			state = '+';
+		else if (lv_obj_has_state(obj, DECREASING))
+			state = '-';
+
 		char buf[8];
-		lv_snprintf(buf, sizeof(buf), "%d%%", (int)lv_bar_get_value(obj));
+		lv_snprintf(buf, sizeof(buf), "%d%%%c", (int)lv_bar_get_value(obj), state);
 
 		lv_point_t txt_size;
 		lv_txt_get_size(&txt_size, buf, label_dsc.font, label_dsc.letter_space, label_dsc.line_space, LV_COORD_MAX,

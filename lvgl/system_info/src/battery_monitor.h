@@ -32,11 +32,18 @@ struct Battery_monitor : Info::Widget
 
 	struct Battery : List_model<Battery>::Element
 	{
+		enum {
+			DEFAULT     = 0,
+			DISCHARGING = 1,
+			CHARGING    = 2,
+		};
+
 		using Name = String<32>;
 
 		Name      name      {   };
 		unsigned  max_value { 0 };
 		unsigned  value     { 0 };
+		unsigned  state     { DEFAULT };
 
 		Constructible<Info::Bar> widget { };
 
@@ -75,8 +82,24 @@ struct Battery_monitor : Info::Widget
 				value = n.attribute_value("value", 0);
 			}, [&] () { });
 
-			if (widget.constructed())
+			node.with_sub_node("state", [&] (Xml_node const & n) {
+				state = n.attribute_value("value", state);
+			}, [&] () { });
+
+			if (widget.constructed()) {
 				widget->value(value * 100 / max_value);
+				switch (state) {
+					case DEFAULT:
+						widget->rate(0);
+						break;
+					case CHARGING:
+						widget->rate(1);
+						break;
+					case DISCHARGING:
+						widget->rate(-1);
+						break;
+				};
+			}
 		}
 
 		void handle_resize()
