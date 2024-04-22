@@ -6,7 +6,7 @@
 		<rtc/>
 		<rom label="drivers/iommu"/>
 		<rom label="runtime/nic_router/state"/>
-		<rom label="runtime/acpica/acpi_battery"/>
+		<rom label="runtime/acpi_support/acpi_battery"/>
 	</requires>
 
 	<config default_timezone="CET-1CEST,M3.5.0,M10.5.0">
@@ -14,7 +14,7 @@
 		<libc stdout="/dev/log" rtc="/dev/rtc"/>
 		<clock/>
 		<calendar/>
-		<battery rom="runtime/acpica/acpi_battery"/>
+		<battery rom="runtime/acpi_support/acpi_battery"/>
 		<tabular rom="runtime/nic_router/state" alt="no IP found">
 			<node type="domain" name="uplink">
 				<row label="Uplink" attribute="ipv4"/>
