@@ -117,7 +117,7 @@ struct Rom_monitor : Info::Widget
 	}
 
 	Rom_monitor(Env & _env, Xml_node const & node, lv_obj_t * cont)
-	: _rom(_env, node.attribute_value("rom", Genode::String<32> { }).string()),
+	: _rom(_env, node.attribute_value("rom", Genode::String<64> { }).string()),
 	  _sigh(_env.ep(), *this, &Rom_monitor::handle_update),
 	  _xml(node),
 	  _cont(cont)
