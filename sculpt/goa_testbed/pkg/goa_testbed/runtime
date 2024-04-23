@@ -18,8 +18,8 @@
 		<rtc/>
 		<trace/>
 		<gpu/>
-		<audio_in/>
-		<audio_out/>
+		<play/>
+		<record/>
 		<usb/>
 		<vm/>
 		<event/>

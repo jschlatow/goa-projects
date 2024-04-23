@@ -16,8 +16,8 @@
 		<rtc/>
 		<rom label="usb_devices"/>
 		<usb/>
-		<audio_in/>
-		<audio_out/>
+		<play/>
+		<record/>
 		<capture/>
 	</requires>
 
