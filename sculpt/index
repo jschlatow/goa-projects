@@ -30,7 +30,6 @@
       <pkg path="recall_fs"       info="component-specific file-system view"/>
     </index>
     <pkg path="screenshot"   info="screenshot utility"/>
-    <pkg path="screenrecord" info="screen-capture utility" arch="x86_64"/>
     <pkg path="file_vault"   info="encrypted file store" arch="x86_64"/>
     <pkg path="qt5_textedit" info="Qt5-based text editor" arch="x86_64"/>
   </index>
