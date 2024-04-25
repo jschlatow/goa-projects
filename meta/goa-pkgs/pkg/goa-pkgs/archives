@@ -1,7 +1,4 @@
 genodelabs/src/dynamic_rom
-genodelabs/src/global_keys_handler
-genodelabs/src/libpng
-genodelabs/src/sandbox
 genodelabs/src/vfs_import
 genodelabs/src/jpeg
 genodelabs/src/vfs_lxip
@@ -20,11 +17,13 @@ jschlatow/src/coreutils
 jschlatow/src/diffutils
 jschlatow/src/findutils
 jschlatow/src/fs_rom
+jschlatow/src/global_keys_handler
 jschlatow/src/gnumake
 jschlatow/src/grep
 jschlatow/src/init
 jschlatow/src/less
 jschlatow/src/libc
+jschlatow/src/libpng
 jschlatow/src/ncurses
 jschlatow/src/pcre
 jschlatow/src/posix

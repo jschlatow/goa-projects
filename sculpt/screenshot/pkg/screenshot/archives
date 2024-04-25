@@ -1,8 +1,7 @@
 genodelabs/src/init
-genodelabs/src/libpng
 genodelabs/src/zlib
 genodelabs/src/libc
 genodelabs/src/vfs
 genodelabs/src/report_rom
-genodelabs/src/global_keys_handler
-genodelabs/src/sandbox
+jschlatow/src/global_keys_handler
+jschlatow/src/libpng

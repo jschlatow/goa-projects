@@ -79,7 +79,6 @@
 		<rom label="vfs.lib.so"/>
 		<rom label="libpng.lib.so"/>
 		<rom label="zlib.lib.so"/>
-		<rom label="sandbox.lib.so"/>
 
 	</content>
 
