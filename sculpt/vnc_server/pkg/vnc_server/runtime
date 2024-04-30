@@ -1,23 +1,19 @@
-<runtime ram="130M" caps="1000" binary="init" config="vnc.config">
+<runtime ram="130M" caps="1000" binary="vnc_server" config="vnc.config">
 
 	<requires>
 		<capture/>
 		<event/>
 		<nic/>
-		<rm/>
 		<timer/>
 	</requires>
 
 	<content>
 
 		<!-- configuration -->
-		<rom label="event.config"/>
 		<rom label="vnc.config"/>
 
 		<!-- components -->
 		<rom label="vnc_server"/>
-		<rom label="init"/>
-		<rom label="event_filter"/>
 
 		<!-- libraries -->
 		<rom label="ld.lib.so"/>

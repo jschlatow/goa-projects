@@ -1,9 +1,8 @@
 jschlatow/src/libvncserver
-genodelabs/src/event_filter
+jschlatow/src/libpng
 genodelabs/src/libc
 genodelabs/src/vfs
 genodelabs/src/init
 genodelabs/src/jpeg
-genodelabs/src/libpng
 genodelabs/src/zlib
 genodelabs/src/vfs_lxip

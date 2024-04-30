@@ -11,6 +11,7 @@
 			</domain>
 			<tcp-forward port="5900" domain="vnc" to="10.0.59.2"/>
 		</nic>
+		<file_system/>
 		<report label="shape"/>
 		<report label="clipboard"/>
 		<rom label="clipboard"/>
@@ -31,21 +32,10 @@
 			<service name="Event"/>
 			<service name="Report"/>
 			<service name="Nic"/>
+			<service name="File_system"/>
 		</parent-provides>
 
 		<default caps="300"/>
-
-		<start name="vfs">
-			<resource name="RAM" quantum="2M"/>
-			<provides> <service name="File_system"/> </provides>
-			<config>
-				<vfs> <ram/> </vfs>
-				<default-policy root="/" writeable="yes" />
-			</config>
-			<route>
-				<any-service> <parent/> </any-service>
-			</route>
-		</start>
 
 		<start name="vnc_server" caps="1000">
 			<binary name="init"/>
@@ -53,9 +43,6 @@
 			<route>
 				<service name="ROM" label="config">
 					<parent label="vnc.config"/>
-				</service>
-				<service name="ROM" label="event.config">
-					<parent label="event.config"/>
 				</service>
 				<service name="Nic">
 					<parent label="vnc"/>
@@ -86,54 +73,5 @@
 			</route>
 		</start>
 	</config>
-
-	<content>
-
-		<!-- configurations -->
-		<rom label="textedit.config"/>
-		<rom label="vnc.config"/>
-		<rom label="event.config"/>
-
-		<!-- components -->
-		<rom label="vnc_server"/>
-		<rom label="event_filter"/>
-		<rom label="init"/>
-		<rom label="textedit"/>
-		<rom label="vfs"/>
-
-		<!-- libraries -->
-		<rom label="ld.lib.so"/>
-		<rom label="libc.lib.so"/>
-		<rom label="libm.lib.so"/>
-		<rom label="vfs.lib.so"/>
-		<rom label="vfs_lxip.lib.so"/>
-		<rom label="lxip.lib.so"/>
-		<rom label="jpeg.lib.so"/>
-		<rom label="zlib.lib.so"/>
-		<rom label="libpng.lib.so"/>
-		<rom label="vncserver.lib.so"/>
-
-		<!-- textedit libraries -->
-		<rom label="egl.lib.so"/>
-		<rom label="expat.lib.so"/>
-		<rom label="freetype.lib.so"/>
-		<rom label="glapi.lib.so"/>
-		<rom label="jpeg.lib.so"/>
-		<rom label="libQt5Core.lib.so"/>
-		<rom label="libQt5Gui.lib.so"/>
-		<rom label="libpng.lib.so"/>
-		<rom label="libqgenode.lib.so"/>
-		<rom label="mesa.lib.so"/>
-		<rom label="libdrm.lib.so"/>
-		<rom label="qt5_dejavusans.tar"/>
-		<rom label="qt5_libqgenode.tar"/>
-		<rom label="stdcxx.lib.so"/>
-		<rom label="vfs_gpu.lib.so"/>
-		<rom label="vfs_pipe.lib.so"/>
-		<rom label="qt5_component.lib.so"/>
-		<rom label="libQt5PrintSupport.lib.so"/>
-		<rom label="libQt5Widgets.lib.so"/>
-
-	</content>
 
 </runtime>
