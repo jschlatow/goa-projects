@@ -28,7 +28,7 @@ set  version(jschlatow/pkg/sdl_vnc)                                   2024-04-18
 set  version(jschlatow/pkg/sntp_client)                               2024-04-19
 set  version(jschlatow/pkg/sticks_blue_backdrop)                      2024-04-18
 set  version(jschlatow/pkg/system_clock_rw-pc)                        2024-02-01
-set  version(jschlatow/pkg/system_info)                               2024-04-22
+set  version(jschlatow/pkg/system_info)                               2024-05-06
 set  version(jschlatow/pkg/system_shell)                              2024-04-19
 set  version(jschlatow/pkg/test-capture)                              2024-04-11
 set  version(jschlatow/pkg/themed_decorator)                          2024-04-18
