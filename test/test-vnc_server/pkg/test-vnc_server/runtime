@@ -38,7 +38,6 @@
 		<default caps="300"/>
 
 		<start name="vnc_server" caps="1000">
-			<binary name="init"/>
 			<resource name="RAM" quantum="130M"/>
 			<route>
 				<service name="ROM" label="config">
