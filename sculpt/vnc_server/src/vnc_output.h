@@ -87,10 +87,11 @@ class Vncserver::Output
 				BUTTON_1 = 0x01,
 				BUTTON_2 = 0x02,
 				BUTTON_3 = 0x04,
-				BUTTON_4 = 0x08,
-				BUTTON_5 = 0x10,
-				BUTTON_6 = 0x80,
-				MASK = 0x8F
+				WHEEL_UP = 0x08,
+				WHEEL_DN = 0x10,
+				WHEEL_LEFT  = 0x20,
+				WHEEL_RIGHT = 0x40,
+				MASK = 0x7F
 			};
 
 			int _value;
@@ -269,23 +270,21 @@ class Vncserver::Output
 						else
 							batch.submit(Input::Release{Input::BTN_RIGHT});
 					}
-					if (_old_buttons.changed(cur_buttons, Button_state::BUTTON_4)) {
-						/* wheel up */
-						if (cur_buttons.pressed(Button_state::BUTTON_4))
-							warning("Wheel events not implemented");
-							/* FIXME batch.submit(Input::Wheel{0, 1}); */
+					if (_old_buttons.changed(cur_buttons, Button_state::WHEEL_UP)) {
+						if (cur_buttons.pressed(Button_state::WHEEL_UP))
+							batch.submit(Input::Wheel{0, 1});
 					}
-					if (_old_buttons.changed(cur_buttons, Button_state::BUTTON_5)) {
-						/* wheel down */
-						if (cur_buttons.pressed(Button_state::BUTTON_5))
-							warning("Wheel events not implemented");
-							/* FIXME batch.submit(Input::Wheel{0,-1}); */
+					if (_old_buttons.changed(cur_buttons, Button_state::WHEEL_DN)) {
+						if (cur_buttons.pressed(Button_state::WHEEL_DN))
+							batch.submit(Input::Wheel{0,-1});
 					}
-					if (_old_buttons.changed(cur_buttons, Button_state::BUTTON_6)) {
-						if (cur_buttons.pressed(Button_state::BUTTON_6))
-							batch.submit(Input::Press  {Input::BTN_SIDE});
-						else
-							batch.submit(Input::Release{Input::BTN_SIDE});
+					if (_old_buttons.changed(cur_buttons, Button_state::WHEEL_LEFT)) {
+						if (cur_buttons.pressed(Button_state::WHEEL_LEFT))
+							batch.submit(Input::Wheel{-1,0});
+					}
+					if (_old_buttons.changed(cur_buttons, Button_state::WHEEL_RIGHT)) {
+						if (cur_buttons.pressed(Button_state::WHEEL_RIGHT))
+							batch.submit(Input::Wheel{1,0});
 					}
 				}
 			});
