@@ -21,6 +21,7 @@
 		<rom label="libm.lib.so"/>
 		<rom label="vfs.lib.so"/>
 		<rom label="vfs_lxip.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
 		<rom label="lxip.lib.so"/>
 		<rom label="jpeg.lib.so"/>
 		<rom label="zlib.lib.so"/>

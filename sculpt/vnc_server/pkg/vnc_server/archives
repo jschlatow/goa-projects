@@ -6,3 +6,4 @@ genodelabs/src/init
 genodelabs/src/jpeg
 genodelabs/src/zlib
 genodelabs/src/vfs_lxip
+genodelabs/src/vfs_pipe

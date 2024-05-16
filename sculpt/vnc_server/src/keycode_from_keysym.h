@@ -16,7 +16,6 @@
 
 #include <input/keycodes.h>
 #include <rfb/keysym.h>
-#include <x11vnc/nox11.h>
 
 namespace Vncserver {
 	using namespace Genode;
@@ -77,7 +76,7 @@ namespace Vncserver {
 			};
 			return map[keysym - XK_KP_Enter];
 		}
-		else if (IsCursorKey(keysym)) {
+		else if (keysym >= XK_Home && keysym < XK_Select) {
 			static Input::Keycode map[] = {
 				KEY_HOME,       /* 0x50 */
 				KEY_LEFT,       /* 0x51 */
@@ -88,12 +87,11 @@ namespace Vncserver {
 				KEY_PAGEDOWN,   /* 0x56 */
 				KEY_END,        /* 0x57 */
 				KEY_HOME,       /* 0x58 */
-				KEY_UNKNOWN,    /* 0x59 */
-				KEY_SELECT      /* 0x60 */
+				KEY_UNKNOWN     /* 0x59 */
 			};
 			return map[keysym - XK_Home];
 		}
-		else if (IsFunctionKey(keysym) && keysym <= XK_F12) {
+		else if (keysym >= XK_F1 && keysym <= XK_F12) {
 			static Input::Keycode map[] = {
 				KEY_F1,       /* 0xbe */
 				KEY_F2,       /* 0xbf */
@@ -110,7 +108,7 @@ namespace Vncserver {
 			};
 			return map[keysym - XK_F1];
 		}
-		else if (IsMiscFunctionKey(keysym)) {
+		else if (keysym >= XK_Select && keysym <= XK_Break) {
 			/* TODO contains select, print, execute, insert, undo, redo, menu,
  			 *      find, cancel, help, break*/
 			return KEY_UNKNOWN;

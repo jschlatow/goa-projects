@@ -171,8 +171,16 @@ class Vncserver::Output
 			if (!_screen)
 				throw Libvnc_error();
 
-			_screen->frameBuffer  = nullptr;
-			_screen->neverShared  = TRUE;
+			_screen->frameBuffer    = nullptr;
+			_screen->alwaysShared   = FALSE;
+			_screen->neverShared    = TRUE;
+
+			/**
+			 * disconnect current client if new client connects so that we
+			 * always accept a connection even if the current client has not
+			 * disconnected properly
+			 */
+			_screen->dontDisconnect = FALSE;
 
 			/* store context for event callbacks in screenData member */
 			_screen->screenData = static_cast<void*>(this);
@@ -192,9 +200,6 @@ class Vncserver::Output
 
 			/* set client hook */
 			_screen->newClientHook = [] (rfbClientPtr cl) {
-				if (cl->screen->clientHead->next)
-					return RFB_CLIENT_REFUSE;
-
 				(static_cast<Output*>(cl->screen->screenData))
 					->handle_connect();
 

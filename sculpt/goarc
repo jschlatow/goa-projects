@@ -24,7 +24,7 @@ set  version(jschlatow/pkg/qt5_textedit)                              2024-04-18
 set  version(jschlatow/pkg/recall_fs)                                 2024-04-11
 set  version(jschlatow/pkg/report_dump)                               2024-04-19
 set  version(jschlatow/pkg/screenshot)                                2024-04-25
-set  version(jschlatow/pkg/sdl_vnc)                                   2024-04-18
+set  version(jschlatow/pkg/sdl_vnc)                                   2024-05-16-e
 set  version(jschlatow/pkg/sntp_client)                               2024-04-19
 set  version(jschlatow/pkg/sticks_blue_backdrop)                      2024-04-18
 set  version(jschlatow/pkg/system_clock_rw-pc)                        2024-02-01
@@ -39,6 +39,6 @@ set  version(jschlatow/pkg/usb_modem_drv)                             2024-04-19
 set  version(jschlatow/pkg/usb_webcam)                                2024-04-24
 set  version(jschlatow/pkg/user_keys)                                 2024-04-11
 set  version(jschlatow/pkg/vbox6)                                     2024-04-18
-set  version(jschlatow/pkg/vnc_server)                                2024-04-22
+set  version(jschlatow/pkg/vnc_server)                                2024-05-16
 set  version(jschlatow/pkg/window_layouter)                           2024-04-24
 set  version(jschlatow/pkg/wm)                                        2024-04-11
