@@ -1,11 +1,67 @@
-<runtime ram="130M" caps="1000" binary="vnc_server" config="vnc.config">
+<runtime ram="135M" caps="1300" binary="init">
 
 	<requires>
 		<capture/>
 		<event/>
 		<nic/>
+		<file_system label="recall" writeable="yes"/>
 		<timer/>
 	</requires>
+
+	<config>
+		<parent-provides>
+			<service name="ROM"/>
+			<service name="LOG"/>
+			<service name="RM"/>
+			<service name="CPU"/>
+			<service name="PD"/>
+			<service name="Timer"/>
+			<service name="Capture"/>
+			<service name="Event"/>
+			<service name="Nic"/>
+			<service name="File_system"/>
+		</parent-provides>
+
+		<start name="vfs" caps="100">
+			<resource name="RAM" quantum="1M"/>
+			<provides> <service name="File_system"/> </provides>
+			<config>
+				<vfs>
+					<fs/>
+					<import> <rom name="vnc.config"/> </import>
+				</vfs>
+				<policy label_prefix="fs_rom" root="/" writeable="no"/>
+			</config>
+			<route>
+				<service name="File_system"> <parent label="recall"/> </service>
+				<any-service> <parent /> </any-service>
+			</route>
+		</start>
+
+		<start name="fs_rom" caps="100">
+			<resource name="RAM" quantum="1M"/>
+			<provides> <service name="ROM"/> </provides>
+			<config/>
+			<route>
+				<service name="File_system"> <child name="vfs"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+		<start name="vnc_server" caps="1000">
+			<resource name="RAM" quantum="130M"/>
+			<route>
+				<service name="ROM" label="config">
+					<child name="fs_rom" label="vnc.config"/>
+				</service>
+				<service name="Nic">
+					<parent label="vnc"/>
+				</service>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+
+	</config>
 
 	<content>
 
@@ -14,6 +70,9 @@
 
 		<!-- components -->
 		<rom label="vnc_server"/>
+		<rom label="init"/>
+		<rom label="fs_rom"/>
+		<rom label="vfs"/>
 
 		<!-- libraries -->
 		<rom label="ld.lib.so"/>
@@ -22,6 +81,7 @@
 		<rom label="vfs.lib.so"/>
 		<rom label="vfs_lxip.lib.so"/>
 		<rom label="vfs_pipe.lib.so"/>
+		<rom label="vfs_import.lib.so"/>
 		<rom label="lxip.lib.so"/>
 		<rom label="jpeg.lib.so"/>
 		<rom label="zlib.lib.so"/>

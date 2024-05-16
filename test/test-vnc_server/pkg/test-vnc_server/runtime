@@ -19,6 +19,10 @@
 		<timer/>
 	</requires>
 
+	<content>
+		<rom label="passwd"/>
+	</content>
+
 	<config verbose="yes">
 		<parent-provides>
 			<service name="ROM"/>

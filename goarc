@@ -27,7 +27,7 @@ set  version(jschlatow/src/init)                         2024-04-11
 set  version(jschlatow/src/less)                         2024-04-11
 set  version(jschlatow/src/libc)                         2024-04-18
 set  version(jschlatow/src/libpng)                       2024-04-11
-set  version(jschlatow/src/libvncserver)                 2024-05-16
+set  version(jschlatow/src/libvncserver)                 2024-05-16-a
 set  version(jschlatow/src/ncurses)                      2024-04-11
 set  version(jschlatow/src/pcre)                         2024-04-19
 set  version(jschlatow/src/posix)                        2024-04-11

@@ -4,7 +4,9 @@
 
 This package can be deployed on Sculpt to provide remote desktop functionality.
 Simply connect the Capture and Event sessions to the system GUI and add a
-forwarding route for TCP port 5900 to your nic_router.
+forwarding route for TCP port 5900 to your nic_router. The component also
+requires a file-system session where it stores its default config as 'vnc.config'
+and reads its 'passwd' file.
 
 By default, the vnc server polls the Capture session every 40ms. You can change
 this by supplying a 'period_ms' attribute in the config node.
@@ -13,3 +15,10 @@ this by supplying a 'period_ms' attribute in the config node.
 
 You can also restrict the area and position that is copied from the Capture
 session by setting the attributes 'width', 'height', 'xpos' and 'ypos'.
+
+Password authentication is enabled by setting the 'requires_password' attribute
+to 'yes':
+
+! <config period_ms="40" requires_password="yes"/>
+
+If enabled, the plaintext password is read from the 'passwd' file.

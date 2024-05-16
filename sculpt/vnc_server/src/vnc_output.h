@@ -18,6 +18,7 @@
 #include <libc/component.h>
 #include <capture_session/connection.h>
 #include <event_session/connection.h>
+#include <util/reconstructible.h>
 
 /* 3rd-party includes */
 #include <libc/args.h>
@@ -123,6 +124,8 @@ class Vncserver::Output
 
 		Event::Connection _event_connection { _env };
 
+		Constructible<Attached_rom_dataspace> _passwd_rom { };
+
 		/* libvnc state */
 		rfbScreenInfoPtr _screen = nullptr;
 		Button_state _old_buttons { 0 };
@@ -183,6 +186,12 @@ class Vncserver::Output
 			 */
 			_screen->dontDisconnect = FALSE;
 
+			/* set password callback */
+			_screen->passwordCheck = [] (rfbClientPtr cl, const char* response, int len) {
+				return (static_cast<Output*>(cl->screen->screenData))
+					->check_password(cl, response, len);
+			};
+
 			/* store context for event callbacks in screenData member */
 			_screen->screenData = static_cast<void*>(this);
 
@@ -235,6 +244,54 @@ class Vncserver::Output
 			Libc::with_libc([&] () {
 				_realloc_buffer();
 			});
+		}
+
+		void handle_config(Xml_node const & config_xml)
+		{
+			if (config_xml.attribute_value("requires_password", false))
+				_screen->authPasswdData = (void *)"passwd";
+			else
+				_screen->authPasswdData = NULL;
+		}
+
+		rfbBool check_password(rfbClientPtr cl, const char* response, int len)
+		{
+			using Password = Genode::String<64>;
+
+			/* create a new ROM connection with label specified by authPasswdData */
+			try {
+				_passwd_rom.construct(_env, (char *)cl->screen->authPasswdData);
+			} catch (...) {
+				return FALSE;
+			}
+
+			/* invalid or empty dataspace -> no password */
+			if (!_passwd_rom->valid() || _passwd_rom->size() == 0)
+				return FALSE;
+
+			Password passwd(_passwd_rom->local_addr<const char>());
+
+			if (!passwd.valid())
+				return FALSE;
+
+			/* remove newline from tail */
+			char * raw_passwd = (char *)passwd.string();
+			if (raw_passwd[passwd.length()-2] == '\n')
+				raw_passwd[passwd.length()-2] = '\0';
+
+			/* encrypt passwd and store in authChallenge */
+			rfbEncryptBytes(cl->authChallenge, raw_passwd);
+
+			/* destruct ROM connection since we do not want to store password in memory */
+			_passwd_rom.destruct();
+
+			/* compare result with response */
+			if (Genode::memcmp(cl->authChallenge, response, len) != 0) {
+				rfbErr("Password authentication failed\n");
+				return FALSE;
+			}
+
+			return TRUE;
 		}
 
 		void handle_connect()    { _timer_ctrl.enable();  }

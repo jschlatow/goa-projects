@@ -1,9 +1,11 @@
 jschlatow/src/libvncserver
 jschlatow/src/libpng
 genodelabs/src/libc
+genodelabs/src/fs_rom
 genodelabs/src/vfs
 genodelabs/src/init
 genodelabs/src/jpeg
 genodelabs/src/zlib
 genodelabs/src/vfs_lxip
 genodelabs/src/vfs_pipe
+genodelabs/src/vfs_import

@@ -148,6 +148,8 @@ struct Vncserver::Main
 	void _handle_config()
 	{
 		_config.update();
+		_output.handle_config(_config.xml());
+
 		_handle_resize();
 
 		unsigned long const period_ms = _config.xml().attribute_value("period_ms", 0U);
