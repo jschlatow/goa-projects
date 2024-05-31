@@ -4,8 +4,9 @@
   <supports arch="arm_v8a"/>
 
   <index name="Devtools">
-    <pkg path="trace_recorder" info="record traces in CTF and pcapng"/>
-    <pkg path="goa_testbed"    info="runtime for executing Goa projects"/>
+    <pkg path="trace_recorder"  info="record traces in CTF and pcapng"/>
+    <pkg path="goa_testbed"     info="runtime for executing Goa projects"/>
+    <pkg path="goa_testbed_vnc" info="runtime for executing Goa projects with VNC server" arch="x86_64"/>
   </index>
 
   <index name="GUI">

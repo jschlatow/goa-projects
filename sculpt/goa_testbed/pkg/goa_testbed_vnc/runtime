@@ -1,0 +1,236 @@
+<runtime ram="1G" caps="5000" binary="init">
+
+	<requires>
+		<nic>
+			<policy label_prefix="goa_testbed_vnc -> http"   domain="http"/>
+			<policy label_prefix="goa_testbed_vnc -> telnet" domain="telnet"/>
+			<policy label_prefix="goa_testbed_vnc -> vnc"    domain="vnc"/>
+			<domain name="http" interface="10.0.200.1/24">
+				<dhcp-server ip_first="10.0.200.2" ip_last="10.0.200.2" dns_config_from="uplink"/>
+			</domain>
+			<domain name="telnet" interface="10.0.201.1/24">
+				<dhcp-server ip_first="10.0.201.2" ip_last="10.0.201.2" dns_config_from="uplink"/>
+			</domain>
+			<domain name="vnc" interface="10.0.202.1/24">
+				<dhcp-server ip_first="10.0.202.2" ip_last="10.0.202.2" dns_config_from="uplink"/>
+			</domain>
+			<tcp-forward port="5555" to_port="80"   domain="http"   to="10.0.200.2"/>
+			<tcp-forward port="2323" to_port="23"   domain="telnet" to="10.0.201.2"/>
+			<tcp-forward port="5900" to_port="5900" domain="vnc"    to="10.0.202.2"/>
+		</nic>
+		<timer/>
+		<rtc/>
+		<trace/>
+		<gpu/>
+		<play/>
+		<record/>
+		<usb/>
+		<vm/>
+		<file_system/>
+		<rom label="mesa_gpu_drv.lib.so"/>
+		<rom label="platform_info"/>
+	</requires>
+
+	<config>
+		<parent-provides>
+			<service name="LOG"/>
+			<service name="CPU"/>
+			<service name="RM"/>
+			<service name="PD"/>
+			<service name="ROM"/>
+			<service name="TRACE"/>
+			<service name="VM"/>
+			<service name="Timer"/>
+			<service name="Rtc"/>
+			<service name="Nic"/>
+			<service name="Play"/>
+			<service name="Record"/>
+			<service name="Usb"/>
+			<service name="Gpu"/>
+			<service name="File_system"/>
+			<service name="Report"/>
+		</parent-provides>
+
+		<default caps="300"/>
+
+		<start name="vnc_server" caps="300">
+			<resource name="RAM" quantum="50M"/>
+			<route>
+				<service name="Nic">
+					<parent label="vnc"/>
+				</service>
+				<service name="Event">
+					<child name="event_filter" label="vnc"/>
+				</service>
+				<service name="Capture">
+					<child name="nitpicker"/>
+				</service>
+				<service name="PD">    <parent/> </service>
+				<service name="CPU">   <parent/> </service>
+				<service name="LOG">   <parent/> </service>
+				<service name="ROM">   <parent/> </service>
+				<service name="Timer"> <parent/> </service>
+			</route>
+			<config period_ms="30" width="1280" height="720">
+				<libc stdin="/dev/null" stdout="/dev/log" stderr="/dev/log" socket="/socket"  pipe="/pipe"/>
+				<vfs>
+					<dir name="dev"> <log/> <null/> </dir>
+					<dir name="socket"> <lxip dhcp="yes"/> </dir>
+					<dir name="pipe"> <pipe/> </dir>
+				</vfs>
+			</config>
+		</start>
+
+		<start name="event_filter" caps="100">
+			<resource name="RAM" quantum="1M"/>
+			<provides>
+				<service name="Event"/>
+			</provides>
+			<route>
+				<service name="ROM" label="config">
+					<parent label="event_filter.config"/> </service>
+				<service name="Event">
+					<child name="nitpicker"/>
+				</service>
+				<service name="PD">    <parent/> </service>
+				<service name="CPU">   <parent/> </service>
+				<service name="LOG">   <parent/> </service>
+				<service name="ROM">   <parent/> </service>
+				<service name="Timer"> <parent/> </service>
+			</route>
+		</start>
+
+		<start name="report_rom" caps="100">
+			<resource name="RAM" quantum="1M"/>
+			<provides> <service name="Report"/> <service name="ROM"/> </provides>
+			<config verbose="no">
+				<policy label_prefix="focus_rom" report="nitpicker -> hover"/>
+			</config>
+			<route>
+				<service name="PD">  <parent/> </service>
+				<service name="CPU"> <parent/> </service>
+				<service name="LOG"> <parent/> </service>
+				<service name="ROM"> <parent/> </service>
+			</route>
+		</start>
+
+		<start name="focus_rom" caps="100">
+			<binary name="rom_filter"/>
+			<resource name="RAM" quantum="1M"/>
+			<provides> <service name="ROM"/> </provides>
+			<config>
+				<input name="hovered_label" rom="hover" node="hover">
+					<attribute name="label" />
+				</input>
+				<output node="focus">
+					<attribute name="label" input="hovered_label"/>
+				</output>
+			</config>
+			<route>
+				<service name="ROM" label="hover"> <child name="report_rom"/> </service>
+				<service name="PD">  <parent/> </service>
+				<service name="CPU"> <parent/> </service>
+				<service name="LOG"> <parent/> </service>
+				<service name="ROM"> <parent/> </service>
+			</route>
+		</start>
+
+		<start name="nitpicker" caps="100">
+			<resource name="RAM" quantum="4M"/>
+			<provides>
+				<service name="Gui"/> <service name="Capture"/> <service name="Event"/>
+			</provides>
+			<route>
+				<service name="ROM" label="focus"> <child name="focus_rom"/> </service>
+				<service name="PD">    <parent/> </service>
+				<service name="CPU">   <parent/> </service>
+				<service name="LOG">   <parent/> </service>
+				<service name="ROM">   <parent/> </service>
+				<service name="Timer"> <parent/> </service>
+				<service name="Report"> <child name="report_rom"/> </service>
+			</route>
+			<config focus="rom">
+				<capture/> <event/>
+				<report hover="yes"/>
+				<domain name="pointer"    layer="1" content="client" label="no" origin="pointer" />
+				<domain name="default"    layer="2" content="client" label="no" hover="always" />
+
+				<policy label_prefix="pointer"  domain="pointer"/>
+				<default-policy domain="default"/>
+			</config>
+		</start>
+
+		<start name="pointer" caps="100">
+			<resource name="RAM" quantum="1M"/>
+			<route>
+				<service name="PD">  <parent/> </service>
+				<service name="CPU"> <parent/> </service>
+				<service name="LOG"> <parent/> </service>
+				<service name="ROM"> <parent/> </service>
+				<service name="Gui"> <child name="nitpicker"/> </service>
+			</route>
+			<config/>
+		</start>
+
+		<start name="testbed" caps="5000">
+			<binary name="init"/>
+			<resource name="RAM" quantum="1G"/>
+			<route>
+				<service name="ROM" label="config">
+					<parent label="testbed.config"/> </service>
+				<service name="Gui">
+					<child name="nitpicker"/> </service>
+				<service name="Nic" label_prefix="lighttpd">
+					<parent label="http"/> </service>
+				<service name="Nic" label_prefix="tcp_terminal">
+					<parent label="telnet"/> </service>
+				<service name="ROM" label="mesa_gpu_drv.lib.so">
+					<parent label="mesa_gpu_drv.lib.so"/> </service>
+				<service name="ROM" label="platform_info">
+					<parent label="platform_info"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+	</config>
+
+	<content>
+
+		<!-- configuration (files) -->
+		<rom label="testbed.config"/>
+		<rom label="lighttpd.conf"/>
+		<rom label="event_filter.config"/>
+
+		<!-- components -->
+		<rom label="init"/>
+		<rom label="lighttpd"/>
+		<rom label="fs_rom"/>
+		<rom label="fs_report"/>
+		<rom label="vfs"/>
+		<rom label="tcp_terminal"/>
+		<rom label="file_terminal"/>
+		<rom label="terminal_log"/>
+		<rom label="stdin2out"/>
+		<rom label="nitpicker"/>
+		<rom label="rom_filter"/>
+		<rom label="pointer"/>
+		<rom label="report_rom"/>
+		<rom label="event_filter"/>
+
+		<!-- libraries -->
+		<rom label="ld.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="libcrypto.lib.so"/>
+		<rom label="libssl.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_import.lib.so"/>
+		<rom label="vfs_lwip.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="vfs_jitterentropy.lib.so"/>
+		<rom label="zlib.lib.so"/>
+
+	</content>
+
+</runtime>
