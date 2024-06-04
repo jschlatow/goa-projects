@@ -1,5 +1,4 @@
-set version(ssumpf/api/qt5_declarative)    2023-05-26
-set version(ssumpf/pkg/ubuntu_ui_toolkit)  2023-11-20
+set version(ssumpf/api/qt5_declarative)    2024-02-25
+set version(ssumpf/pkg/ubuntu_ui_toolkit)  2024-06-03
 set version(ssumpf/api/qt5_quickcontrols2) 2023-05-26
-set version(jschlatow/api/qt5_declarative) 2024-01-05
-set version(jschlatow/api/qt5_base)        2024-01-05
+set version(ssumpf/api/qt5_base)           2024-04-18
