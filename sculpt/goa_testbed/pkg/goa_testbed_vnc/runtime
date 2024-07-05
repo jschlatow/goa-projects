@@ -88,7 +88,7 @@
 			</provides>
 			<route>
 				<service name="ROM" label="config">
-					<parent label="event_filter.config"/> </service>
+					<parent label="event_filter_vnc.config"/> </service>
 				<service name="Event">
 					<child name="nitpicker"/>
 				</service>
@@ -199,7 +199,7 @@
 		<!-- configuration (files) -->
 		<rom label="testbed.config"/>
 		<rom label="lighttpd.conf"/>
-		<rom label="event_filter.config"/>
+		<rom label="event_filter_vnc.config"/>
 
 		<!-- components -->
 		<rom label="init"/>
