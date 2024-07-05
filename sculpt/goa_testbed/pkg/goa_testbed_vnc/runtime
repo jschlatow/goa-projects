@@ -4,6 +4,7 @@
 		<nic>
 			<policy label_suffix="-> http"   domain="http"/>
 			<policy label_suffix="-> telnet" domain="telnet"/>
+			<policy label_suffix="-> gdb"    domain="gdb"/>
 			<policy label_suffix="-> vnc"    domain="vnc"/>
 			<domain name="http" interface="10.0.200.1/24">
 				<dhcp-server ip_first="10.0.200.2" ip_last="10.0.200.2" dns_config_from="uplink"/>
@@ -11,12 +12,16 @@
 			<domain name="telnet" interface="10.0.201.1/24">
 				<dhcp-server ip_first="10.0.201.2" ip_last="10.0.201.2" dns_config_from="uplink"/>
 			</domain>
-			<domain name="vnc" interface="10.0.202.1/24">
+			<domain name="gdb" interface="10.0.202.1/24">
 				<dhcp-server ip_first="10.0.202.2" ip_last="10.0.202.2" dns_config_from="uplink"/>
+			</domain>
+			<domain name="vnc" interface="10.0.203.1/24">
+				<dhcp-server ip_first="10.0.203.2" ip_last="10.0.203.2" dns_config_from="uplink"/>
 			</domain>
 			<tcp-forward port="5555" to_port="80"   domain="http"   to="10.0.200.2"/>
 			<tcp-forward port="2323" to_port="23"   domain="telnet" to="10.0.201.2"/>
-			<tcp-forward port="5900" to_port="5900" domain="vnc"    to="10.0.202.2"/>
+			<tcp-forward port="9999"                domain="gdb"    to="10.0.202.2"/>
+			<tcp-forward port="5900" to_port="5900" domain="vnc"    to="10.0.203.2"/>
 		</nic>
 		<timer/>
 		<rtc/>
@@ -184,6 +189,8 @@
 					<parent label="telnet"/> </service>
 				<service name="Nic" label_prefix="http">
 					<parent label="http"/> </service>
+				<service name="Nic" label_prefix="gdb">
+					<parent label="gdb"/> </service>
 				<service name="ROM" label="mesa_gpu_drv.lib.so">
 					<parent label="mesa_gpu_drv.lib.so"/> </service>
 				<service name="ROM" label="platform_info">
@@ -203,6 +210,7 @@
 
 		<!-- components -->
 		<rom label="init"/>
+		<rom label="monitor"/>
 		<rom label="lighttpd"/>
 		<rom label="fs_rom"/>
 		<rom label="fs_report"/>
@@ -224,6 +232,7 @@
 		<rom label="posix.lib.so"/>
 		<rom label="libcrypto.lib.so"/>
 		<rom label="libssl.lib.so"/>
+		<rom label="sandbox.lib.so"/>
 		<rom label="vfs.lib.so"/>
 		<rom label="vfs_import.lib.so"/>
 		<rom label="vfs_lwip.lib.so"/>

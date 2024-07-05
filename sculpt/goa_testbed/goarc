@@ -4,5 +4,6 @@ set  version(genodelabs/src/stdin2out)                                2024-04-11
 set  version(genodelabs/src/terminal_log)                             2024-04-11
 set  version(genodelabs/src/vfs_jitterentropy)                        2024-04-11
 set  version(jschlatow/src/lighttpd)                                  2024-04-11
-set  version(jschlatow/src/tcp_terminal)                              2024-04-11
-set  version(jschlatow/src/vfs)                                       2024-04-11
+set  version(jschlatow/src/tcp_terminal)                              2024-07-05
+set  version(jschlatow/src/monitor)                                   2024-07-05
+set  version(jschlatow/src/libc)                                      2024-07-05

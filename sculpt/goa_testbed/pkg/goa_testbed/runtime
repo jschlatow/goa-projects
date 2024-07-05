@@ -1,18 +1,23 @@
-<runtime ram="1G" caps="5000" binary="init" config="testbed.config">
+<runtime ram="1G" caps="7000" binary="init" config="testbed.config">
 
 	<requires>
 		<gui/>
 		<nic>
 			<policy label="goa_testbed -> http"   domain="http"/>
 			<policy label="goa_testbed -> telnet" domain="telnet"/>
+			<policy label="goa_testbed -> gdb"    domain="gdb"/>
 			<domain name="http" interface="10.0.200.1/24">
 				<dhcp-server ip_first="10.0.200.2" ip_last="10.0.200.2" dns_config_from="uplink"/>
 			</domain>
 			<domain name="telnet" interface="10.0.201.1/24">
 				<dhcp-server ip_first="10.0.201.2" ip_last="10.0.201.2" dns_config_from="uplink"/>
 			</domain>
+			<domain name="gdb" interface="10.0.202.1/24">
+				<dhcp-server ip_first="10.0.202.2" ip_last="10.0.202.2" dns_config_from="uplink"/>
+			</domain>
 			<tcp-forward port="5555" to_port="80" domain="http"   to="10.0.200.2"/>
 			<tcp-forward port="2323" to_port="23" domain="telnet" to="10.0.201.2"/>
+			<tcp-forward port="9999"              domain="gdb"    to="10.0.202.2"/>
 		</nic>
 		<timer/>
 		<rtc/>
@@ -41,6 +46,7 @@
 
 		<!-- components -->
 		<rom label="init"/>
+		<rom label="monitor"/>
 		<rom label="lighttpd"/>
 		<rom label="fs_rom"/>
 		<rom label="fs_report"/>
@@ -57,6 +63,7 @@
 		<rom label="posix.lib.so"/>
 		<rom label="libcrypto.lib.so"/>
 		<rom label="libssl.lib.so"/>
+		<rom label="sandbox.lib.so"/>
 		<rom label="vfs.lib.so"/>
 		<rom label="vfs_import.lib.so"/>
 		<rom label="vfs_lwip.lib.so"/>
