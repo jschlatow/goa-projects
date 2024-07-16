@@ -6,6 +6,7 @@ genodelabs/src/zlib
 genodelabs/pkg/drivers_interactive-linux
 genodelabs/pkg/fonts_fs
 genodelabs/src/base-linux
+genodelabs/src/base-nova
 genodelabs/src/bash
 genodelabs/src/black_hole
 genodelabs/src/coreutils
@@ -24,6 +25,7 @@ genodelabs/src/ncurses
 genodelabs/src/nic_router
 genodelabs/src/nitpicker
 genodelabs/src/mesa
+genodelabs/src/monitor
 genodelabs/src/pcre
 genodelabs/src/posix
 genodelabs/src/qt5_base
@@ -32,6 +34,7 @@ genodelabs/src/qt5_svg
 genodelabs/src/report_rom
 genodelabs/src/rom_filter
 genodelabs/src/rom_reporter
+genodelabs/src/sandbox
 genodelabs/src/sdl
 genodelabs/src/sed
 genodelabs/src/stdcxx
