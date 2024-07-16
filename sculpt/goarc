@@ -11,8 +11,8 @@ set  version(jschlatow/pkg/firefox-av@vbox6)                          2024-04-22
 set  version(jschlatow/pkg/fonts_fs)                                  2024-04-18
 set  version(jschlatow/pkg/fs_report)                                 2024-04-11
 set  version(jschlatow/pkg/fs_rom)                                    2024-04-11
-set  version(jschlatow/pkg/goa_testbed)                               2024-05-31
-set  version(jschlatow/pkg/goa_testbed_vnc)                           2024-05-31
+set  version(jschlatow/pkg/goa_testbed)                               2024-07-15
+set  version(jschlatow/pkg/goa_testbed_vnc)                           2024-07-15
 set  version(jschlatow/pkg/mbimcli)                                   2024-04-19
 set  version(jschlatow/pkg/mesa_gears)                                2024-04-18
 set  version(jschlatow/pkg/mesa_gpu-cpu)                              2024-04-11
