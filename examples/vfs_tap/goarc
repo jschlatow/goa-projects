@@ -1,0 +1,6 @@
+set version(genodelabs/api/net)         2023-11-29
+set version(genodelabs/api/nic_session) 2023-11-29
+set version(jschlatow/src/ping)         2024-04-11
+
+set depot_dir  ./var/depot
+set public_dir ./var/public

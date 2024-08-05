@@ -1,0 +1,69 @@
+<runtime ram="20M" caps="1000" binary="init">
+
+	<requires>
+		<timer/>
+	</requires>
+
+	<content>
+		<rom label="test-vfs_tap"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_tap.lib.so"/>
+		<rom label="ping"/>
+		<rom label="nic_router"/>
+	</content>
+
+	<config>
+		<parent-provides>
+			<service name="PD"/>
+			<service name="CPU"/>
+			<service name="LOG"/>
+			<service name="ROM"/>
+			<service name="Timer"/>
+		</parent-provides>
+
+		<default-route>
+			<service name="Nic"> <child name="nic_router"/> </service>
+			<any-service> <parent/> </any-service>
+		</default-route>
+
+		<default caps="100"/>
+
+		<start name="nic_router">
+			<resource name="RAM" quantum="2M"/>
+			<provides>
+				<service name="Nic"/>
+				<service name="Uplink"/>
+			</provides>
+			<config verbose_domain_state="yes" verbose="yes">
+				<default-policy domain="default"/>
+				<domain name="default" interface="10.0.2.1/24"/>
+			</config>
+		</start>
+
+		<start name="test-vfs_tap">
+			<resource name="RAM" quantum="8M"/>
+			<config>
+				<libc stdout="/dev/log"/>
+				<vfs>
+					<dir name="dev">
+						<log/>
+						<tap name="tap0"/>
+					</dir>
+				</vfs>
+			</config>
+		</start>
+
+		<start name="ping">
+			<resource name="RAM" quantum="4M"/>
+			<config interface="10.0.2.2/24"
+			        gateway="10.0.2.1"
+			        dst_ip="10.0.2.123"
+			        period_sec="5"
+			        verbose="no"/>
+		</start>
+	</config>
+
+</runtime>

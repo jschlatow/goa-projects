@@ -1,0 +1,5 @@
+genodelabs/api/base
+genodelabs/api/os
+genodelabs/api/vfs
+genodelabs/api/nic_session
+genodelabs/api/so
