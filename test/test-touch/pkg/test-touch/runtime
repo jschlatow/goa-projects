@@ -1,0 +1,42 @@
+<runtime ram="100M" caps="1000" binary="init">
+
+	<requires>
+		<platform/>
+		<timer/>
+	</requires>
+
+	<config>
+		<parent-provides>
+			<service name="ROM"/>
+			<service name="PD"/>
+			<service name="RM"/>
+			<service name="CPU"/>
+			<service name="LOG"/>
+			<service name="Platform"/>
+			<service name="Timer"/>
+		</parent-provides>
+		<default-route>
+			<any-service> <parent/> <any-child/> </any-service>
+		</default-route>
+		<default caps="100"/>
+
+		<start name="event_dump">
+			<resource name="RAM" quantum="1M"/>
+			<provides> <service name="Event"/> </provides>
+			<config/>
+		</start>
+
+		<start name="pc_goodix_touch">
+			<resource name="RAM" quantum="20M"/>
+			<config>
+			</config>
+		</start>
+	</config>
+
+	<content>
+		<rom label="init"/>
+		<rom label="event_dump"/>
+		<rom label="pc_goodix_touch"/>
+	</content>
+
+</runtime>
