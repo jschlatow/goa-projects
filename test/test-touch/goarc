@@ -1,0 +1,2 @@
+set depot_dir  ~/repos/genode/depot
+set public_dir ~/repos/genode/public
