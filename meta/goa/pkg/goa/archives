@@ -13,6 +13,7 @@ genodelabs/src/coreutils
 genodelabs/src/event_filter
 genodelabs/src/expat
 genodelabs/src/fb_sdl
+genodelabs/src/fs_query
 genodelabs/src/fs_rom
 genodelabs/src/gui_fb
 genodelabs/src/init
@@ -38,9 +39,13 @@ genodelabs/src/sandbox
 genodelabs/src/sdl
 genodelabs/src/sed
 genodelabs/src/stdcxx
+genodelabs/src/stdin2out
 genodelabs/src/terminal
+genodelabs/src/terminal_crosslink
 genodelabs/src/vfs
+genodelabs/src/vfs_block
 genodelabs/src/vfs_gpu
+genodelabs/src/vfs_import
 genodelabs/src/vfs_lwip
 genodelabs/src/vfs_pipe
 genodelabs/src/vfs_ttf
