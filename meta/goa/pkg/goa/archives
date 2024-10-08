@@ -19,8 +19,8 @@ genodelabs/src/gui_fb
 genodelabs/src/init
 genodelabs/src/libc
 genodelabs/src/libdrm
-genodelabs/src/linux_nic_drv
-genodelabs/src/linux_rtc_drv
+genodelabs/src/linux_nic
+genodelabs/src/linux_rtc
 genodelabs/src/lx_fs
 genodelabs/src/ncurses
 genodelabs/src/nic_router
@@ -48,6 +48,7 @@ genodelabs/src/vfs_gpu
 genodelabs/src/vfs_import
 genodelabs/src/vfs_lwip
 genodelabs/src/vfs_pipe
+genodelabs/src/vfs_rump
 genodelabs/src/vfs_ttf
 genodelabs/src/vim
 genodelabs/raw/drivers_interactive-linux
