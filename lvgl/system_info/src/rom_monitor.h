@@ -56,10 +56,9 @@ struct Rom_monitor : Info::Widget
 				String<64> value { };
 				attr.value<64>(value);
 
-				if (!data_node.has_attribute(name.string()) ||
-				    !data_node.attribute(name.string()).has_value(value.string())) {
+				String<64> attr_value = data_node.attribute_value(name.string(), String<64> { });
+				if (attr_value != value)
 					matches = false;
-				}
 			});
 
 			if (matches)

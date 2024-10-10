@@ -72,33 +72,23 @@ namespace Util {
 } /* namespace Util */
 
 
-struct Attached_framebuffer
+struct Attached_framebuffer : Genode::Attached_dataspace
 {
-	Genode::Env                &_env;
-	Genode::Attached_dataspace  _fb_ds;
-	size_t                      _count;
-	size_t                      _size;
+	const size_t                _size;
 
 	Attached_framebuffer(Genode::Env                & env,
 	                     Framebuffer::Mode            mode,
-	                     Genode::Dataspace_capability ds,
-	                     bool                         use_alpha)
-	: _env(env),
-	  _fb_ds(_env.rm(), ds),
-	  _count(mode.area.w() * mode.area.h()),
-	  _size(_count * mode.bytes_per_pixel())
+	                     Genode::Dataspace_capability ds)
+	: Attached_dataspace(env.rm(), ds),
+	  _size(mode.area.count() * sizeof(Genode::Pixel_rgb888))
 	{
-		/* initialise input mask (after pixel array and alpha array) */
-		if (use_alpha)
-			memset((uint8_t*)base() + size() + _count, 0x1, _count);
+		/* initialise input mask */
+		mode.with_input_bytes(*this, [&] (Genode::Byte_range_ptr const & bytes) {
+			memset(bytes.start, 0x1, bytes.num_bytes);
+		});
 	}
 
-	~Attached_framebuffer()
-	{
-		_env.rm().detach(_fb_ds.local_addr<void>());
-	}
-
-	void  *base() { return _fb_ds.local_addr<void>(); }
+	void  *base() { return local_addr<void>(); }
 	size_t size() { return _size; }
 };
 
@@ -108,11 +98,8 @@ struct Platform
 	Genode::Env &_env;
 
 	Gui::Connection         & _gui;
-	Gui::Session::View_handle _view { _gui.create_view() };
+	Gui::Top_level_view       _view { _gui };
 	Framebuffer::Mode         _mode;
-	bool                      _use_alpha;
-
-	Input::Session_client &_input { *_gui.input() };
 
 	struct Key_event
 	{
@@ -133,89 +120,93 @@ struct Platform
 	Genode::Constructible<Attached_framebuffer> _fb { };
 
 	Genode::Signal_handler<Platform> _sigh {
-		_env.ep(), *this, &Platform::_handle_mode_change };
+		_env.ep(), *this, &Platform::_resize };
 
-	void _handle_mode_change()
+	void _resize()
 	{
 		/* dummy signal handler to activate resizing */
 	}
 
 	Platform(Genode::Env       &env,
 	         Gui::Connection   &gui,
-	         Framebuffer::Mode  mode,
+	         Gui::Rect          gui_win,
 	         bool               allow_resize,
 	         char const        *title,
 	         bool               use_alpha)
 	:
 		_env { env },
 		_gui { gui },
-		_mode { mode },
-		_use_alpha { use_alpha }
+		_mode { .area = gui_win.area, .alpha = use_alpha }
 	{
 		/* register handler early, otherwise resizing seems to has issues */
 		if (allow_resize)
-			_gui.mode_sigh(_sigh);
+			_gui.info_sigh(_sigh);
 
-		_gui.buffer(_mode, _use_alpha);
-
-		_fb.construct(_env, mode, _gui.framebuffer()->dataspace(), _use_alpha);
+		_gui.buffer(_mode);
+		_fb.construct(_env, _mode, _gui.framebuffer.dataspace());
 
 		using Command = Gui::Session::Command;
 		using namespace Gui;
 
-		_gui.enqueue<Command::Geometry>(_view, Gui::Rect(Gui::Point(0, 0),
-		                                                 _mode.area));
-		_gui.enqueue<Command::To_front>(_view, Gui::Session::View_handle());
-		_gui.enqueue<Command::Title>(_view, title ? title : "unknown-lvgl-window");
+		_gui.enqueue<Command::Geometry>(_view.id(), gui_win);
+		_gui.enqueue<Command::Front>(_view.id());
+		_gui.enqueue<Command::Title>(_view.id(), title ? title : "unknown-lvgl-window");
 		_gui.execute();
 	}
 
-	void update_mode(Framebuffer::Mode mode)
+	void resize(Gui::Rect gui_win)
 	{
 		if (_fb.constructed())
 			_fb.destruct();
 
-		_gui.buffer(mode, _use_alpha);
+		Framebuffer::Mode const mode = { .area = gui_win.area, .alpha = _mode.alpha };
+		_gui.buffer(mode);
+		_fb.construct(_env, mode, _gui.framebuffer.dataspace());
 
-		_fb.construct(_env, mode, _gui.framebuffer()->dataspace(), _use_alpha);
 		_mode = mode;
 
 		using Command = Gui::Session::Command;
 		using namespace Gui;
 
-		_gui.enqueue<Command::Geometry>(_view, Gui::Rect(Gui::Point(0, 0),
-		                                                 mode.area));
+		_gui.enqueue<Command::Geometry>(_view.id(), gui_win);
 		_gui.execute();
 	}
 
 	void refresh(int x, int y, int w, int h)
 	{
-		if (_use_alpha) {
-			/* fill alpha array from rgba values */
-			uint32_t *rgba  = (uint32_t*)_fb->base() + _mode.area.w()*y + x;
-			uint8_t  *alpha = (uint8_t*)_fb->base() + _fb->size();
+		Gui::Rect rect { .at = { x, y }, .area = { (unsigned)w, (unsigned)h } };
 
-			for (int row=y; row < y+h; row++,
-			                           rgba  += _mode.area.w(),
-			                           alpha += _mode.area.w())
-			{
-				for (int col=x; col < x+w; col++)
-					alpha[col] = (rgba[col] >> 24) & 0xff;
-			}
-		}
+		/* fill alpha bytes with values from pixel data */
+		_mode.with_alpha_bytes(*_fb, [&] (Genode::Byte_range_ptr const & alpha_bytes) {
+			_mode.with_pixel_surface(*_fb, [&] (auto & surface) {
 
-		_gui.framebuffer()->refresh(x, y, w, h);
+				Gui::Rect clipped     = Gui::Rect::intersect(surface.clip(), rect);
+				unsigned  line_length = surface.size().w;
+
+				uint32_t *rgba  = (uint32_t*)surface.addr()
+				                  + line_length*clipped.y1() + clipped.x1();
+				uint8_t  *alpha = (uint8_t*)alpha_bytes.start
+				                  + line_length*clipped.y1() + clipped.x1();
+
+				for (unsigned row = clipped.h(); row--; rgba  += line_length,
+				                                        alpha += line_length)
+					for (unsigned col = clipped.w(); col--;)
+						alpha[col] = (rgba[col] >> 24) & 0xff;
+			});
+		});
+
+		_gui.framebuffer.refresh(rect);
 	}
 
 	template <typename FN>
-	void framebuffer(FN const & fn)
+	void with_framebuffer(FN const & fn)
 	{
 		fn(_fb->base(), _fb->size());
 	}
 
 	void update_input()
 	{
-		_input.for_each_event([&] (Input::Event const &curr) {
+		_gui.input.for_each_event([&] (Input::Event const &curr) {
 
 			curr.handle_absolute_motion([&] (int x, int y) {
 				_mouse_event.x = x;
@@ -332,7 +323,7 @@ class Lvgl_support
 		Genode::Heap _heap { _env.ram(), _env.rm() };
 
 		Gui::Connection   _gui;
-		Framebuffer::Mode _mode;
+		Gui::Rect         _gui_win;
 		Platform          _platform;
 
 		Timer::Connection _timer   { _env };
@@ -351,7 +342,7 @@ class Lvgl_support
 
 		void _setup_draw_buffer(lv_disp_draw_buf_t &buffer)
 		{
-			_platform.framebuffer([&] (void *base, size_t size) {
+			_platform.with_framebuffer([&] (void *base, size_t size) {
 				lv_disp_draw_buf_init(&buffer, base, NULL, size);
 			});
 		}
@@ -365,8 +356,8 @@ class Lvgl_support
 		Genode::Signal_handler<Lvgl_support> _timer_sigh {
 			_env.ep(), *this, &Lvgl_support::_handle_timer };
 
-		Genode::Signal_handler<Lvgl_support> _mode_sigh {
-			_env.ep(), *this, &Lvgl_support::_handle_mode_change };
+		Genode::Signal_handler<Lvgl_support> _info_sigh {
+			_env.ep(), *this, &Lvgl_support::_handle_resize };
 
 		void _handle_signals()
 		{
@@ -388,19 +379,24 @@ class Lvgl_support
 			_handle_signals();
 		}
 
-		void _handle_mode_change()
+		void _handle_resize()
 		{
-			Framebuffer::Mode const req_mode = _gui.mode();
+			Gui::Rect const new_win = _gui.window().convert<Gui::Rect>(
+				[&] (Gui::Rect rect) { return rect; },
+				[&] (Gui::Undefined) { return Gui::Rect { }; });
 
-			_platform.update_mode(req_mode);
+			if (!new_win.valid())
+				return;
 
-			_disp_drv.hor_res = req_mode.area.w();
-			_disp_drv.ver_res = req_mode.area.h();
+			_platform.resize(new_win);
+
+			_disp_drv.hor_res = new_win.w();
+			_disp_drv.ver_res = new_win.h();
 
 			_setup_draw_buffer(_disp_buf1);
 
 			lv_disp_drv_update(_disp, &_disp_drv);
-			_mode = req_mode;
+			_gui_win = new_win;
 
 			if (_config.resize_callback)
 				(*_config.resize_callback)();
@@ -409,7 +405,7 @@ class Lvgl_support
 		void _resume(Lvgl::Config config)
 		{
 			if (config.use_keyboard || config.use_mouse) {
-				_platform._input.sigh(_sigh);
+				_gui.input.sigh(_sigh);
 			}
 
 			if (config.use_periodic_timer) {
@@ -418,40 +414,27 @@ class Lvgl_support
 			}
 
 			if (config.use_refresh_sync) {
-				_gui.framebuffer()->sync_sigh(_sigh);
+				_gui.framebuffer.sync_sigh(_sigh);
 			}
 
 			if (config.allow_resize) {
-				_gui.mode_sigh(_mode_sigh);
+				_gui.info_sigh(_info_sigh);
 			}
 		}
 
-		static Framebuffer::Mode _initial_mode(Gui::Connection & gui,
-		                                       Lvgl::Config & config)
+		static Gui::Rect _initial_win(Gui::Connection & gui,
+		                              Lvgl::Config & config)
 		{
-			Framebuffer::Mode mode = gui.mode();
+			/* prefer initial width/height if set and resizing is not allowed */
+			if (!config.allow_resize && config.initial_width && config.initial_height)
+				return Gui::Rect { { }, { config.initial_width, config.initial_height } };
 
-			if (config.allow_resize) {
-
-				/* always prefer actual screen size (only if larger) */
-				if (mode.area.w() < config.initial_width)
-					mode.area = { config.initial_width, mode.area.h() };
-
-				if (mode.area.h() < config.initial_height)
-					mode.area = { mode.area.w(), config.initial_height };
-
-			} else {
-
-				/* prefer initial width/height (if != 0) */
-				if (config.initial_width)
-					mode.area = { config.initial_width, mode.area.h() };
-
-				if (config.initial_height)
-					mode.area = { mode.area.w(), config.initial_height };
-
-			}
-
-			return mode;
+			/* else, get actual window size */
+			return gui.window().convert<Gui::Rect>(
+				[&] (Gui::Rect rect) { return rect; },
+				[&] (Gui::Undefined) {
+					return Gui::Rect { .at = { }, .area = { config.initial_width, config.initial_height } };
+				});
 		}
 
 		/* Noncopyable */
@@ -464,10 +447,10 @@ class Lvgl_support
 		:
 			_env  { env },
 			_gui  { env, config.title ? config.title : "LVGL" },
-			_mode { _initial_mode(_gui, config) },
-			_platform { _env, _gui, _mode, config.allow_resize,
-			                               config.title,
-			                               config.use_alpha },
+			_gui_win  { _initial_win(_gui, config) },
+			_platform { _env, _gui, _gui_win, config.allow_resize,
+			                                  config.title,
+			                                  config.use_alpha },
 			_config { config }
 		{
 			lv_init();
@@ -478,8 +461,8 @@ class Lvgl_support
 			_disp_drv.draw_buf = &_disp_buf1;
 			_disp_drv.flush_cb = genode_disp_flush;
 			_disp_drv.clear_cb = genode_disp_clear;
-			_disp_drv.hor_res = _mode.area.w();
-			_disp_drv.ver_res = _mode.area.h();
+			_disp_drv.hor_res = _gui_win.w();
+			_disp_drv.ver_res = _gui_win.h();
 			_disp_drv.screen_transp = config.use_alpha;
 			_disp_drv.direct_mode = true;
 			_disp_drv.full_refresh = true;
