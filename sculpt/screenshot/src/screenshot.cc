@@ -51,8 +51,8 @@ struct Screenshot::Main
 
 	static Area _area_from_xml(Xml_node node, Area default_area)
 	{
-		return Area(node.attribute_value("width",  default_area.w()),
-		            node.attribute_value("height", default_area.h()));
+		return Area(node.attribute_value("width",  default_area.w),
+		            node.attribute_value("height", default_area.h));
 	}
 
 	Rtc::Connection      _rtc        { _env };
@@ -85,15 +85,15 @@ struct Screenshot::Main
 			Png_output(Allocator &alloc, Area area)
 			: _alloc(alloc), _area(area)
 			{
-				_image        = new (_alloc) png_byte[area.w() * area.h() * sizeof(Pixel)];
-				_row_pointers = new (_alloc) png_bytep[area.h()];
+				_image        = new (_alloc) png_byte[area.w * area.h * sizeof(Pixel)];
+				_row_pointers = new (_alloc) png_bytep[area.h];
 
 				if (_image == nullptr || _row_pointers == nullptr)
 					throw Out_of_ram();
 
 				/* Set up pointers into your "image" byte array. */
-				for (size_t k = 0; k < area.h(); k++)
-					_row_pointers[k] = _image + k * area.w() * sizeof(Pixel);
+				for (size_t k = 0; k < area.h; k++)
+					_row_pointers[k] = _image + k * area.w * sizeof(Pixel);
 			}
 
 			~Png_output()
@@ -145,7 +145,7 @@ struct Screenshot::Main
 				png_init_io(png_ptr, fp);
 
 				/* setup png header */
-				png_set_IHDR(png_ptr, info_ptr, _area.w(), _area.h(), 8,
+				png_set_IHDR(png_ptr, info_ptr, _area.w, _area.h, 8,
 				             PNG_COLOR_TYPE_RGB, PNG_INTERLACE_ADAM7,
 				             PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 
@@ -190,11 +190,11 @@ struct Screenshot::Main
 
 		void _check_area()
 		{
-			if (!_area.w() || !_area.h())
+			if (!_area.valid())
 				throw Invalid_screen_size();
 		}
 
-		bool _capture_buffer_init = ( _check_area(), _capture.buffer(_area), true );
+		bool _capture_buffer_init = ( _check_area(), _capture.buffer({ .px = _area, .mm = { } }), true );
 
 		Attached_dataspace _capture_ds { _env.rm(), _capture.dataspace() };
 
@@ -238,7 +238,7 @@ struct Screenshot::Main
 		try {
 			_capture_input.construct(_env, xml);
 			_output.       construct(_heap, _capture_input->area());
-		} catch (Capture_input::Invalid_screen_size & e) {
+		} catch (Capture_input::Invalid_screen_size &) {
 			error("Invalid screen size");
 			return;
 		}
