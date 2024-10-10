@@ -1,13 +1,13 @@
 genodelabs/src/init
 genodelabs/src/event_filter
-jschlatow/src/monitor
+genodelabs/src/monitor
 genodelabs/src/sandbox
 genodelabs/src/fs_rom
 genodelabs/src/fs_report
 genodelabs/src/terminal_log
 genodelabs/src/file_terminal
 genodelabs/src/stdin2out
-jschlatow/src/libc
+genodelabs/src/libc
 genodelabs/src/nitpicker
 genodelabs/src/openssl
 genodelabs/src/posix
