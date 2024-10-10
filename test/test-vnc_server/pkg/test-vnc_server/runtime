@@ -15,7 +15,7 @@
 		<report label="shape"/>
 		<report label="clipboard"/>
 		<rom label="clipboard"/>
-		<rom label="mesa_gpu_drv.lib.so"/>
+		<rom label="mesa_gpu.lib.so"/>
 		<timer/>
 	</requires>
 
@@ -60,8 +60,8 @@
 				<service name="ROM" label="config">
 					<parent label="textedit.config"/>
 				</service>
-				<service name="ROM" label="mesa_gpu_drv.lib.so">
-					<parent label="mesa_gpu_drv.lib.so"/>
+				<service name="ROM" label="mesa_gpu.lib.so">
+					<parent label="mesa_gpu.lib.so"/>
 				</service>
 				<service name="ROM" label="clipboard">
 					<parent label="clipboard"/>

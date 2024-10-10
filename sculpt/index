@@ -17,12 +17,11 @@
 
   <index name="Mobile Network" arch="x86_64">
     <pkg path="mobile_network" info="all-in-one package for mobile network support"/>
-    <pkg path="usb_modem_drv"  info="usb modem driver"/>
+    <pkg path="usb_modem"      info="usb modem driver"/>
     <pkg path="mbimcli"        info="MBIM control app for usb_modem_drv"/>
   </index>
 
   <index name="Shells" arch="x86_64">
-    <pkg path="system_shell" info="command-line interface to the system"/>
     <pkg path="unix_shell"   info="unix shell"/>
     <pkg path="dotfiles_fs"  info="dot files for unix shell"/>
   </index>

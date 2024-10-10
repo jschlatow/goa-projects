@@ -32,7 +32,7 @@
 		<usb/>
 		<vm/>
 		<file_system/>
-		<rom label="mesa_gpu_drv.lib.so"/>
+		<rom label="mesa_gpu.lib.so"/>
 		<rom label="platform_info"/>
 	</requires>
 
@@ -191,8 +191,8 @@
 					<parent label="http"/> </service>
 				<service name="Nic" label_prefix="gdb">
 					<parent label="gdb"/> </service>
-				<service name="ROM" label="mesa_gpu_drv.lib.so">
-					<parent label="mesa_gpu_drv.lib.so"/> </service>
+				<service name="ROM" label="mesa_gpu.lib.so">
+					<parent label="mesa_gpu.lib.so"/> </service>
 				<service name="ROM" label="platform_info">
 					<parent label="platform_info"/> </service>
 				<any-service> <parent/> </any-service>
