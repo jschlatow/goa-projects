@@ -26,8 +26,94 @@ namespace Vncserver {
 
 	using namespace Genode;
 
+	template <typename>
+	class  Rate_limiter;
 	struct Main;
 }
+
+
+template <typename HANDLER>
+class Vncserver::Rate_limiter : public Output_control
+{
+	private:
+
+		using Handler_method   = void (HANDLER::*)();
+		using One_shot_timeout = Timer::One_shot_timeout<Rate_limiter>;
+
+		Env                        & _env;
+		Capture::Connection        & _capture;
+		HANDLER                    & _handler;
+		Handler_method const         _handler_method;
+		Timer::Connection            _timer   { _env };
+		One_shot_timeout             _timeout { _timer, *this, &Rate_limiter::_handle_timeout };
+		Signal_handler<Rate_limiter> _wakeup_handler {
+			_env.ep(), *this, &Rate_limiter::_handle_wakeup };
+
+		Duration _period     { Milliseconds { 40 } };  /* max. 25 fps */
+		Duration _last_frame { Microseconds { 0 } };
+
+		bool     _idle       { true };
+
+		void _handle_timeout(Duration)
+		{
+			_last_frame = _timer.curr_time();
+			(_handler.*_handler_method)();
+			_capture.capture_stopped();
+		}
+
+		void _handle_wakeup()
+		{
+			if (_idle) return;
+
+			Duration now      = _timer.curr_time();
+			Duration earliest = _last_frame;
+			earliest.add(_period.trunc_to_plain_ms());
+			earliest.add(Milliseconds { 1 }); /* tolerance */
+			if (earliest.less_than(now)) {
+				/* call handler_method only if last call was > _period in the past */
+				_last_frame = now;
+				(_handler.*_handler_method)();
+				_capture.capture_stopped();
+			} else if (!_timeout.scheduled()) {
+				/* postpone the call of handler_method */
+				auto diff = earliest.trunc_to_plain_us().value - now.trunc_to_plain_us().value;
+				_timeout.schedule({ Microseconds { diff } });
+			}
+		}
+
+	public:
+
+		Rate_limiter(Env & env, Capture::Connection & capture,
+		             HANDLER & handler, Handler_method method)
+		: _env(env), _capture(capture),
+		  _handler(handler),
+		  _handler_method(method)
+		{
+			_capture.wakeup_sigh(_wakeup_handler);
+			_capture.capture_stopped();
+		}
+
+		void update_period(Milliseconds period) { _period = Duration({period}); }
+
+		/**
+		* Output_control interface
+		*/
+
+		void enable()
+		{
+			_idle = false;
+			_last_frame = _timer.curr_time();
+			(_handler.*_handler_method)();
+			_capture.capture_stopped();
+		}
+
+		void disable()
+		{
+			_timeout.discard();
+			_idle = true;
+		}
+};
+
 
 struct Vncserver::Main
 {
@@ -49,25 +135,24 @@ struct Vncserver::Main
 
 	static Area _area_from_xml(Xml_node node, Area default_area)
 	{
-		return Area(node.attribute_value("width",  default_area.w()),
-		            node.attribute_value("height", default_area.h()));
+		return Area(node.attribute_value("width",  default_area.w),
+		            node.attribute_value("height", default_area.h));
 	}
 
 	static Area _safe_screen_size(Area default_area)
 	{
-		if (default_area.w() > 0 && default_area.h() > 0)
+		if (default_area.w > 0 && default_area.h > 0)
 			return default_area;
 		else
 			return Area(320, 240);
 	}
 
-	Capture::Connection  _capture    { _env };
-	Timer::Connection    _timer      { _env };
-	Timer_ctrl           _timer_ctrl { _timer };
-	Output               _output     { _env,
-	                                   _heap,
-	                                   _safe_screen_size(_capture.screen_size()),
-	                                   _timer_ctrl };
+	Capture::Connection  _capture      { _env };
+	Rate_limiter<Main>   _rate_limiter { _env, _capture, *this, &Main::_handle_capture };
+	Output               _output       { _env,
+	                                     _heap,
+	                                     _safe_screen_size(_capture.screen_size()),
+	                                     _rate_limiter };
 
 	struct Capture_input
 	{
@@ -77,7 +162,7 @@ struct Vncserver::Main
 
 		Area const _area;
 
-		bool _capture_buffer_init = ( _capture.buffer(_area), true );
+		bool _capture_buffer_init = ( _capture.buffer({ .px = _area, .mm = { } }), true );
 
 		Attached_dataspace _capture_ds { _env.rm(), _capture.dataspace() };
 
@@ -107,9 +192,7 @@ struct Vncserver::Main
 
 	Constructible<Capture_input> _capture_input { };
 
-	Signal_handler<Main> _timer_handler { _env.ep(), *this, &Main::_handle_timer };
-
-	void _handle_timer()
+	void _handle_capture()
 	{
 		if (!_capture_input.constructed())
 			return;
@@ -157,7 +240,7 @@ struct Vncserver::Main
 		if (period_ms == 0)
 			warning("missing or invalid 'period_ms' config attribute");
 
-		_timer_ctrl.update_period(period_ms);
+		_rate_limiter.update_period(Milliseconds { period_ms });
 	}
 
 	Signal_handler<Main> _resize_handler { _env.ep(), *this, &Main::_handle_resize };
@@ -165,7 +248,6 @@ struct Vncserver::Main
 
 	Main(Libc::Env &env) : _env(env)
 	{
-		_timer.sigh(_timer_handler);
 		_config.sigh(_config_handler);
 		_capture.screen_size_sigh(_resize_handler);
 
