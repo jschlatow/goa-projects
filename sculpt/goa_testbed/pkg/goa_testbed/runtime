@@ -30,7 +30,7 @@
 		<event/>
 		<capture/>
 		<file_system/>
-		<rom label="mesa_gpu_drv.lib.so"/>
+		<rom label="mesa_gpu.lib.so"/>
 		<rom label="clipboard"/>
 		<rom label="platform_info"/>
 		<rom label="capslock"/>
