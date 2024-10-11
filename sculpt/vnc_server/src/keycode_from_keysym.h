@@ -162,7 +162,6 @@ namespace Vncserver {
 			return map[keysym - XK_BackSpace];
 		}
 
-		warning("Unmapped keysym: ", Hex(keysym));
 		return KEY_UNKNOWN;
 	}
 
