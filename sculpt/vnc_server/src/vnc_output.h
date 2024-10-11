@@ -30,40 +30,15 @@
 namespace Vncserver {
 	using namespace Genode;
 
-	struct Timer_ctrl;
-	class Output;
+	struct Output_control;
+	class  Output;
 }
 
-struct Vncserver::Timer_ctrl
+
+struct Vncserver::Output_control
 {
-	Timer::Connection &_timer;
-	unsigned long      _period_ms { 0 };
-	bool               _enabled   { false };
-
-	void _start() { _timer.trigger_periodic(1000*_period_ms); }
-	void _stop()  { _timer.trigger_periodic(0); }
-
-	Timer_ctrl(Timer::Connection &timer)
-	: _timer(timer)
-	{ }
-
-	void update_period(unsigned long period_ms)
-	{
-		_period_ms = period_ms;
-		if (_enabled) _start();
-	}
-
-	void enable()
-	{
-		_enabled = true;
-		_start();
-	}
-
-	void disable()
-	{
-		_enabled = false;
-		_stop();
-	}
+	virtual void enable()  = 0;
+	virtual void disable() = 0;
 };
 
 
@@ -117,10 +92,10 @@ class Vncserver::Output
 			{ return _value & button & MASK; }
 		};
 
-		Libc::Env  &_env;
-		Allocator  &_alloc;
-		Timer_ctrl &_timer_ctrl;
-		Area        _area;
+		Libc::Env       &_env;
+		Allocator       &_alloc;
+		Area             _area;
+		Output_control & _output_control;
 
 		Event::Connection _event_connection { _env };
 
@@ -132,14 +107,14 @@ class Vncserver::Output
 
 		void _realloc_buffer()
 		{
-			const size_t size = _area.w() * _area.h() * sizeof(Pixel);
+			const size_t size = _area.w * _area.h * sizeof(Pixel);
 
 			char* oldfb = _screen->frameBuffer;
 			char* newfb = new (_alloc) char[size];
 
 			if (oldfb) {
 				rfbNewFramebuffer(_screen, newfb,
-				                  _area.w(), _area.h(),
+				                  _area.w, _area.h,
 				                  8, 3, sizeof(Pixel));
 				destroy(_alloc, oldfb);
 			}
@@ -160,8 +135,8 @@ class Vncserver::Output
 
 	public:
 
-		Output(Libc::Env &env, Allocator &alloc, Area area, Timer_ctrl &timer)
-		: _env(env), _alloc(alloc), _timer_ctrl(timer), _area(area)
+		Output(Libc::Env &env, Allocator &alloc, Area area, Output_control & ctrl)
+		: _env(env), _alloc(alloc), _area(area), _output_control(ctrl)
 		{
 			/* rfbGetScreen takes options from argc/argv */
 			int argc    = 0;
@@ -170,7 +145,7 @@ class Vncserver::Output
 			populate_args_and_env(_env, argc, argv, envp);
 
 			_screen = rfbGetScreen(&argc, argv,
-			                       _area.w(), _area.h(),
+			                       _area.w, _area.h,
 			                       8, 3, sizeof(Pixel));
 			if (!_screen)
 				throw Libvnc_error();
@@ -294,12 +269,12 @@ class Vncserver::Output
 			return TRUE;
 		}
 
-		void handle_connect()    { _timer_ctrl.enable();  }
-		void handle_disconnect() { _timer_ctrl.disable(); }
+		void handle_connect()    { _output_control.enable();  }
+		void handle_disconnect() { _output_control.disable(); }
 
 		void handle_ptr(int buttons, int x, int y)
 		{
-			if (x < 0 || y < 0 || (unsigned)x >= _area.w() || (unsigned)y >= _area.h())
+			if (x < 0 || y < 0 || (unsigned)x >= _area.w || (unsigned)y >= _area.h)
 				return;
 
 			Button_state cur_buttons(buttons);

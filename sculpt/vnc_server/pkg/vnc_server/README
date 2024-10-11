@@ -8,8 +8,9 @@ forwarding route for TCP port 5900 to your nic_router. The component also
 requires a file-system session where it stores its default config as 'vnc.config'
 and reads its 'passwd' file.
 
-By default, the vnc server polls the Capture session every 40ms. You can change
-this by supplying a 'period_ms' attribute in the config node.
+The VNC server uses the wakeup/stop protocol of the Capture session and sends
+a frame update at most every 40ms. You can change the minimum time period between
+frames by supplying the 'period_ms' attribute in the config node.
 
 ! <config period_ms="20"/>
 
