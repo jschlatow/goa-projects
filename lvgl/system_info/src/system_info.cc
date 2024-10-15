@@ -28,6 +28,7 @@
 /* local includes */
 #include "system_info.h"
 #include "rom_tabular.h"
+#include "rom_label.h"
 #include "battery_monitor.h"
 
 using namespace Genode;
@@ -117,6 +118,51 @@ struct Main
 		});
 	}
 
+	void _handle_rom_nodes(Xml_node const & xml, lv_obj_t * cont, String<32> const & default_tz)
+	{
+		/* iterate XML nodes and create widgets */
+		xml.for_each_sub_node([&] (Xml_node const & node) {
+			String<32> tz = node.attribute_value("timezone", default_tz);
+
+			if (node.has_type("clock"))
+				new (_heap) Registered_widget<Info::Clock>(_widget_registry,
+				                                           cont, tz.string());
+			else if (node.has_type("calendar"))
+				new (_heap) Registered_widget<Info::Calendar>(_widget_registry,
+				                                           cont, tz.string());
+			else if (node.has_type("tabular"))
+				new (_heap) Registered_widget<Rom_tabular>(_widget_registry,
+				                                           _env, node, cont);
+			else if (node.has_type("battery"))
+				new (_heap) Registered_widget<Battery_monitor>(_widget_registry,
+				                                               _env, node, cont,
+				                                               _heap);
+			else if (node.has_type("tabular"))
+				new (_heap) Registered_widget<Rom_tabular>(_widget_registry,
+				                                           _env, node, cont);
+			else if (node.has_type("label")) {
+				String<64> rom_label  = node.attribute_value("rom", String<64>());
+				unsigned   label_size = node.attribute_value("size", 28);
+
+				if (rom_label.length())
+					new (_heap) Registered_widget<Rom_label>(_widget_registry,
+						_env, rom_label, cont, label_size);
+				else
+					new (_heap) Registered_widget<Info::Label>(
+						_widget_registry, cont,
+						node.decoded_content<String<128>>().string(),
+						label_size);
+			}
+			else if (node.has_type("track")) {
+				Info::Track * track = new (_heap) Registered_widget<Info::Track>(
+					_widget_registry, cont,
+					node.attribute_value("align", Info::Alignment::MID));
+				track->with_container([&] (lv_obj_t * track) {
+					_handle_rom_nodes(node, track, tz); });
+			}
+		});
+	}
+
 	void handle_config()
 	{
 		/* remove all widgets */
@@ -137,31 +183,7 @@ struct Main
 			Info::set_background(c, color.a);
 
 			_layout->with_container([&] (lv_obj_t * cont) {
-
-				/* iterate XML nodes and create widgets */
-				_config_rom.xml().for_each_sub_node([&] (Xml_node const & node) {
-					String<32> tz = node.attribute_value("timezone", default_tz);
-
-					if (node.has_type("clock"))
-						new (_heap) Registered_widget<Info::Clock>(_widget_registry,
-						                                           cont, tz.string());
-					else if (node.has_type("calendar"))
-						new (_heap) Registered_widget<Info::Calendar>(_widget_registry,
-						                                           cont, tz.string());
-					else if (node.has_type("tabular"))
-						new (_heap) Registered_widget<Rom_tabular>(_widget_registry,
-						                                           _env, node, cont);
-					else if (node.has_type("battery"))
-						new (_heap) Registered_widget<Battery_monitor>(_widget_registry,
-						                                               _env, node, cont,
-						                                               _heap);
-					else if (node.has_type("label"))
-						new (_heap) Registered_widget<Info::Label>(
-							_widget_registry, cont,
-							node.decoded_content<String<128>>().string(),
-							node.attribute_value("size", 28));
-				});
-
+				_handle_rom_nodes(_config_rom.xml(), cont, default_tz);
 			});
 		});
 

@@ -25,9 +25,23 @@ namespace Info {
 	struct Bar;
 	struct Calendar;
 	struct Layout;
+	struct Track;
 	struct Tabular;
 
 	void set_background(lv_color_t, unsigned);
+
+	enum Alignment { TOP, MID, BOTTOM };
+
+	inline size_t ascii_to(char const *s, Alignment &result)
+	{
+		using Genode::strcmp;
+		if (!strcmp(s, "top",    3)) { result = Alignment::TOP;    return 3; }
+		if (!strcmp(s, "mid",    3)) { result = Alignment::MID;    return 3; }
+		if (!strcmp(s, "center", 6)) { result = Alignment::MID;    return 6; }
+		if (!strcmp(s, "bottom", 6)) { result = Alignment::BOTTOM; return 6; }
+
+		return 0;
+	}
 }
 
 
@@ -97,11 +111,17 @@ struct Info::Label : Widget
 		lv_obj_align_to(_shadow, _label, LV_ALIGN_TOP_LEFT, offset, offset);
 	}
 
-	Label(lv_obj_t * parent, char const *text, unsigned fontsize)
-	: _fontsize(fontsize)
+	void set_text(char const * text)
 	{
 		strncpy(_text, text, sizeof(_text)-1);
 
+		lv_label_set_text(_label,  _text);
+		lv_label_set_text(_shadow, lv_label_get_text(_label));
+	}
+
+	Label(lv_obj_t * parent, char const *text, unsigned fontsize)
+	: _fontsize(fontsize)
+	{
 		/* set up a container */
 		_cont = lv_obj_create(parent);
 		lv_obj_align(_cont, LV_ALIGN_CENTER, 0, 0);
@@ -130,8 +150,7 @@ struct Info::Label : Widget
 		/*Position the main label*/
 		lv_obj_align(_label, LV_ALIGN_CENTER, 0, 0);
 
-		lv_label_set_text(_label,  _text);
-		lv_label_set_text(_shadow, lv_label_get_text(_label));
+		set_text(text);
 
 		handle_resize();
 	}
@@ -604,6 +623,53 @@ struct Info::Layout
 			lv_style_set_flex_track_place(&_flex_style, LV_FLEX_ALIGN_CENTER);
 		else
 			lv_style_set_flex_track_place(&_flex_style, LV_FLEX_ALIGN_START);
+	}
+};
+
+
+struct Info::Track : Widget
+{
+	lv_obj_t * _flex_container { };
+
+	/* Noncopyable */
+	Track(Track const &) = delete;
+	void operator= (Track const &) = delete;
+
+	Track(lv_obj_t * cont, Alignment const & align)
+	: _flex_container(lv_obj_create(cont))
+	{
+		lv_obj_align(_flex_container, LV_ALIGN_CENTER, 0, 0);
+		lv_obj_set_size(_flex_container, LV_SIZE_CONTENT, lv_pct(100));
+		lv_obj_set_flex_flow(_flex_container, LV_FLEX_FLOW_COLUMN_WRAP);
+		switch (align) {
+			case TOP:
+				lv_obj_set_flex_align(_flex_container, LV_FLEX_ALIGN_START,
+				                             LV_FLEX_ALIGN_CENTER,
+				                             LV_FLEX_ALIGN_START);
+				break;
+			case MID:
+				lv_obj_set_flex_align(_flex_container, LV_FLEX_ALIGN_CENTER,
+				                             LV_FLEX_ALIGN_CENTER,
+				                             LV_FLEX_ALIGN_START);
+				break;
+			case BOTTOM:
+				lv_obj_set_flex_align(_flex_container, LV_FLEX_ALIGN_END,
+				                             LV_FLEX_ALIGN_CENTER,
+				                             LV_FLEX_ALIGN_START);
+				break;
+		}
+		lv_obj_set_style_bg_opa(_flex_container, LV_OPA_0, LV_PART_MAIN);
+		lv_obj_set_style_border_opa(_flex_container, LV_OPA_0, LV_PART_MAIN);
+		lv_obj_set_style_pad_all(_flex_container, 0, LV_PART_MAIN);
+		lv_obj_add_flag(_flex_container, LV_OBJ_FLAG_FLEX_IN_NEW_TRACK);
+	}
+
+	~Track() { lv_obj_del(_flex_container); }
+
+	template <typename FN>
+	void with_container(FN && fn)
+	{
+		fn(_flex_container);
 	}
 };
 
