@@ -11,8 +11,8 @@
  * under the terms of the GNU Affero General Public License version 3.
  */
 
-#ifndef _ROM_MONITOR_H_
-#define _ROM_MONITOR_H_
+#ifndef _ROM_TABULAR_H_
+#define _ROM_TABULAR_H_
 
 #include <base/attached_rom_dataspace.h>
 #include <util/reconstructible.h>
@@ -22,18 +22,18 @@
 
 using namespace Genode;
 
-struct Rom_monitor : Info::Widget
+struct Rom_tabular : Info::Widget
 {
 	Attached_rom_dataspace       _rom;
-	Signal_handler<Rom_monitor>  _sigh;
+	Signal_handler<Rom_tabular>  _sigh;
 	Xml_node                     _xml;
 	lv_obj_t                   * _cont;
 
 	Constructible<Info::Tabular> _widget { };
 
 	/* Noncopyable */
-	Rom_monitor(Rom_monitor const &) = delete;
-	void operator=(Rom_monitor const &) = delete;
+	Rom_tabular(Rom_tabular const &) = delete;
+	void operator=(Rom_tabular const &) = delete;
 
 	void _handle_node(Xml_node const & node, Xml_node const & rom_node)
 	{
@@ -115,9 +115,9 @@ struct Rom_monitor : Info::Widget
 		});
 	}
 
-	Rom_monitor(Env & _env, Xml_node const & node, lv_obj_t * cont)
+	Rom_tabular(Env & _env, Xml_node const & node, lv_obj_t * cont)
 	: _rom(_env, node.attribute_value("rom", Genode::String<64> { }).string()),
-	  _sigh(_env.ep(), *this, &Rom_monitor::handle_update),
+	  _sigh(_env.ep(), *this, &Rom_tabular::handle_update),
 	  _xml(node),
 	  _cont(cont)
 	{
@@ -129,4 +129,4 @@ struct Rom_monitor : Info::Widget
 };
 
 
-#endif /* _ROM_MONITOR_H_ */
+#endif /* _ROM_TABULAR_H_ */
