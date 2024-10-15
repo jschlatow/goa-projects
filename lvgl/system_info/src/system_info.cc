@@ -27,7 +27,7 @@
 
 /* local includes */
 #include "system_info.h"
-#include "rom_monitor.h"
+#include "rom_tabular.h"
 #include "battery_monitor.h"
 
 using namespace Genode;
@@ -149,7 +149,7 @@ struct Main
 						new (_heap) Registered_widget<Info::Calendar>(_widget_registry,
 						                                           cont, tz.string());
 					else if (node.has_type("tabular"))
-						new (_heap) Registered_widget<Rom_monitor>(_widget_registry,
+						new (_heap) Registered_widget<Rom_tabular>(_widget_registry,
 						                                           _env, node, cont);
 					else if (node.has_type("battery"))
 						new (_heap) Registered_widget<Battery_monitor>(_widget_registry,
