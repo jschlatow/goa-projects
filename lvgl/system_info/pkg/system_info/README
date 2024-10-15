@@ -51,10 +51,14 @@ Label widget
 This widget is instantiated by a '<label>' node. The content of the node is
 shown as plain text. An optional 'size' attribute may be provided to adjust
 the font size (supported values: 8 to 48).
+When provided with an optional 'rom' attribute, the content of the node is
+ignored and, instead, the widget displays the first 128 characters of the
+specified ROM module.
 
-Example:
+Examples:
 
 ! <label>Show this text</label>
+! <label rom="VERSION"/>
 
 Clock widget
 ~~~~~~~~~~~~
@@ -106,3 +110,18 @@ Creates a row in the table, showing the label "Foo" in its left cell and the
 value of the 'bar' attribute of the current XML node in its right cell. An
 optional 'highlight' attribute can be specified to highlight the row as a
 (sub)header of the table.
+
+Track widget
+~~~~~~~~~~~~
+
+This is a layout widget that creates a new flex container insider the default
+layout. The container takes up the full height so that the widgets within the
+container are displayed in a separate column. In contrast to the default layout,
+widgets are not spread evenly but vertically adjacent. The optional 'align'
+attribute controls the vertical anchoring of widgets within the track. Accepted
+values are: "top", "center" (default) and "bottom".
+
+! <track>
+!   <label>Battery state</label>
+!   <battery rom="runtime/acpica/acpi_battery"/>
+! </track>
