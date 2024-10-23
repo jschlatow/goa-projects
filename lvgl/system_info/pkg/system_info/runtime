@@ -1,4 +1,4 @@
-<runtime ram="25M" caps="2000" binary="system_info">
+<runtime ram="50M" caps="2000" binary="system_info">
 
 	<requires>
 		<gui/>
