@@ -56,6 +56,7 @@ struct Screenshot::Main
 	}
 
 	Rtc::Connection      _rtc        { _env };
+	Capture::Connection  _capture    { _env };
 
 	struct Png_output
 	{
@@ -176,53 +177,10 @@ struct Screenshot::Main
 			}
 	};
 
+	using Screen = Capture::Connection::Screen;
+
 	Constructible<Png_output> _output { };
-
-	struct Capture_input
-	{
-		struct Invalid_screen_size : Genode::Exception { };
-
-		Env &_env;
-
-		Capture::Connection _capture;
-
-		Area const _area;
-
-		void _check_area()
-		{
-			if (!_area.valid())
-				throw Invalid_screen_size();
-		}
-
-		bool _capture_buffer_init = ( _check_area(), _capture.buffer({ .px = _area, .mm = { } }), true );
-
-		Attached_dataspace _capture_ds { _env.rm(), _capture.dataspace() };
-
-		Texture<Pixel> const _texture { _capture_ds.local_addr<Pixel>(), nullptr, _area };
-
-		Capture::Point _at { };
-
-		Capture_input(Env &env,
-		              Xml_node const &config)
-		:
-			_env(env),
-			_capture(_env),
-			_area(_area_from_xml(config, _capture.screen_size())),
-			_at(_point_from_xml(config))
-		{ }
-
-		Area area() const { return _area; }
-
-		Affected_rects capture() { return _capture.capture_at(_at); }
-
-		template <typename FN>
-		void with_texture(FN const &fn) const
-		{
-			fn(_texture);
-		}
-	};
-
-	Constructible<Capture_input> _capture_input { };
+	Constructible<Screen>     _screen { };
 
 	void _handle_update()
 	{
@@ -235,19 +193,21 @@ struct Screenshot::Main
 
 		_last_state = !_last_state;
 
-		try {
-			_capture_input.construct(_env, xml);
-			_output.       construct(_heap, _capture_input->area());
-		} catch (Capture_input::Invalid_screen_size &) {
+		Area area = _area_from_xml(xml, _capture.screen_size());
+
+		if (!area.valid()) {
 			error("Invalid screen size");
 			return;
 		}
 
+		_screen.construct(_capture, _env.rm(), Screen::Attr { .px = area, .mm = { } });
+		_output.construct(_heap, area);
+
 		/* copy image data from capture session to image buffer */
-		_capture_input->with_texture([&] (Texture<Pixel> const &texture) {
+		_screen->with_texture([&] (Texture<Pixel> const &texture) {
 
 			_output->with_surface([&] (Surface<Pixel> &surface) {
-				Affected_rects const affected = _capture_input->capture();
+				Affected_rects const affected = _capture.capture_at(_point_from_xml(xml));
 
 				affected.for_each_rect([&] (Capture::Rect const rect) {
 
