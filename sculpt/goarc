@@ -6,7 +6,7 @@ set depot_user jschlatow
 set  version(jschlatow/pkg/dotfiles_fs)                            2024-10-09
 set  version(jschlatow/pkg/firefox-av@vbox6)                       2024-10-09
 set  version(jschlatow/pkg/fs_report)                              2024-10-07
-set  version(jschlatow/pkg/fs_rom)                                 2024-10-07
+set  version(jschlatow/pkg/fs_rom)                                 2024-11-19
 set  version(jschlatow/pkg/goa_testbed)                            2024-10-11
 set  version(jschlatow/pkg/goa_testbed_vnc)                        2024-10-11
 set  version(jschlatow/pkg/mbimcli)                                2024-11-12
