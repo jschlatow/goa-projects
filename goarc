@@ -8,7 +8,7 @@ set  version(genodelabs/src/libiconv)                    2024-10-07
 set  version(genodelabs/src/libyuv)                      2024-10-07
 set  version(genodelabs/src/mesa)                        2024-10-29
 set  version(genodelabs/src/vbox6)                       2024-10-29
-set  version(genodelabs/src/vfs_lxip)                    2024-10-29
+set  version(genodelabs/src/vfs_lxip)                    2024-11-19
 set  version(genodelabs/src/vfs_oss)                     2024-11-04
 set  version(genodelabs/src/vim)                         2024-10-07
 set  version(jschlatow/api/libpng)                       2019-02-25
