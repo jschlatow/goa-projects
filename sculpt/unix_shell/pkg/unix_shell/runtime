@@ -4,6 +4,7 @@
 		<gui/>
 		<timer/>
 		<rtc/>
+		<nic/>
 
 		<file_system label="home"     writeable="yes"/>
 		<file_system label="report"   writeable="no"/>
@@ -32,11 +33,16 @@
 		<!-- libraries -->
 		<rom label="vfs.lib.so"/>
 		<rom label="vfs_pipe.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="lxip.lib.so"/>
 		<rom label="libc.lib.so"/>
 		<rom label="libm.lib.so"/>
 		<rom label="posix.lib.so"/>
 		<rom label="ncurses.lib.so"/>
 		<rom label="pcre.lib.so"/>
+		<rom label="libssl.lib.so"/>
+		<rom label="libcrypto.lib.so"/>
+		<rom label="zlib.lib.so"/>
 
 		<!-- applications -->
 		<rom label="coreutils.tar"/>
@@ -49,6 +55,10 @@
 		<rom label="which.tar"/>
 		<rom label="less.tar"/>
 		<rom label="make.tar"/>
+		<rom label="curl.tar"/>
+
+		<!-- data files -->
+		<rom label="ca-certificates.crt"/>
 
 	</content>
 

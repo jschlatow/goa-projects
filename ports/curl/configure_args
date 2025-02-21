@@ -1,0 +1,4 @@
+--with-openssl
+--with-ca-path=/etc/ssl/certs
+--with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
+--without-libpsl
