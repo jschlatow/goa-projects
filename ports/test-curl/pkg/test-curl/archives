@@ -1,0 +1,9 @@
+genodelabs/src/vfs
+genodelabs/src/vfs_lxip
+genodelabs/src/vfs_pipe
+genodelabs/src/libc
+genodelabs/src/posix
+genodelabs/src/openssl
+genodelabs/src/libssh
+genodelabs/src/zlib
+jschlatow/src/curl

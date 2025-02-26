@@ -1,0 +1,4 @@
++++ src/Makefile	2025-02-25 13:32:56.777341802 +0100
+@@ -0,0 +1,2 @@
++test-curl: simple
++	@mv simple test-curl

@@ -1,0 +1,15 @@
+LICENSE   := curl
+DOWNLOADS := curl.archive
+VERSION   := 8.12.1
+
+URL(curl) := https://curl.se/download/curl-$(VERSION).tar.gz
+SHA(curl) := 7b40ea64947e0b440716a4d7f0b7aa56230a5341c8377d7b609649d4aea8dbcf
+SIG(curl) := ${URL(curl)}.asc
+KEY(curl) := daniel@haxx.se
+DIR(curl) := tmp
+
+PATCHES   := $(addprefix patches/,Makefile.patch \
+                                  no_ssl.patch)
+
+DIRS := src
+DIR_CONTENT(src) := tmp/docs/examples/simple.c

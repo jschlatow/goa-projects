@@ -1,0 +1,32 @@
+<runtime ram="12M" caps="300" binary="test-curl">
+
+	<requires>
+		<nic/>
+		<timer/>
+	</requires>
+
+	<config>
+		<libc stdout="/log" stderr="/log" socket="/sockets" pipe="/pipe"/>
+		<vfs>
+			<log/>
+			<dir name="pipe"> <pipe/> </dir>
+			<dir name="sockets"> <lxip dhcp="yes"/> </dir>
+		</vfs>
+	</config>
+
+	<content>
+		<rom label="test-curl"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="posix.lib.so"/>
+		<rom label="curl.lib.so"/>
+		<rom label="libssl.lib.so"/>
+		<rom label="libcrypto.lib.so"/>
+		<rom label="libssh.lib.so"/>
+		<rom label="lxip.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="vfs_lxip.lib.so"/>
+		<rom label="vfs_pipe.lib.so"/>
+		<rom label="zlib.lib.so"/>
+	</content>
+</runtime>
