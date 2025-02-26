@@ -11,4 +11,9 @@ DIR(curl) := src
 PATCHES   := $(addprefix patches/,max_write_size.patch \
                                   no_cmake.patch \
                                   remove_generated_src.patch \
-                                  xattr.patch)
+                                  xattr.patch \
+                                  configure.patch \
+                                  libcurl.pc.patch)
+
+DIRS := src
+DIR_CONTENT(src) := $(addprefix $(REP_DIR)/files/,FindCURL.cmake)

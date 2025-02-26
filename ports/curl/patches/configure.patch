@@ -1,0 +1,26 @@
++++ src/configure	2025-02-26 08:48:14.392438826 +0100
+@@ -13829,6 +13829,10 @@
+ 
+     # See if GNU ld supports shared libraries.
+     case $host_os in
++    genode*)
++      archive_cmds='$CC $libobjs $deplibs '$LDLIBS_SHARED' -o $lib'
++      archive_expsym_cmds=''
++      ;;
+     aix[3-9]*)
+       # On AIX/PPC, the GNU linker is very broken
+       if test ia64 != "$host_cpu"; then
+@@ -16051,6 +16055,13 @@
+   shlibpath_var=LD_LIBRARY_PATH
+   ;;
+ 
++genode*)
++  dynamic_linker="Genode ld.lib.so"
++  shrext_cmds=.lib.so
++  libname_spec='$name'
++  library_names_spec='$libname$shared_ext'
++  ;;
++
+ *)
+   dynamic_linker=no
+   ;;

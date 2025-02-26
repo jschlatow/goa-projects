@@ -2,3 +2,6 @@
 --with-ca-path=/etc/ssl/certs
 --with-ca-bundle=/etc/ssl/certs/ca-certificates.crt
 --without-libpsl
+--enable-shared
+--disable-static
+--host=x86_64-pc-genode
