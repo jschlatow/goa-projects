@@ -24,9 +24,9 @@
 			</node>
 		</tabular>
 		<track>
-			<label>                                  </label>
-			<label>Sculpt</label>
-			<label>24.10</label>
+			<label size="32">                          </label>
+			<label size="32">Sculpt</label>
+			<label size="34">24.10</label>
 		</track>
 		<tabular rom="drivers/iommu" alt="no IOMMU present">
 			<node type="intel">

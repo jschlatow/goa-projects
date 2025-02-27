@@ -42,6 +42,78 @@ namespace Info {
 
 		return 0;
 	}
+
+	inline unsigned column_size() {
+		if (LV_HOR_RES < 800)
+			return 250;
+		else if (LV_HOR_RES < 1200)
+			return 300;
+		else if (LV_HOR_RES < 1920)
+			return 400;
+		else
+			return 600;
+	}
+
+	inline unsigned scaled_font(unsigned size) {
+		unsigned base_size       { 12 };
+		unsigned current_scaling { size / base_size };
+		if (current_scaling == 0) current_scaling = 1;
+
+		unsigned offset { 16 };
+		if (LV_HOR_RES < 800)
+			offset = 0;
+		if (LV_HOR_RES < 1200)
+			offset = 2;
+		else if (LV_HOR_RES < 1920)
+			offset = 6;
+
+		return size + (offset * current_scaling);
+	}
+
+	inline const lv_font_t * font_by_size(unsigned size) {
+		const lv_font_t * fonts[] = { &lv_font_montserrat_8,
+		                              &lv_font_montserrat_10,
+		                              &lv_font_montserrat_12,
+		                              &lv_font_montserrat_14,
+		                              &lv_font_montserrat_16,
+		                              &lv_font_montserrat_18,
+		                              &lv_font_montserrat_20,
+		                              &lv_font_montserrat_22,
+		                              &lv_font_montserrat_24,
+		                              &lv_font_montserrat_26,
+		                              &lv_font_montserrat_28,
+		                              &lv_font_montserrat_30,
+		                              &lv_font_montserrat_32,
+		                              &lv_font_montserrat_34,
+		                              &lv_font_montserrat_36,
+		                              &lv_font_montserrat_38,
+		                              &lv_font_montserrat_40,
+		                              &lv_font_montserrat_42,
+		                              &lv_font_montserrat_44,
+		                              &lv_font_montserrat_46,
+		                              &lv_font_montserrat_48,
+		                              &lv_font_montserrat_60,
+		                              &lv_font_montserrat_60,
+		                              &lv_font_montserrat_60,
+		                              &lv_font_montserrat_60,
+		                              &lv_font_montserrat_60,
+		                              &lv_font_montserrat_60,
+		                              &lv_font_montserrat_72,
+		                              &lv_font_montserrat_72,
+		                              &lv_font_montserrat_72,
+		                              &lv_font_montserrat_72,
+		                              &lv_font_montserrat_72,
+		                              &lv_font_montserrat_72 };
+
+		unsigned sanitized_fontsize = size;
+		if (sanitized_fontsize < 8)
+			sanitized_fontsize = 8;
+		else if (sanitized_fontsize > 72)
+			sanitized_fontsize = 72;
+
+		unsigned font_index = (sanitized_fontsize / 2) - 4;
+		return fonts[font_index];
+	}
 }
 
 
@@ -69,42 +141,9 @@ struct Info::Label : Widget
 
 	void handle_resize() override
 	{
-		const lv_font_t * fonts[] = { &lv_font_montserrat_8,
-		                              &lv_font_montserrat_10,
-		                              &lv_font_montserrat_12,
-		                              &lv_font_montserrat_14,
-		                              &lv_font_montserrat_16,
-		                              &lv_font_montserrat_18,
-		                              &lv_font_montserrat_20,
-		                              &lv_font_montserrat_22,
-		                              &lv_font_montserrat_24,
-		                              &lv_font_montserrat_26,
-		                              &lv_font_montserrat_28,
-		                              &lv_font_montserrat_30,
-		                              &lv_font_montserrat_32,
-		                              &lv_font_montserrat_34,
-		                              &lv_font_montserrat_36,
-		                              &lv_font_montserrat_38,
-		                              &lv_font_montserrat_40,
-		                              &lv_font_montserrat_42,
-		                              &lv_font_montserrat_44,
-		                              &lv_font_montserrat_46,
-		                              &lv_font_montserrat_48 };
-
-		unsigned sanitized_fontsize = _fontsize;
-		if (sanitized_fontsize < 8)
-			sanitized_fontsize = 8;
-		else if (sanitized_fontsize > 48)
-			sanitized_fontsize = 48;
-
-		unsigned font_index = (sanitized_fontsize / 2) - 4;
-		const lv_font_t * font = fonts[font_index];
-
-		unsigned offset { 2 };
-		if (sanitized_fontsize > 40)
-			offset = 4;
-		else if (sanitized_fontsize > 20)
-			offset = 3;
+		unsigned font_size        = scaled_font(_fontsize);
+		const    lv_font_t * font = font_by_size(font_size);
+		unsigned offset           = font_size/10;
 
 		lv_style_set_text_font(&_style, font);
 		lv_style_set_text_font(&_style_shadow, font);
@@ -184,20 +223,12 @@ struct Info::Clock : Widget
 
 	void handle_resize() override
 	{
-		const lv_font_t * font   { &lv_font_montserrat_48 };
-		unsigned          offset { 4 };
-
-		if (LV_HOR_RES <= 600) {
-			font = &lv_font_montserrat_28;
-			offset = 2;
-		} else if (LV_HOR_RES <= 1000) {
-			font = &lv_font_montserrat_36;
-			offset = 3;
-		}
+		unsigned font_size        { scaled_font(32) };
+		const    lv_font_t * font { font_by_size(font_size) };
 
 		lv_style_set_text_font(&_style, font);
 		lv_style_set_text_font(&_style_shadow, font);
-		lv_obj_align_to(_shadow, _label, LV_ALIGN_TOP_LEFT, offset, offset);
+		lv_obj_align_to(_shadow, _label, LV_ALIGN_TOP_LEFT, font_size/10, font_size/10);
 	}
 
 	Clock(lv_obj_t * parent, char const *tz)
@@ -276,14 +307,15 @@ struct Info::Bar : Widget
 
 	void handle_resize() override
 	{
-		const lv_font_t * font   { &lv_font_montserrat_20 };
+		unsigned font_size          { scaled_font(14) };
+		const    lv_font_t * font   { font_by_size(font_size) };
 
-		if (LV_HOR_RES <= 1000)
-			font = &lv_font_montserrat_16;
+		lv_obj_set_size(_bar, column_size()-2*font_size, font_size+4);
+		lv_style_set_pad_bottom(&_style, font_size+6);
 
 		lv_style_set_text_font(&_style, font);
 		lv_style_set_text_font(&_style_shadow, font);
-		lv_obj_align_to(_shadow, _label, LV_ALIGN_TOP_LEFT, 2, 2);
+		lv_obj_align_to(_shadow, _label, LV_ALIGN_TOP_LEFT, font_size/5, font_size/5);
 	}
 
 	static void _draw_part_event_cb(lv_event_t * e)
@@ -295,7 +327,7 @@ struct Info::Bar : Widget
 
 		lv_draw_label_dsc_t label_dsc;
 		lv_draw_label_dsc_init(&label_dsc);
-		label_dsc.font = &lv_font_montserrat_16;
+		label_dsc.font = font_by_size(scaled_font(10));
 
 		char state = '\0';
 		if (lv_obj_has_state(obj, INCREASING))
@@ -352,7 +384,6 @@ struct Info::Bar : Widget
 
 		_bar = lv_bar_create(_cont);
 		lv_obj_add_style(_bar, &style_indic, LV_PART_INDICATOR);
-		lv_obj_set_size(_bar, 200, 20);
 		lv_obj_center(_bar);
 		lv_bar_set_range(_bar, min, max);
 		lv_obj_add_event_cb(_bar, _draw_part_event_cb, LV_EVENT_DRAW_PART_END, NULL);
@@ -370,12 +401,10 @@ struct Info::Bar : Widget
 
 		/* set title style */
 		lv_style_init(&_style);
-		lv_style_set_pad_bottom(&_style, 20);
 
 		/* Create title label */
 		_label = lv_label_create(_cont);
 		lv_obj_add_style(_label, &_style, 0);
-
 		lv_obj_align(_label, LV_ALIGN_TOP_MID, 0, 0);
 
 		lv_label_set_text(_label,  _title);
@@ -407,13 +436,15 @@ struct Info::Calendar : Widget
 
 	void handle_resize() override
 	{
-		const lv_font_t * font   { &lv_font_montserrat_20 };
-		lv_obj_set_size(_cal, 250, 250);
+		unsigned font_size        { scaled_font(10) };
+		const    lv_font_t * font { font_by_size(font_size) };
+		lv_obj_set_size(_cal, column_size()-2*font_size, column_size()-2*font_size);
 		lv_obj_set_style_text_font(_cal, font, LV_PART_MAIN);
+		lv_obj_set_size(_cont, column_size(), column_size());
 
 		lv_style_set_text_font(&_date_style, font);
 		lv_style_set_text_font(&_date_style_shadow, font);
-		lv_obj_align_to(_date_shadow, _date_label, LV_ALIGN_TOP_LEFT, 2, 2);
+		lv_obj_align_to(_date_shadow, _date_label, LV_ALIGN_TOP_LEFT, font_size/5, font_size/5);
 	}
 
 	void tick(time_t epoch) override
@@ -444,7 +475,6 @@ struct Info::Calendar : Widget
 		/* set up a container */
 		_cont = lv_obj_create(parent);
 		lv_obj_align(_cont, LV_ALIGN_CENTER, 0, 0);
-		lv_obj_set_size(_cont, 260, 290);
 		lv_obj_set_style_bg_opa(_cont, LV_OPA_0, LV_PART_MAIN);
 		lv_obj_set_style_border_opa(_cont, LV_OPA_0, LV_PART_MAIN);
 		lv_obj_set_style_pad_all(_cont, 0, LV_PART_MAIN);
@@ -509,20 +539,10 @@ struct Info::Tabular : Widget
 
 	void handle_resize() override
 	{
-		const lv_font_t * font   { &lv_font_montserrat_18 };
+		const lv_font_t * font = font_by_size(scaled_font(10));
 
-		if (LV_HOR_RES < 700) {
-			font = &lv_font_montserrat_12;
-			lv_table_set_col_width(_table, 0, 125);
-			lv_table_set_col_width(_table, 1, 125);
-		} else if (LV_HOR_RES < 1000) {
-			font = &lv_font_montserrat_16;
-			lv_table_set_col_width(_table, 0, 160);
-			lv_table_set_col_width(_table, 1, 160);
-		} else {
-			lv_table_set_col_width(_table, 0, 200);
-			lv_table_set_col_width(_table, 1, 200);
-		}
+		lv_table_set_col_width(_table, 0, column_size()/2);
+		lv_table_set_col_width(_table, 1, column_size()/2);
 
 		lv_obj_set_style_text_font(_table, font, LV_PART_MAIN);
 	}
@@ -603,6 +623,7 @@ struct Info::Layout
 		lv_style_set_layout(&_flex_style, LV_LAYOUT_FLEX);
 		lv_style_set_bg_opa(&_flex_style, LV_OPA_0);
 		lv_style_set_border_opa(&_flex_style, LV_OPA_0);
+		lv_style_set_pad_column(&_flex_style, 2*scaled_font(12));
 
 		lv_obj_set_size(_flex_container, lv_pct(100), lv_pct(100));
 		lv_obj_center(_flex_container);
@@ -619,7 +640,7 @@ struct Info::Layout
 
 	void handle_resize()
 	{
-		if (LV_HOR_RES < 600)
+		if (LV_HOR_RES < LV_VER_RES)
 			lv_style_set_flex_track_place(&_flex_style, LV_FLEX_ALIGN_CENTER);
 		else
 			lv_style_set_flex_track_place(&_flex_style, LV_FLEX_ALIGN_START);
