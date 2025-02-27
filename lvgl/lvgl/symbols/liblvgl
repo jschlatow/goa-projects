@@ -392,7 +392,6 @@ lv_colorwheel_set_hsv T
 lv_colorwheel_set_mode T
 lv_colorwheel_set_mode_fixed T
 lv_colorwheel_set_rgb T
-lv_deinit T
 lv_disp_clean_dcache T
 lv_disp_draw_buf_init T
 lv_disp_drv_init T
@@ -562,6 +561,8 @@ lv_font_montserrat_42 D 48
 lv_font_montserrat_44 D 48
 lv_font_montserrat_46 D 48
 lv_font_montserrat_48 D 48
+lv_font_montserrat_60 D 48
+lv_font_montserrat_72 D 48
 lv_font_montserrat_8 D 48
 lv_font_simsun_16_cjk D 48
 lv_font_unscii_16 D 48
@@ -580,6 +581,7 @@ lv_fs_is_ready T
 lv_fs_open T
 lv_fs_read T
 lv_fs_seek T
+lv_fs_stdio_init T
 lv_fs_tell T
 lv_fs_up T
 lv_fs_write T
@@ -1352,26 +1354,6 @@ lv_timer_resume T
 lv_timer_set_cb T
 lv_timer_set_period T
 lv_timer_set_repeat_count T
-lv_tlsf_add_pool T
-lv_tlsf_align_size T
-lv_tlsf_alloc_overhead T
-lv_tlsf_block_size T
-lv_tlsf_block_size_max T
-lv_tlsf_block_size_min T
-lv_tlsf_check T
-lv_tlsf_check_pool T
-lv_tlsf_create T
-lv_tlsf_create_with_pool T
-lv_tlsf_destroy T
-lv_tlsf_free T
-lv_tlsf_get_pool T
-lv_tlsf_malloc T
-lv_tlsf_memalign T
-lv_tlsf_pool_overhead T
-lv_tlsf_realloc T
-lv_tlsf_remove_pool T
-lv_tlsf_size T
-lv_tlsf_walk_pool T
 lv_trigo_sin T
 lv_txt_get_size T
 lv_txt_get_width T
