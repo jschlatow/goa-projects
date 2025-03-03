@@ -46,9 +46,9 @@ namespace Info {
 	inline unsigned column_size() {
 		if (LV_HOR_RES < 800)
 			return 250;
-		else if (LV_HOR_RES < 1200)
+		else if (LV_HOR_RES <= 1200)
 			return 300;
-		else if (LV_HOR_RES < 1920)
+		else if (LV_HOR_RES <= 1920)
 			return 400;
 		else
 			return 600;
@@ -62,9 +62,9 @@ namespace Info {
 		unsigned offset { 16 };
 		if (LV_HOR_RES < 800)
 			offset = 0;
-		if (LV_HOR_RES < 1200)
+		if (LV_HOR_RES <= 1200)
 			offset = 2;
-		else if (LV_HOR_RES < 1920)
+		else if (LV_HOR_RES <= 1920)
 			offset = 6;
 
 		return size + (offset * current_scaling);
