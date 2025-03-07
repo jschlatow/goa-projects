@@ -1,0 +1,10 @@
++++ src/src/Makefile.in	2025-03-07 12:34:58.101914423 +0100
+@@ -324,7 +324,7 @@
+ curl_DEPENDENCIES = $(top_builddir)/lib/libcurl.la
+ curl_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+-	$(curl_LDFLAGS) $(LDFLAGS) -o $@
++	$(curl_LDFLAGS) $(LDFLAGS) -static-libtool-libs -o $@
+ AM_V_P = $(am__v_P_@AM_V@)
+ am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
+ am__v_P_0 = false

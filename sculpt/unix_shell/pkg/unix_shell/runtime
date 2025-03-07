@@ -40,6 +40,7 @@
 		<rom label="posix.lib.so"/>
 		<rom label="ncurses.lib.so"/>
 		<rom label="pcre.lib.so"/>
+		<rom label="libssh.lib.so"/>
 		<rom label="libssl.lib.so"/>
 		<rom label="libcrypto.lib.so"/>
 		<rom label="zlib.lib.so"/>

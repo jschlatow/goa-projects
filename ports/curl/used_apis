@@ -2,4 +2,5 @@ genodelabs/api/libc
 genodelabs/api/posix
 jschlatow/api/openssl/2025-02-21
 genodelabs/api/zlib
+genodelabs/api/libssh
 genodelabs/api/so

@@ -3,6 +3,7 @@ genodelabs/src/coreutils
 genodelabs/src/fs_rom
 genodelabs/src/init
 genodelabs/src/libc
+genodelabs/src/libssh
 genodelabs/src/ncurses
 genodelabs/src/openssl
 genodelabs/src/pcre
