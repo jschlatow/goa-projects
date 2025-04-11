@@ -130,16 +130,13 @@ struct Main
 			else if (node.has_type("calendar"))
 				new (_heap) Registered_widget<Info::Calendar>(_widget_registry,
 				                                           cont, tz.string());
-			else if (node.has_type("tabular"))
-				new (_heap) Registered_widget<Rom_tabular>(_widget_registry,
-				                                           _env, node, cont);
 			else if (node.has_type("battery"))
 				new (_heap) Registered_widget<Battery_monitor>(_widget_registry,
 				                                               _env, node, cont,
 				                                               _heap);
 			else if (node.has_type("tabular"))
 				new (_heap) Registered_widget<Rom_tabular>(_widget_registry,
-				                                           _env, node, cont);
+				                                           _env, _heap, node, cont);
 			else if (node.has_type("label")) {
 				String<64> rom_label  = node.attribute_value("rom", String<64>());
 				unsigned   label_size = node.attribute_value("size", 28);
@@ -172,7 +169,7 @@ struct Main
 
 		_config_rom.update();
 
-		Xml_node xml = _config_rom.xml();
+		Xml_node const &xml = _config_rom.xml();
 		Color      color      = xml.attribute_value("background_color",
 		                                            Color(17, 85, 136));
 		String<32> default_tz = xml.attribute_value("default_timezone",
@@ -183,7 +180,7 @@ struct Main
 			Info::set_background(c, color.a);
 
 			_layout->with_container([&] (lv_obj_t * cont) {
-				_handle_rom_nodes(_config_rom.xml(), cont, default_tz);
+				_handle_rom_nodes(xml, cont, default_tz);
 			});
 		});
 

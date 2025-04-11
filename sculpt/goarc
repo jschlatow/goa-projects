@@ -5,6 +5,11 @@ set depot_user jschlatow
 
 
 switch [set sculpt_version] {
+	25.04 {
+		set  version(jschlatow/pkg/goa_testbed)                            2025-04-11
+		set  version(jschlatow/pkg/screenshot)                             2025-04-11
+		set  version(jschlatow/pkg/system_info)                            2025-04-11
+	}
 	24.10 {
 		set  version(jschlatow/pkg/dotfiles_fs)                            2024-10-09
 		set  version(jschlatow/pkg/firefox-av@vbox6)                       2024-10-09

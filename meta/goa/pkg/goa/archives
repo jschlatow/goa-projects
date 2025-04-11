@@ -19,6 +19,7 @@ genodelabs/src/gui_fb
 genodelabs/src/init
 genodelabs/src/libc
 genodelabs/src/libdrm
+genodelabs/src/libiconv
 genodelabs/src/linux_nic
 genodelabs/src/linux_rtc
 genodelabs/src/lx_fs

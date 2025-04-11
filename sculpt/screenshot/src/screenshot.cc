@@ -43,13 +43,13 @@ struct Screenshot::Main
 
 	bool                   _last_state { false };
 
-	static Capture::Point _point_from_xml(Xml_node node)
+	static Capture::Point _point_from_xml(Xml_node const &node)
 	{
 		return Capture::Point(node.attribute_value("xpos", 0L),
 		                      node.attribute_value("ypos", 0L));
 	}
 
-	static Area _area_from_xml(Xml_node node, Area default_area)
+	static Area _area_from_xml(Xml_node const &node, Area default_area)
 	{
 		return Area(node.attribute_value("width",  default_area.w),
 		            node.attribute_value("height", default_area.h));
@@ -187,7 +187,7 @@ struct Screenshot::Main
 		_rom.update();
 		if (!_rom.valid()) return;
 
-		Xml_node xml = _rom.xml();
+		Xml_node const &xml = _rom.xml();
 
 		if (xml.attribute_value("enabled", _last_state) == _last_state) return;
 
@@ -200,7 +200,11 @@ struct Screenshot::Main
 			return;
 		}
 
-		_screen.construct(_capture, _env.rm(), Screen::Attr { .px = area, .mm = { } });
+		_screen.construct(_capture, _env.rm(), Screen::Attr { .px = area,
+		                                                      .mm = { },
+		                                                      .viewport = area,
+		                                                      .rotate = { },
+		                                                      .flip = { } });
 		_output.construct(_heap, area);
 
 		/* copy image data from capture session to image buffer */

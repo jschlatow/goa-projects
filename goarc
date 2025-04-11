@@ -1,28 +1,62 @@
-set  version(genodelabs/api/capture_session)             2024-10-07
-set  version(genodelabs/api/event_session)               2024-10-07
-set  version(genodelabs/pkg/qt5_textedit)                2024-11-04
-set  version(genodelabs/src/dynamic_rom)                 2024-10-07
-set  version(genodelabs/src/jpeg)                        2024-10-07
-set  version(genodelabs/src/libdrm)                      2024-10-29
-set  version(genodelabs/src/libiconv)                    2024-10-07
-set  version(genodelabs/src/libyuv)                      2024-10-07
-set  version(genodelabs/src/mesa)                        2024-10-29
-set  version(genodelabs/src/vbox6)                       2024-10-29
-set  version(genodelabs/src/vfs_lxip)                    2024-11-19
-set  version(genodelabs/src/vfs_oss)                     2024-11-04
-set  version(genodelabs/src/vim)                         2024-10-07
-set  version(jschlatow/api/libpng)                       2019-02-25
-set  version(jschlatow/api/libvncserver)                 2024-05-28
-set  version(jschlatow/src/diffutils)                    2024-10-09
-set  version(jschlatow/src/findutils)                    2024-10-09
-set  version(jschlatow/src/global_keys_handler)          2024-10-29
-set  version(jschlatow/src/gnumake)                      2024-10-09
-set  version(jschlatow/src/grep)                         2024-10-09
-set  version(jschlatow/src/less)                         2024-10-07
-set  version(jschlatow/src/libpng)                       2024-10-07
-set  version(jschlatow/src/libvncserver)                 2024-10-07
-set  version(jschlatow/src/which)                        2024-10-09
-set  version(jschlatow/src/wireguard)                    2024-10-29
+
+switch [set sculpt_version] {
+	25.04 {
+		set  version(genodelabs/api/capture_session)             2025-04-09
+		set  version(genodelabs/api/event_session)               2025-04-09
+		set  version(genodelabs/pkg/qt5_textedit)                2025-04-09
+		set  version(genodelabs/src/dynamic_rom)                 2025-04-09
+		set  version(genodelabs/src/jpeg)                        2025-04-09
+		set  version(genodelabs/src/libdrm)                      2025-04-09
+		set  version(genodelabs/src/libiconv)                    2025-04-09
+		set  version(genodelabs/src/libyuv)                      2025-04-09
+		set  version(genodelabs/src/mesa)                        2025-04-09
+		set  version(genodelabs/src/vbox6)                       2025-04-09
+		set  version(genodelabs/src/vfs_lxip)                    2025-04-09
+		set  version(genodelabs/src/vfs_oss)                     2025-04-09
+		set  version(genodelabs/src/vim)                         2025-04-09
+		set  version(jschlatow/api/libpng)                       2019-02-25
+		set  version(jschlatow/api/libvncserver)                 2024-05-28
+		set  version(jschlatow/src/diffutils)                    2025-04-11
+		set  version(jschlatow/src/findutils)                    2025-04-11
+		set  version(jschlatow/src/global_keys_handler)          2025-04-09
+		set  version(jschlatow/src/gnumake)                      2025-04-11
+		set  version(jschlatow/src/grep)                         2025-04-11
+		set  version(jschlatow/src/less)                         2025-04-09
+		set  version(jschlatow/src/libpng)                       2025-04-09
+		set  version(jschlatow/src/libvncserver)                 2025-04-09
+		set  version(jschlatow/src/which)                        2025-04-11
+		set  version(jschlatow/src/wireguard)                    2025-04-09
+	}
+	24.10 {
+		set  version(genodelabs/api/capture_session)             2024-10-07
+		set  version(genodelabs/api/event_session)               2024-10-07
+		set  version(genodelabs/pkg/qt5_textedit)                2024-11-04
+		set  version(genodelabs/src/dynamic_rom)                 2024-10-07
+		set  version(genodelabs/src/jpeg)                        2024-10-07
+		set  version(genodelabs/src/libdrm)                      2024-10-29
+		set  version(genodelabs/src/libiconv)                    2024-10-07
+		set  version(genodelabs/src/libyuv)                      2024-10-07
+		set  version(genodelabs/src/mesa)                        2024-10-29
+		set  version(genodelabs/src/vbox6)                       2024-10-29
+		set  version(genodelabs/src/vfs_lxip)                    2024-11-19
+		set  version(genodelabs/src/vfs_oss)                     2024-11-04
+		set  version(genodelabs/src/vim)                         2024-10-07
+		set  version(jschlatow/api/libpng)                       2019-02-25
+		set  version(jschlatow/api/libvncserver)                 2024-05-28
+		set  version(jschlatow/src/diffutils)                    2024-10-09
+		set  version(jschlatow/src/findutils)                    2024-10-09
+		set  version(jschlatow/src/global_keys_handler)          2024-10-29
+		set  version(jschlatow/src/gnumake)                      2024-10-09
+		set  version(jschlatow/src/grep)                         2024-10-09
+		set  version(jschlatow/src/less)                         2024-10-07
+		set  version(jschlatow/src/libpng)                       2024-10-07
+		set  version(jschlatow/src/libvncserver)                 2024-10-07
+		set  version(jschlatow/src/which)                        2024-10-09
+		set  version(jschlatow/src/wireguard)                    2024-10-29
+	}
+	default {
+	}
+}
 
 set depot_dir      ../genode/depot
 set public_dir     ../genode/public

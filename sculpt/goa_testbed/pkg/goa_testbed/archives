@@ -8,6 +8,7 @@ genodelabs/src/file_terminal
 genodelabs/src/stdin2out
 genodelabs/src/libc
 genodelabs/src/openssl
+genodelabs/src/pcre
 genodelabs/src/posix
 genodelabs/src/vfs
 genodelabs/src/vfs_import

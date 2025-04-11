@@ -15,6 +15,8 @@
 #define _ROM_TABULAR_H_
 
 #include <base/attached_rom_dataspace.h>
+#include <base/heap.h>
+#include <os/buffered_xml.h>
 #include <util/reconstructible.h>
 
 /* local includes */
@@ -26,7 +28,7 @@ struct Rom_tabular : Info::Widget
 {
 	Attached_rom_dataspace       _rom;
 	Signal_handler<Rom_tabular>  _sigh;
-	Xml_node                     _xml;
+	Buffered_xml                 _config;
 	lv_obj_t                   * _cont;
 
 	Constructible<Info::Tabular> _widget { };
@@ -108,17 +110,17 @@ struct Rom_tabular : Info::Widget
 			_widget->clear();
 
 			Xml_node const & rom_node = _rom.xml();
-			_parse_xml(_xml, rom_node);
+			_parse_xml(_config.xml, rom_node);
 
 			if (_widget->empty())
-				_widget->add_merged_row(_xml.attribute_value("alt", default_message).string());
+				_widget->add_merged_row(_config.xml.attribute_value("alt", default_message).string());
 		});
 	}
 
-	Rom_tabular(Env & _env, Xml_node const & node, lv_obj_t * cont)
+	Rom_tabular(Env & _env, Allocator & _alloc, Xml_node const & node, lv_obj_t * cont)
 	: _rom(_env, node.attribute_value("rom", Genode::String<64> { }).string()),
 	  _sigh(_env.ep(), *this, &Rom_tabular::handle_update),
-	  _xml(node),
+	  _config(_alloc, node),
 	  _cont(cont)
 	{
 		_rom.sigh(_sigh);
