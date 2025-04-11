@@ -10,6 +10,7 @@ genodelabs/src/stdin2out
 genodelabs/src/libc
 genodelabs/src/nitpicker
 genodelabs/src/openssl
+genodelabs/src/pcre
 genodelabs/src/posix
 genodelabs/src/report_rom
 genodelabs/src/rom_filter

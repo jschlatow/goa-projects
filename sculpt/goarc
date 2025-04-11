@@ -6,9 +6,24 @@ set depot_user jschlatow
 
 switch [set sculpt_version] {
 	25.04 {
+		set  version(jschlatow/pkg/dotfiles_fs)                            2025-04-17
+		set  version(jschlatow/pkg/firefox-av@vbox6)                       2025-04-17-a
+		set  version(jschlatow/pkg/fs_report)                              2025-04-17
+		set  version(jschlatow/pkg/fs_rom)                                 2025-04-09
 		set  version(jschlatow/pkg/goa_testbed)                            2025-04-11
-		set  version(jschlatow/pkg/screenshot)                             2025-04-11
+		set  version(jschlatow/pkg/goa_testbed_vnc)                        2025-04-17
+		set  version(jschlatow/pkg/mbimcli)                                2025-04-17
+		set  version(jschlatow/pkg/mobile_network)                         2025-04-17
+		set  version(jschlatow/pkg/screenshot)                             2025-04-11-a
+		set  version(jschlatow/pkg/sdl_vnc)                                2025-04-17
+		set  version(jschlatow/pkg/sntp_client)                            2025-04-17
+		set  version(jschlatow/pkg/system_clock_rw-pc)                     2025-04-17
 		set  version(jschlatow/pkg/system_info)                            2025-04-11
+		set  version(jschlatow/pkg/trace_recorder)                         2025-04-17
+		set  version(jschlatow/pkg/unix_shell)                             2025-04-17
+		set  version(jschlatow/pkg/usb_modem)                              2025-04-17
+		set  version(jschlatow/pkg/user_keys)                              2025-04-17
+		set  version(jschlatow/pkg/vnc_server)                             2025-04-11
 	}
 	24.10 {
 		set  version(jschlatow/pkg/dotfiles_fs)                            2024-10-09

@@ -99,7 +99,7 @@ class Vncserver::Rate_limiter : public Output_control
 		* Output_control interface
 		*/
 
-		void enable()
+		void enable() override
 		{
 			_idle = false;
 			_last_frame = _timer.curr_time();
@@ -107,7 +107,7 @@ class Vncserver::Rate_limiter : public Output_control
 			_capture.capture_stopped();
 		}
 
-		void disable()
+		void disable() override
 		{
 			_timeout.discard();
 			_idle = true;
@@ -127,13 +127,13 @@ struct Vncserver::Main
 
 	Heap                      _heap   { _env.ram(), _env.rm() };
 
-	static Capture::Point _point_from_xml(Xml_node node)
+	static Capture::Point _point_from_xml(Xml_node const &node)
 	{
 		return Capture::Point(node.attribute_value("xpos", 0L),
 		                      node.attribute_value("ypos", 0L));
 	}
 
-	static Area _area_from_xml(Xml_node node, Area default_area)
+	static Area _area_from_xml(Xml_node const &node, Area default_area)
 	{
 		return Area(node.attribute_value("width",  default_area.w),
 		            node.attribute_value("height", default_area.h));
@@ -162,7 +162,9 @@ struct Vncserver::Main
 
 		Area const _area;
 
-		bool _capture_buffer_init = ( _capture.buffer({ .px = _area, .mm = { } }), true );
+		bool _capture_buffer_init = ( _capture.buffer({ .px = _area,
+		                                                .mm = { },
+		                                                .viewport = _area}), true );
 
 		Attached_dataspace _capture_ds { _env.rm(), _capture.dataspace() };
 
@@ -219,7 +221,7 @@ struct Vncserver::Main
 
 	void _handle_resize()
 	{
-		Xml_node const config = _config.xml();
+		Xml_node const &config = _config.xml();
 
 		Area area = _area_from_xml(config, _safe_screen_size(_capture.screen_size()));
 

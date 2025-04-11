@@ -9,7 +9,7 @@
 
 	<config>
 		<vfs>
-			<fs label="dotfiles"/>
+			<fs label="dotfiles -> /"/>
 			<import>
 				<dir name="vim">
 					<rom name="vimrc"/>

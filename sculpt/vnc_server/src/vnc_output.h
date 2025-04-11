@@ -19,6 +19,7 @@
 #include <capture_session/connection.h>
 #include <event_session/connection.h>
 #include <util/reconstructible.h>
+#include <util/interface.h>
 
 /* 3rd-party includes */
 #include <libc/args.h>
@@ -35,7 +36,7 @@ namespace Vncserver {
 }
 
 
-struct Vncserver::Output_control
+struct Vncserver::Output_control : Interface
 {
 	virtual void enable()  = 0;
 	virtual void disable() = 0;

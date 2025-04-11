@@ -13,6 +13,7 @@
     <pkg path="system_info" info="dynamic desktop background with system info"/>
     <pkg path="user_keys"   info="user-defined global keys" arch="x86_64"/>
     <pkg path="screenshot"  info="screenshot utility"/>
+    <pkg path="screenshot_with_trigger" info="screenshot utility with trigger button" arch="arm_v8a"/>
   </index>
 
   <index name="Mobile Network" arch="x86_64">

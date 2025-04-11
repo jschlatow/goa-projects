@@ -31,7 +31,7 @@
 		<record/>
 		<usb/>
 		<vm/>
-		<file_system/>
+		<file_system writeable="yes"/>
 		<rom label="mesa_gpu.lib.so"/>
 		<rom label="platform_info"/>
 	</requires>
@@ -229,6 +229,7 @@
 		<rom label="ld.lib.so"/>
 		<rom label="libc.lib.so"/>
 		<rom label="libm.lib.so"/>
+		<rom label="pcre.lib.so"/>
 		<rom label="posix.lib.so"/>
 		<rom label="libcrypto.lib.so"/>
 		<rom label="libssl.lib.so"/>

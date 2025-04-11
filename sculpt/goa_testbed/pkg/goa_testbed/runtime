@@ -29,7 +29,7 @@
 		<vm/>
 		<event/>
 		<capture/>
-		<file_system/>
+		<file_system writeable="yes"/>
 		<rom label="mesa_gpu.lib.so"/>
 		<rom label="clipboard"/>
 		<rom label="platform_info"/>
