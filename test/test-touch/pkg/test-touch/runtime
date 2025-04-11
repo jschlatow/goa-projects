@@ -16,6 +16,7 @@
 			<service name="Timer"/>
 		</parent-provides>
 		<default-route>
+			<service name="Event"> <child name="event_filter"/> </service>
 			<any-service> <parent/> <any-child/> </any-service>
 		</default-route>
 		<default caps="100"/>
@@ -26,17 +27,57 @@
 			<config/>
 		</start>
 
-		<start name="pc_goodix_touch">
-			<resource name="RAM" quantum="20M"/>
+		<start name="event_filter">
+			<resource name="RAM" quantum="4M"/>
+			<provides> <service name="Event"/> </provides>
+			<route>
+				<service name="Event"> <child name="event_dump"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
 			<config>
+	<output>
+		<chargen>
+			<remap>
+				<key name="KEY_CAPSLOCK" to="KEY_ESC"/>
+				<key name="KEY_F12"      to="KEY_DASHBOARD"/>
+				<key name="KEY_SYSRQ"    to="KEY_PRINT"/>
+				<key name="KEY_RIGHTMETA" to="KEY_SCREEN"/>
+				<key name="BTN_TOOL_PEN" to="BTN_LEFT"/>
+				<key name="BTN_STYLUS"   to="BTN_RIGHT"/>
+				<merge>
+					<transform>
+						<input name="touch"/>
+						<scale x="0.25" y="0.25"/>
+					</transform>
+				</merge>
+			</remap>
+			<mod1>
+				<key name="KEY_LEFTSHIFT"/> <key name="KEY_RIGHTSHIFT"/>
+			</mod1>
+			<mod2>
+				<key name="KEY_LEFTCTRL"/> <key name="KEY_RIGHTCTRL"/>
+			</mod2>
+			<mod3>
+				<key name="KEY_RIGHTALT"/> <!-- AltGr -->
+			</mod3>
+			<repeat delay_ms="230" rate_ms="40"/>
+		</chargen>
+	</output>
+	<policy label_prefix="pc_i2c_hid"      input="touch"/>
 			</config>
+		</start>
+
+		<start name="pc_i2c_hid" caps="150">
+			<resource name="RAM" quantum="4M"/>
+			<config gpio_pin="306" bus_addr="93" hid_addr="1" info="StarLite"/>
 		</start>
 	</config>
 
 	<content>
 		<rom label="init"/>
 		<rom label="event_dump"/>
-		<rom label="pc_goodix_touch"/>
+		<rom label="event_filter"/>
+		<rom label="pc_i2c_hid"/>
 	</content>
 
 </runtime>

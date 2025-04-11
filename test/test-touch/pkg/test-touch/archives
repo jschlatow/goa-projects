@@ -1,3 +1,4 @@
 genodelabs/src/init
-jschlatow/src/event_dump/2024-08-13-a
-jschlatow/src/pc_goodix_touch
+genodelabs/src/event_filter
+jschlatow/src/event_dump/2025-01-16
+jschlatow_test/src/pc_i2c_hid
