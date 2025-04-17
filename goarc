@@ -10,6 +10,7 @@ switch [set sculpt_version] {
 		set  version(genodelabs/src/libiconv)                    2025-04-09
 		set  version(genodelabs/src/libyuv)                      2025-04-09
 		set  version(genodelabs/src/mesa)                        2025-04-09
+		set  version(genodelabs/src/screenshot_trigger)          2025-04-09
 		set  version(genodelabs/src/vbox6)                       2025-04-09
 		set  version(genodelabs/src/vfs_lxip)                    2025-04-09
 		set  version(genodelabs/src/vfs_oss)                     2025-04-09

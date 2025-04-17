@@ -1,0 +1,104 @@
+<runtime ram="39M" caps="1000" binary="init">
+
+	<requires>
+		<gui label="trigger"/>
+		<gui label="global"/>
+		<capture/>
+		<file_system label="target" writeable="yes"/>
+		<event/>
+		<rtc/>
+		<timer/>
+	</requires>
+
+	<config>
+		<parent-provides>
+			<service name="ROM"/>
+			<service name="PD"/>
+			<service name="RM"/>
+			<service name="CPU"/>
+			<service name="LOG"/>
+			<service name="Capture"/>
+			<service name="Gui"/>
+			<service name="Timer"/>
+			<service name="Event"/>
+			<service name="File_system"/>
+			<service name="Rtc"/>
+		</parent-provides>
+
+		<default caps="150"/>
+
+		<start name="touch_trigger">
+			<binary name="screenshot_trigger"/>
+			<resource name="RAM" quantum="1M"/>
+			<config size="100"/>
+			<route>
+				<service name="Gui"> <parent label="trigger"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+
+		<start name="screenshot">
+			<resource name="RAM" quantum="32M"/>
+			<config>
+				<libc stdin="/dev/null" stdout="/dev/log" stderr="/dev/log"/>
+				<vfs>
+					<fs/>
+					<dir name="dev"> <null/> <log/> </dir>
+				</vfs>
+			</config>
+			<route>
+				<service name="ROM" label="trigger"> <child name="report"/> </service>
+				<service name="Rtc"> <parent/> </service>
+				<service name="File_system"> <parent identity="target"/> </service>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+
+		<start name="report">
+			<binary name="report_rom"/>
+			<resource name="RAM" quantum="1M"/>
+			<provides> <service name="Report"/> <service name="ROM"/> </provides>
+			<config>
+				<policy label="screenshot -> trigger" report="keys -> screenshot" />
+			</config>
+			<route>
+				<any-service> <parent/> <any-child/> </any-service>
+			</route>
+		</start>
+
+		<start name="keys">
+			<binary name="global_keys_handler"/>
+			<resource name="RAM" quantum="1M"/>
+			<config>
+				<bool name="screenshot" initial="no"/>
+				<press  name="KEY_PRINT" bool="screenshot" change="toggle"/>
+				<report name="screenshot"> <bool name="screenshot"/> </report>
+			</config>
+			<route>
+				<service name="Report"> <child name="report"/> </service>
+				<any-service> <parent/> </any-service>
+			</route>
+		</start>
+	</config>
+
+	<content>
+
+		<!-- components -->
+		<rom label="init"/>
+		<rom label="screenshot"/>
+		<rom label="global_keys_handler"/>
+		<rom label="report_rom"/>
+		<rom label="screenshot_trigger"/>
+
+		<!-- libraries -->
+		<rom label="ld.lib.so"/>
+		<rom label="libc.lib.so"/>
+		<rom label="libm.lib.so"/>
+		<rom label="vfs.lib.so"/>
+		<rom label="libpng.lib.so"/>
+		<rom label="zlib.lib.so"/>
+		<rom label="sandbox.lib.so"/>
+
+	</content>
+
+</runtime>

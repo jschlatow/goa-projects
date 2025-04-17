@@ -4,6 +4,7 @@ genodelabs/src/jpeg
 genodelabs/src/libdrm
 genodelabs/src/libiconv
 genodelabs/src/libyuv
+genodelabs/src/screenshot_trigger
 genodelabs/src/mesa
 genodelabs/src/vbox6
 genodelabs/src/vfs_lxip
