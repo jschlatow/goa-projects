@@ -26,7 +26,7 @@
 		<track>
 			<label size="32">                          </label>
 			<label size="32">Sculpt</label>
-			<label size="34">24.10</label>
+			<label size="34">25.04</label>
 		</track>
 		<tabular rom="drivers/iommu" alt="no IOMMU present">
 			<node type="intel">
