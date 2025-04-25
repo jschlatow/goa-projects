@@ -164,7 +164,7 @@ struct Vncserver::Main
 
 		bool _capture_buffer_init = ( _capture.buffer({ .px = _area,
 		                                                .mm = { },
-		                                                .viewport = _area}), true );
+		                                                .viewport = { { }, _area }}), true );
 
 		Attached_dataspace _capture_ds { _env.rm(), _capture.dataspace() };
 
