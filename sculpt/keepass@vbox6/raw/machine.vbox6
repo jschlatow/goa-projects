@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<VirtualBox xmlns="http://www.virtualbox.org/" version="1.14-freebsd">
+  <Machine uuid="{37ab43a5-38d8-4491-93f5-5b0b077f5c32}" name="TinyCore" OSType="Ubuntu_64" snapshotFolder="Snapshots" lastStateChange="2018-01-23T18:40:00Z">
+    <MediaRegistry>
+      <DVDImages>
+        <Image uuid="{81763434-9a51-49e8-9444-528a5a28c4ba}" location="keepass-tc16.iso"/>
+      </DVDImages>
+    </MediaRegistry>
+    <Hardware>
+      <CPU count="2">
+        <PAE enabled="true"/>
+        <LongMode enabled="true"/>
+        <HardwareVirtExLargePages enabled="false"/>
+      </CPU>
+      <Memory RAMSize="256"/>
+      <HID Pointing="PS2Mouse"/>
+      <!-- normal operation -->
+      <Display VRAMSize="20" monitorCount="1" controller="VBoxSVGA"/>
+      <!-- 3D Linux
+      <Display controller="VMSVGA" VRAMSize="256" accelerate3D="true"/>
+      -->
+      <RemoteDisplay enabled="false"/>
+      <Paravirt provider="KVM"/>
+      <BIOS>
+        <IOAPIC enabled="true"/>
+      </BIOS>
+      <USB>
+        <Controllers>
+          <Controller name="OHCI" type="OHCI"/>
+        </Controllers>
+      </USB>
+      <Network>
+        <Adapter slot="0" enabled="true" MACAddress="0800271D7901" cable="true" type="82540EM">
+          <BridgedInterface/>
+        </Adapter>
+      </Network>
+      <UART>
+        <Port slot="0" enabled="false" IOBase="0x3f8" IRQ="4" hostMode="Disconnected"/>
+        <Port slot="1" enabled="false" IOBase="0x2f8" IRQ="3" hostMode="Disconnected"/>
+      </UART>
+      <LPT>
+        <Port slot="0" enabled="false" IOBase="0x378" IRQ="7"/>
+        <Port slot="1" enabled="false" IOBase="0x378" IRQ="7"/>
+      </LPT>
+      <RTC localOrUTC="UTC"/>
+      <SharedFolders>
+        <SharedFolder name="shared" hostPath="/shared" writable="true" autoMount="true"/>
+      </SharedFolders>
+      <Clipboard mode="Bidirectional"/>
+    </Hardware>
+    <StorageControllers>
+      <StorageController name="SATA" type="AHCI" PortCount="4" useHostIOCache="true" Bootable="true" IDE0MasterEmulationPort="0" IDE0SlaveEmulationPort="1" IDE1MasterEmulationPort="2" IDE1SlaveEmulationPort="3">
+        <AttachedDevice passthrough="false" type="DVD" port="3" device="0">
+          <Image uuid="{81763434-9a51-49e8-9444-528a5a28c4ba}"/>
+        </AttachedDevice>
+      </StorageController>
+    </StorageControllers>
+  </Machine>
+</VirtualBox>

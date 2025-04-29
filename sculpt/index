@@ -36,6 +36,7 @@
 
   <index name="Virtual Machines" arch="x86_64">
     <pkg path="firefox-av@vbox6" info="Firefox kiosk VM with audio/video support"/>
+    <pkg path="keepass@vbox6"    info="TinyCore VM with KeePassX"/>
   </index>
 
   <index name="VNC" arch="x86_64">
