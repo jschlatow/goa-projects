@@ -1,4 +1,4 @@
-<runtime ram="1800M" caps="1500" binary="init" config="init.config">
+<runtime ram="1800M" caps="1500" binary="virtualbox6">
 
 	<requires>
 		<file_system label="vm"/>
@@ -20,10 +20,41 @@
 		<capture/>
 	</requires>
 
+	<config vbox_file="machine.vbox6" xhci="yes" vm_name="linux" capslock="ROM" ld_verbose="yes">
+		<vfs>
+			<dir name="dev">
+				<log/> <rtc/> <null/> <zero/> <gpu/>
+				<oss name="dsp" min_ofrag_size="8192" min_ifrag_size="8192"/>
+			</dir>
+			<dir name="pipe"> <pipe/> </dir>
+			<dir name="shared"> <fs label="shared -> /" writeable="yes"/> </dir>
+			<rom name="VBoxSharedClipboard.so"/>
+			<rom name="VBoxSharedFolders.so"/>
+			<fs label="vm -> /"/>
+			<import overwrite="yes">
+				<rom name="machine.vbox6"/>
+			</import>
+			<import overwrite="no">
+				<rom name="firefox-av-tc16.iso" binary="yes"/>
+			</import>
+		</vfs>
+		<libc stdout="/dev/log" stderr="/dev/log" rtc="/dev/rtc" pipe="/pipe">
+			<pthread placement="single-cpu"/>
+		</libc>
+		<monitor label="VBOX-1"/>
+		<webcam vertical_flip="true" fps="30" screen_size="false" width="640" height="480"/>
+		<arg value="virtualbox"/>
+		<env key="VBOX_USER_HOME" value="/"/>
+		<env key="VBOX_LOG_DEST"          value="file=/dev/log"/>
+		<env key="VBOX_LOG"               value="+dbgf+gim"/>
+		<env key="VBOX_LOG_FLAGS"         value="thread"/>
+		<env key="VBOX_RELEASE_LOG_DEST"  value="file=/dev/log"/>
+		<env key="VBOX_RELEASE_LOG"       value=""/>
+		<env key="VBOX_RELEASE_LOG_FLAGS" value="thread"/>
+	</config>
+
 	<content>
 		<rom label="ld.lib.so"/>
-		<rom label="init"/>
-		<rom label="init.config"/>
 		<rom label="virtualbox6"/>
 		<rom label="libc.lib.so"/>
 		<rom label="libm.lib.so"/>
@@ -44,9 +75,9 @@
 		<rom label="vfs_pipe.lib.so"/>
 		<rom label="zlib.lib.so"/>
 		<rom label="virtualbox6-shaderlib.lib.so"/>
-		<rom label="virtualbox6-sharedfolders.lib.so"/>
-		<rom label="virtualbox6-sharedclipboard.lib.so"/>
-		<rom label="firefox-av-tc13.iso"/>
+		<rom label="virtualbox6-sharedfolders.lib.so"   as="VBoxSharedFolders.so"/>
+		<rom label="virtualbox6-sharedclipboard.lib.so" as="VBoxSharedClipboard.so"/>
+		<rom label="firefox-av-tc16.iso"/>
 		<rom label="machine.vbox6"/>
 	</content>
 
