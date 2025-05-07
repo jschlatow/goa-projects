@@ -9,6 +9,7 @@ switch [set sculpt_version] {
 		set  version(jschlatow/pkg/dotfiles_fs)                            2025-04-17
 		set  version(jschlatow/pkg/firefox-av@vbox6)                       2025-04-29-b
 		set  version(jschlatow/pkg/keepass@vbox6)                          2025-04-29
+		set  version(jschlatow/pkg/thunderbird@vbox6)                      2025-05-07
 		set  version(jschlatow/pkg/fs_report)                              2025-04-17
 		set  version(jschlatow/pkg/fs_rom)                                 2025-04-09
 		set  version(jschlatow/pkg/goa_testbed)                            2025-04-11
