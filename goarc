@@ -1,17 +1,17 @@
 
 switch [set sculpt_version] {
 	25.04 {
-		set  version(genodelabs/api/capture_session)             2025-04-09
+		set  version(genodelabs/api/capture_session)             2025-04-28
 		set  version(genodelabs/api/event_session)               2025-04-09
-		set  version(genodelabs/pkg/qt5_textedit)                2025-04-09
+		set  version(genodelabs/pkg/qt5_textedit)                2025-04-28
 		set  version(genodelabs/src/dynamic_rom)                 2025-04-09
 		set  version(genodelabs/src/jpeg)                        2025-04-09
 		set  version(genodelabs/src/libdrm)                      2025-04-09
 		set  version(genodelabs/src/libiconv)                    2025-04-09
 		set  version(genodelabs/src/libyuv)                      2025-04-09
-		set  version(genodelabs/src/mesa)                        2025-04-09
-		set  version(genodelabs/src/screenshot_trigger)          2025-04-09
-		set  version(genodelabs/src/vbox6)                       2025-04-09
+		set  version(genodelabs/src/mesa)                        2025-04-28
+		set  version(genodelabs/src/screenshot_trigger)          2025-04-28
+		set  version(genodelabs/src/vbox6)                       2025-04-28
 		set  version(genodelabs/src/vfs_lxip)                    2025-04-09
 		set  version(genodelabs/src/vfs_oss)                     2025-04-09
 		set  version(genodelabs/src/vim)                         2025-04-09
