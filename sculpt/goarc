@@ -25,7 +25,7 @@ switch [set sculpt_version] {
 		set  version(jschlatow/pkg/unix_shell)                             2025-04-17
 		set  version(jschlatow/pkg/usb_modem)                              2025-04-17
 		set  version(jschlatow/pkg/user_keys)                              2025-04-17
-		set  version(jschlatow/pkg/vnc_server)                             2025-04-11
+		set  version(jschlatow/pkg/vnc_server)                             2025-04-30
 	}
 	24.10 {
 		set  version(jschlatow/pkg/dotfiles_fs)                            2024-10-09
