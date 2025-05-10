@@ -86,6 +86,9 @@ struct Battery_monitor : Info::Widget
 				state = n.attribute_value("value", state);
 			}, [&] () { });
 
+			if (max_value == 0)
+				widget.destruct();
+
 			if (widget.constructed()) {
 				widget->value(value * 100 / max_value);
 				switch (state) {

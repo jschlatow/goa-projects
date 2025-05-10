@@ -21,7 +21,7 @@ switch [set sculpt_version] {
 		set  version(jschlatow/pkg/sdl_vnc)                                2025-04-17
 		set  version(jschlatow/pkg/sntp_client)                            2025-04-17
 		set  version(jschlatow/pkg/system_clock_rw-pc)                     2025-04-17
-		set  version(jschlatow/pkg/system_info)                            2025-04-22
+		set  version(jschlatow/pkg/system_info)                            2025-05-11
 		set  version(jschlatow/pkg/trace_recorder)                         2025-04-17
 		set  version(jschlatow/pkg/unix_shell)                             2025-04-17
 		set  version(jschlatow/pkg/usb_modem)                              2025-04-17
