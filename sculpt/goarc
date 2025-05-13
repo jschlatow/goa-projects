@@ -7,6 +7,7 @@ set depot_user jschlatow
 switch [set sculpt_version] {
 	25.04 {
 		set  version(jschlatow/pkg/dotfiles_fs)                            2025-04-17
+		set  version(jschlatow/pkg/falkon_qt6-jemalloc)                    2025-04-11
 		set  version(jschlatow/pkg/firefox-av@vbox6)                       2025-04-29-b
 		set  version(jschlatow/pkg/keepass@vbox6)                          2025-05-07
 		set  version(jschlatow/pkg/thunderbird@vbox6)                      2025-05-07

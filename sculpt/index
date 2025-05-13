@@ -22,6 +22,10 @@
     <pkg path="mbimcli"        info="MBIM control app for usb_modem_drv"/>
   </index>
 
+  <index name="Mods" arch="x86_64">
+    <pkg path="falkon_qt6-jemalloc" info="Falkon Browser with Emoji support and 150% scaling"/>
+  </index>
+
   <index name="Shells" arch="x86_64">
     <pkg path="unix_shell"   info="unix shell"/>
     <pkg path="dotfiles_fs"  info="dot files for unix shell"/>
