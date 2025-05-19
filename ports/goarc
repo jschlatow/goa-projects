@@ -1,10 +1,9 @@
 switch [set sculpt_version] {
 	25.04 {
 		# versions for lomiri calculator
-		set version(ssumpf/api/qt5_declarative)    2024-02-25
-		set version(ssumpf/pkg/ubuntu_ui_toolkit)  2024-06-03
-		set version(ssumpf/api/qt5_quickcontrols2) 2023-05-26
-		set version(ssumpf/api/qt5_base)           2024-04-18
+		set version(jschlatow/api/qt5_declarative)    2024-02-25
+		set version(jschlatow/pkg/ubuntu_ui_toolkit)  2025-05-19
+		set version(jschlatow/api/qt5_quickcontrols2) 2023-05-26
 	}
 	default {
 		# versions for lomiri calculator

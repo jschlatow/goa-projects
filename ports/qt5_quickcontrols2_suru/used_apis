@@ -4,5 +4,5 @@ genodelabs/api/mesa
 genodelabs/api/so
 genodelabs/api/qt5_base
 genodelabs/api/qt5_component
-ssumpf/api/qt5_declarative
-ssumpf/api/qt5_quickcontrols2
+jschlatow/api/qt5_declarative
+jschlatow/api/qt5_quickcontrols2
