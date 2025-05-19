@@ -202,7 +202,7 @@ struct Screenshot::Main
 
 		_screen.construct(_capture, _env.rm(), Screen::Attr { .px = area,
 		                                                      .mm = { },
-		                                                      .viewport = area,
+		                                                      .viewport = { { }, area },
 		                                                      .rotate = { },
 		                                                      .flip = { } });
 		_output.construct(_heap, area);

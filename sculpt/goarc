@@ -14,8 +14,8 @@ switch [set sculpt_version] {
 		set  version(jschlatow/pkg/goa_testbed_vnc)                        2025-04-17
 		set  version(jschlatow/pkg/mbimcli)                                2025-04-17
 		set  version(jschlatow/pkg/mobile_network)                         2025-04-17
-		set  version(jschlatow/pkg/screenshot)                             2025-04-11-a
-		set  version(jschlatow/pkg/screenshot_with_trigger)                2025-04-11-a
+		set  version(jschlatow/pkg/screenshot)                             2025-05-19
+		set  version(jschlatow/pkg/screenshot_with_trigger)                2025-05-19
 		set  version(jschlatow/pkg/sdl_vnc)                                2025-04-17
 		set  version(jschlatow/pkg/sntp_client)                            2025-04-17
 		set  version(jschlatow/pkg/system_clock_rw-pc)                     2025-04-17
