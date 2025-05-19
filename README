@@ -15,3 +15,24 @@ tool.
 
   [https://github.com/nfeske/goa]
 
+
+Folders
+=======
+
+:apps/: Ready-to-use and regularly published applications (pkg archives).
+
+:examples/: Example applications and tutorials.
+
+:ports/: Ports of 3rd-party libraries and applications.
+
+:sculpt/: Index project for Sculpt OS.
+
+:mods/: Modifications of other users' pkg archives.
+
+:test/: Test runtimes.
+
+:meta/: Meta projects used for updating versions in goarc files.
+
+:playground/: Unfinished and experimental projects.
+
+:zynq/: Zynq-7000 bitstreams
