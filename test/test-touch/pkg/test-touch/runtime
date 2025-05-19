@@ -2,6 +2,7 @@
 
 	<requires>
 		<platform/>
+		<event/>
 		<timer/>
 	</requires>
 
@@ -14,6 +15,7 @@
 			<service name="LOG"/>
 			<service name="Platform"/>
 			<service name="Timer"/>
+			<service name="Event"/>
 		</parent-provides>
 		<default-route>
 			<service name="Event"> <child name="event_filter"/> </service>
@@ -21,17 +23,10 @@
 		</default-route>
 		<default caps="100"/>
 
-		<start name="event_dump">
-			<resource name="RAM" quantum="1M"/>
-			<provides> <service name="Event"/> </provides>
-			<config/>
-		</start>
-
 		<start name="event_filter">
 			<resource name="RAM" quantum="4M"/>
 			<provides> <service name="Event"/> </provides>
 			<route>
-				<service name="Event"> <child name="event_dump"/> </service>
 				<any-service> <parent/> </any-service>
 			</route>
 			<config>
@@ -45,10 +40,35 @@
 				<key name="BTN_TOOL_PEN" to="BTN_LEFT"/>
 				<key name="BTN_STYLUS"   to="BTN_RIGHT"/>
 				<merge>
+					<log motion="no">
+					<touch-gesture>
 					<transform>
 						<input name="touch"/>
-						<scale x="0.25" y="0.25"/>
+						<scale x="0.1875" y="0.1875"/>
 					</transform>
+					<hold> <key name="BTN_RIGHT"/> </hold>
+					<hold fingers="2" delay_ms="200" width="300" height="300">
+						<key hold="yes" name="BTN_MIDDLE"/>
+					</hold>
+					<hold fingers="3" delay_ms="500" width="600" height="300">
+						<key hold="yes" name="KEY_SCREEN">
+							<key hold="yes" name="BTN_LEFT"/>
+						</key>
+					</hold>
+					<swipe direction="down" xpos="580" ypos="0" width="1000" height="400" distance="50">
+						<key name="KEY_DASHBOARD"/>
+					</swipe>
+					<swipe direction="left" fingers="3" distance="50">
+						<key name="KEY_SCREEN"> <key name="KEY_2"/> </key>
+					</swipe>
+					<swipe direction="right" fingers="3" distance="50">
+						<key name="KEY_SCREEN"> <key name="KEY_1"/> </key>
+					</swipe>
+					<swipe direction="up" fingers="3" distance="50">
+						<key name="KEY_SCREEN"> <key name="KEY_ENTER"/> </key>
+					</swipe>
+					</touch-gesture>
+					</log>
 				</merge>
 			</remap>
 			<mod1>
@@ -69,13 +89,17 @@
 
 		<start name="pc_i2c_hid" caps="150">
 			<resource name="RAM" quantum="4M"/>
-			<config gpio_pin="306" bus_addr="93" hid_addr="1" info="StarLite"/>
+			<config>
+				<i2c_slave irq="104" bus_addr="93" hid_addr="1" info="StarLite"/>
+				<i2c_master bus_speed_hz="400" info="StarLite">
+					<fmcn hcnt="106" lcnt="213" hold_time="40"/>
+				</i2c_master>
+			</config>
 		</start>
 	</config>
 
 	<content>
 		<rom label="init"/>
-		<rom label="event_dump"/>
 		<rom label="event_filter"/>
 		<rom label="pc_i2c_hid"/>
 	</content>

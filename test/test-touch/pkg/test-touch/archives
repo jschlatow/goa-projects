@@ -1,4 +1,3 @@
 genodelabs/src/init
 genodelabs/src/event_filter
-jschlatow/src/event_dump/2025-01-16
-jschlatow_test/src/pc_i2c_hid
+jschlatow/src/pc_i2c_hid/2025-05-14
