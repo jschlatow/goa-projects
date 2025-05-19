@@ -1,3 +1,6 @@
+set depot_dir      ../genode/depot
+set public_dir     ../genode/public
+set depot_user     jschlatow
 
 switch [set sculpt_version] {
 	25.04 {
@@ -58,9 +61,3 @@ switch [set sculpt_version] {
 	default {
 	}
 }
-
-set depot_dir      ../genode/depot
-set public_dir     ../genode/public
-set common_var_dir var/projects
-#set warn_strict 0
-#set versions_from_genode_dir ../genode/

@@ -6,3 +6,5 @@ set  version(genodelabs/src/terminal_log)                          2025-04-09
 set  version(genodelabs/src/vfs_jitterentropy)                     2025-04-09
 set  version(jschlatow/src/lighttpd)                               2025-04-09
 set  version(jschlatow/src/tcp_terminal)                           2025-04-09
+
+set search_dir ../vnc_server

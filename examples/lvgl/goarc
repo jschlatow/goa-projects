@@ -1,0 +1,4 @@
+set search_dir ../../ports
+set version(jschlatow/api/lvgl_demos) 2025-05-19
+set version(jschlatow/src/lvgl_demos) 2025-05-19
+set warn_strict 0

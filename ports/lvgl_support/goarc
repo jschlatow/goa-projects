@@ -1,0 +1,2 @@
+set search_dir ../lvgl/
+set warn_strict 0
