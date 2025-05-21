@@ -382,7 +382,7 @@ struct Vfs::Tap_file_system::Local_factory : File_system_factory,
 	 ** Factory interface **
 	 ***********************/
 
-	Vfs::File_system *create(Vfs::Env&, Xml_node node) override
+	Vfs::File_system *create(Vfs::Env&, Xml_node const &node) override
 	{
 		if (node.has_type("data"))      return &_data_fs;
 		if (node.has_type("info"))      return &_info_fs;
@@ -394,12 +394,12 @@ struct Vfs::Tap_file_system::Local_factory : File_system_factory,
 	 ** Constructor, etc. **
 	 ***********************/
 
-	static Name name(Xml_node config)
+	static Name name(Xml_node const &config)
 	{
 		return config.attribute_value("name", Name("tap"));
 	}
 
-	Local_factory(Vfs::Env &env, Xml_node config)
+	Local_factory(Vfs::Env &env, Xml_node const &config)
 	:
 		_name       (name(config)),
 		_label      (config.attribute_value("label", Label(""))),
@@ -413,9 +413,9 @@ class Vfs::Tap_file_system::Compound_file_system : private Local_factory,
 {
 	private:
 
-		typedef Tap_file_system::Name Name;
+		using Name = Tap_file_system::Name;
 
-		typedef String<200> Config;
+		using Config = String<200>;
 		static Config _config(Name const &name)
 		{
 			char buf[Config::capacity()] { };
@@ -441,7 +441,7 @@ class Vfs::Tap_file_system::Compound_file_system : private Local_factory,
 
 	public:
 
-		Compound_file_system(Vfs::Env &vfs_env, Genode::Xml_node node)
+		Compound_file_system(Vfs::Env &vfs_env, Genode::Xml_node const &node)
 		:
 			Local_factory(vfs_env, node),
 			Vfs::Dir_file_system(vfs_env,
@@ -459,7 +459,7 @@ extern "C" Vfs::File_system_factory *vfs_file_system_factory(void)
 {
 	struct Factory : Vfs::File_system_factory
 	{
-		Vfs::File_system *create(Vfs::Env &env, Genode::Xml_node config) override
+		Vfs::File_system *create(Vfs::Env &env, Genode::Xml_node const &config) override
 		{
 			return new (env.alloc())
 				Vfs::Tap_file_system::Compound_file_system(env, config);

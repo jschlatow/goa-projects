@@ -31,8 +31,7 @@
 
 		<default caps="100"/>
 
-		<start name="nic_router">
-			<resource name="RAM" quantum="2M"/>
+		<start name="nic_router" ram="2M">
 			<provides>
 				<service name="Nic"/>
 				<service name="Uplink"/>
@@ -43,8 +42,7 @@
 			</config>
 		</start>
 
-		<start name="test-vfs_tap">
-			<resource name="RAM" quantum="8M"/>
+		<start name="test-vfs_tap" ram="8M">
 			<config>
 				<libc stdout="/dev/log"/>
 				<vfs>
@@ -56,8 +54,7 @@
 			</config>
 		</start>
 
-		<start name="ping">
-			<resource name="RAM" quantum="4M"/>
+		<start name="ping" ram="4M">
 			<config interface="10.0.2.2/24"
 			        gateway="10.0.2.1"
 			        dst_ip="10.0.2.123"
