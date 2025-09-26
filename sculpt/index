@@ -49,5 +49,12 @@
     <pkg path="sdl_vnc"    info="vnc client"/>
   </index>
 
+  <api path="lvgl"         info="LVGL library"/>
+  <src path="lvgl"         info="LVGL library"/>
+  <api path="lvgl_support" info="LVGL support library"/>
+  <src path="lvgl_support" info="LVGL support library"/>
+  <api path="curl"         info="curl library"/>
+  <src path="curl"         info="curl binary and library"/>
+
 </index>
 
