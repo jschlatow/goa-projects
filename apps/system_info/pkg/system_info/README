@@ -1,6 +1,8 @@
 
                                System Info
 
+                            Johannes Schlatow
+
 The system-info component draws a custom set status widgets on screen. By
 default, it displays the current time, a calendar, IP addresses and IOMMU
 state.
