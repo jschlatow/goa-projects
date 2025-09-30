@@ -1,1 +1,1 @@
-screenshot: ${LIB_SRC} screenshot.cc
+screenshot: screenshot.cc
