@@ -118,10 +118,10 @@ struct Main
 		});
 	}
 
-	void _handle_rom_nodes(Xml_node const & xml, lv_obj_t * cont, String<32> const & default_tz)
+	void _handle_rom_nodes(Node const & root, lv_obj_t * cont, String<32> const & default_tz)
 	{
-		/* iterate XML nodes and create widgets */
-		xml.for_each_sub_node([&] (Xml_node const & node) {
+		/* iterate nodes and create widgets */
+		root.for_each_sub_node([&] (Node const & node) {
 			String<32> tz = node.attribute_value("timezone", default_tz);
 
 			if (node.has_type("clock"))
@@ -147,7 +147,7 @@ struct Main
 				else
 					new (_heap) Registered_widget<Info::Label>(
 						_widget_registry, cont,
-						node.decoded_content<String<128>>().string(),
+						String<128>(Node::Quoted_content(node)).string(),
 						label_size);
 			}
 			else if (node.has_type("track")) {
@@ -169,18 +169,18 @@ struct Main
 
 		_config_rom.update();
 
-		Xml_node const &xml = _config_rom.xml();
-		Color      color      = xml.attribute_value("background_color",
-		                                            Color(17, 85, 136));
-		String<32> default_tz = xml.attribute_value("default_timezone",
-		                                            Genode::String<32>("UTC-01"));
+		Node const &node  = _config_rom.node();
+		Color       color = node.attribute_value("background_color",
+		                                         Color(17, 85, 136));
+		String<32> default_tz = node.attribute_value("default_timezone",
+		                                             Genode::String<32>("UTC-01"));
 
 		Libc::with_libc([&] {
 			lv_color_t c = lv_color_make(color.r, color.g, color.b);
 			Info::set_background(c, color.a);
 
 			_layout->with_container([&] (lv_obj_t * cont) {
-				_handle_rom_nodes(xml, cont, default_tz);
+				_handle_rom_nodes(node, cont, default_tz);
 			});
 		});
 

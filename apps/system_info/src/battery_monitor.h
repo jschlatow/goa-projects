@@ -47,24 +47,25 @@ struct Battery_monitor : Info::Widget
 
 		Constructible<Info::Bar> widget { };
 
-		static bool type_matches(Xml_node const & node) {
+		static bool type_matches(Node const & node) {
 			return node.has_type("sb"); }
 
-		bool matches(Xml_node const & node)
+		bool matches(Node const & node)
 		{
 			bool result = false;
-			node.with_sub_node("name", [&] (Xml_node const & n) {
-				if (n.decoded_content<Name>() == name)
+			node.with_sub_node("name", [&] (Node const & n) {
+				Name node_name { Node::Quoted_content(n) };
+				if (node_name == name)
 					result = true;
 			}, [&] () { });
 
 			return result;
 		}
 
-		Battery(Xml_node const & node, lv_obj_t * cont)
+		Battery(Node const & node, lv_obj_t * cont)
 		{
-			node.with_sub_node("name", [&] (Xml_node const & n) {
-				name = n.decoded_content<Name>();
+			node.with_sub_node("name", [&] (Node const & n) {
+				name = Name { Node::Quoted_content(n) };
 			}, [&] () { });
 
 			widget.construct(cont, name.string(), 0, 100);
@@ -72,17 +73,17 @@ struct Battery_monitor : Info::Widget
 			update(node);
 		}
 
-		void update(Xml_node const & node)
+		void update(Node const & node)
 		{
-			node.with_sub_node("last_full_capacity", [&] (Xml_node const & n) {
+			node.with_sub_node("last_full_capacity", [&] (Node const & n) {
 				max_value = n.attribute_value("value", 0);
 			}, [&] () { });
 
-			node.with_sub_node("remaining_capacity", [&] (Xml_node const & n) {
+			node.with_sub_node("remaining_capacity", [&] (Node const & n) {
 				value = n.attribute_value("value", 0);
 			}, [&] () { });
 
-			node.with_sub_node("state", [&] (Xml_node const & n) {
+			node.with_sub_node("state", [&] (Node const & n) {
 				state = n.attribute_value("value", state);
 			}, [&] () { });
 
@@ -126,12 +127,12 @@ struct Battery_monitor : Info::Widget
 		});
 	}
 
-	void update_from_xml(Xml_node const & node)
+	void update_from_node(Node const & node)
 	{
-		_widgets.update_from_xml(node,
+		_widgets.update_from_node(node,
 
 			/* create fn */
-			[&] (Xml_node const &node) -> Battery & {
+			[&] (Node const &node) -> Battery & {
 				return *new (_alloc) Battery(node, _cont);
 			},
 
@@ -139,7 +140,7 @@ struct Battery_monitor : Info::Widget
 			[&] (Battery &b) { destroy(_alloc, &b); },
 
 			/* update fn */
-			[&] (Battery &b, Xml_node const &node) { b.update(node); }
+			[&] (Battery &b, Node const &node) { b.update(node); }
 		);
 	}
 
@@ -149,14 +150,14 @@ struct Battery_monitor : Info::Widget
 
 		try {
 			Libc::with_libc([&] () {
-				update_from_xml(_rom.xml());
+				update_from_node(_rom.node());
 			});
 		} catch (...) {
 			error("Unable to complete update of battery ROM");
 		}
 	}
 
-	Battery_monitor(Env & _env, Xml_node const & node, lv_obj_t * cont, Allocator & alloc)
+	Battery_monitor(Env & _env, Node const & node, lv_obj_t * cont, Allocator & alloc)
 	: _rom(_env, node.attribute_value("rom", Genode::String<64> { }).string()),
 	  _sigh(_env.ep(), *this, &Battery_monitor::handle_update),
 	  _cont(lv_obj_create(cont)),
@@ -179,7 +180,7 @@ struct Battery_monitor : Info::Widget
 
 	~Battery_monitor()
 	{
-		update_from_xml("<empty/>");
+		update_from_node(Node());
 		lv_obj_del(_cont);
 	}
 };

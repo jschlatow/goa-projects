@@ -16,7 +16,6 @@
 
 #include <base/attached_rom_dataspace.h>
 #include <base/heap.h>
-#include <os/buffered_xml.h>
 #include <util/reconstructible.h>
 
 /* local includes */
@@ -28,7 +27,7 @@ struct Rom_tabular : Info::Widget
 {
 	Attached_rom_dataspace       _rom;
 	Signal_handler<Rom_tabular>  _sigh;
-	Buffered_xml                 _config;
+	Buffered_node                _config;
 	lv_obj_t                   * _cont;
 
 	Constructible<Info::Tabular> _widget { };
@@ -37,38 +36,37 @@ struct Rom_tabular : Info::Widget
 	Rom_tabular(Rom_tabular const &) = delete;
 	void operator=(Rom_tabular const &) = delete;
 
-	void _handle_node(Xml_node const & node, Xml_node const & rom_node)
+	void _handle_node(Node const & node, Node const & rom_node)
 	{
 		if (!node.has_attribute("type")) return;
 
-		Xml_node::Type type = node.attribute_value("type", Xml_node::Type());
+		Node::Type type = node.attribute_value("type", Node::Type());
 
-		rom_node.for_each_sub_node(type.string(), [&] (Xml_node const & data_node) {
+		rom_node.for_each_sub_node(type.string(), [&] (Node const & data_node) {
 			bool matches { true };
 
-			node.for_each_attribute([&] (Xml_attribute const & attr) {
+			node.for_each_attribute([&] (Node::Attribute const & attr) {
 				if (!matches) return;
 
-				using Name = Xml_attribute::Name;
-				Name const & name = attr.name();
+				using Name = Node::Attribute::Name;
+				Name const & name = attr.name;
 
 				/* skip type attribute */
 				if (name == "type") return;
 
-				String<64> value { };
-				attr.value<64>(value);
-
-				String<64> attr_value = data_node.attribute_value(name.string(), String<64> { });
-				if (attr_value != value)
-					matches = false;
+				data_node.attribute_value(name.string(),
+				                          String<64> { }).with_span([&] (Span const &span) {
+					if (!span.equals(attr.value))
+						matches = false;
+				});
 			});
 
 			if (matches)
-				_parse_xml(node, data_node);
+				_parse_node(node, data_node);
 		});
 	}
 
-	void _handle_row(Xml_node const & row, Xml_node const & rom_node)
+	void _handle_row(Node const & row, Node const & rom_node)
 	{
 		using Name = String<64>;
 
@@ -84,13 +82,13 @@ struct Rom_tabular : Info::Widget
 		                 row.attribute_value("highlight", false));
 	}
 
-	void _parse_xml(Xml_node const & xml, Xml_node const & rom_node)
+	void _parse_node(Node const & node, Node const & rom_node)
 	{
-		xml.for_each_sub_node([&] (Xml_node const & node) {
-			if (node.has_type("node"))
-				_handle_node(node, rom_node);
-			else if (node.has_type("row"))
-				_handle_row(node, rom_node);
+		node.for_each_sub_node([&] (Node const & subnode) {
+			if (subnode.has_type("node"))
+				_handle_node(subnode, rom_node);
+			else if (subnode.has_type("row"))
+				_handle_row(subnode, rom_node);
 		});
 	}
 
@@ -109,15 +107,15 @@ struct Rom_tabular : Info::Widget
 		Libc::with_libc([&] () {
 			_widget->clear();
 
-			Xml_node const & rom_node = _rom.xml();
-			_parse_xml(_config.xml, rom_node);
+			Node const & rom_node = _rom.node();
+			_parse_node(_config, rom_node);
 
 			if (_widget->empty())
-				_widget->add_merged_row(_config.xml.attribute_value("alt", default_message).string());
+				_widget->add_merged_row(_config.attribute_value("alt", default_message).string());
 		});
 	}
 
-	Rom_tabular(Env & _env, Allocator & _alloc, Xml_node const & node, lv_obj_t * cont)
+	Rom_tabular(Env & _env, Allocator & _alloc, Node const & node, lv_obj_t * cont)
 	: _rom(_env, node.attribute_value("rom", Genode::String<64> { }).string()),
 	  _sigh(_env.ep(), *this, &Rom_tabular::handle_update),
 	  _config(_alloc, node),
