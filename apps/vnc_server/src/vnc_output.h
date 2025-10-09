@@ -222,9 +222,9 @@ class Vncserver::Output
 			});
 		}
 
-		void handle_config(Xml_node const & config_xml)
+		void handle_config(Node const &node)
 		{
-			if (config_xml.attribute_value("requires_password", false))
+			if (node.attribute_value("requires_password", false))
 				_screen->authPasswdData = (void *)"passwd";
 			else
 				_screen->authPasswdData = NULL;

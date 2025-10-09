@@ -127,13 +127,13 @@ struct Vncserver::Main
 
 	Heap                      _heap   { _env.ram(), _env.rm() };
 
-	static Capture::Point _point_from_xml(Xml_node const &node)
+	static Capture::Point _point_from_node(Node const &node)
 	{
 		return Capture::Point(node.attribute_value("xpos", 0L),
 		                      node.attribute_value("ypos", 0L));
 	}
 
-	static Area _area_from_xml(Xml_node const &node, Area default_area)
+	static Area _area_from_node(Node const &node, Area default_area)
 	{
 		return Area(node.attribute_value("width",  default_area.w),
 		            node.attribute_value("height", default_area.h));
@@ -175,12 +175,12 @@ struct Vncserver::Main
 		Capture_input(Env &env,
 		              Capture::Connection &capture,
 		              Area area,
-		              Xml_node const &config)
+		              Node const &config)
 		:
 			_env(env),
 			_capture(capture),
 			_area(area),
-			_at(_point_from_xml(config))
+			_at(_point_from_node(config))
 		{ }
 
 		Affected_rects capture() { return _capture.capture_at(_at); }
@@ -221,9 +221,9 @@ struct Vncserver::Main
 
 	void _handle_resize()
 	{
-		Xml_node const &config = _config.xml();
+		Node const &config = _config.node();
 
-		Area area = _area_from_xml(config, _safe_screen_size(_capture.screen_size()));
+		Area area = _area_from_node(config, _safe_screen_size(_capture.screen_size()));
 
 		_output.resize(area);
 
@@ -233,11 +233,11 @@ struct Vncserver::Main
 	void _handle_config()
 	{
 		_config.update();
-		_output.handle_config(_config.xml());
+		_output.handle_config(_config.node());
 
 		_handle_resize();
 
-		unsigned long const period_ms = _config.xml().attribute_value("period_ms", 0U);
+		unsigned long const period_ms = _config.node().attribute_value("period_ms", 0U);
 
 		if (period_ms == 0)
 			warning("missing or invalid 'period_ms' config attribute");
