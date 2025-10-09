@@ -43,13 +43,13 @@ struct Screenshot::Main
 
 	bool                   _last_state { false };
 
-	static Capture::Point _point_from_xml(Xml_node const &node)
+	static Capture::Point _point_from_node(Node const &node)
 	{
 		return Capture::Point(node.attribute_value("xpos", 0L),
 		                      node.attribute_value("ypos", 0L));
 	}
 
-	static Area _area_from_xml(Xml_node const &node, Area default_area)
+	static Area _area_from_node(Node const &node, Area default_area)
 	{
 		return Area(node.attribute_value("width",  default_area.w),
 		            node.attribute_value("height", default_area.h));
@@ -187,13 +187,13 @@ struct Screenshot::Main
 		_rom.update();
 		if (!_rom.valid()) return;
 
-		Xml_node const &xml = _rom.xml();
+		Node const &node = _rom.node();
 
-		if (xml.attribute_value("enabled", _last_state) == _last_state) return;
+		if (node.attribute_value("enabled", _last_state) == _last_state) return;
 
 		_last_state = !_last_state;
 
-		Area area = _area_from_xml(xml, _capture.screen_size());
+		Area area = _area_from_node(node, _capture.screen_size());
 
 		if (!area.valid()) {
 			error("Invalid screen size");
@@ -211,7 +211,7 @@ struct Screenshot::Main
 		_screen->with_texture([&] (Texture<Pixel> const &texture) {
 
 			_output->with_surface([&] (Surface<Pixel> &surface) {
-				Affected_rects const affected = _capture.capture_at(_point_from_xml(xml));
+				Affected_rects const affected = _capture.capture_at(_point_from_node(node));
 
 				affected.for_each_rect([&] (Capture::Rect const rect) {
 
@@ -222,10 +222,10 @@ struct Screenshot::Main
 			});
 		});
 
-		/* use tag name from XML als filename base and
+		/* use tag name from node als filename base and
 		 * append current date/time
 		 */
-		Png_output::Filename name(xml.type(),"_" ,_rtc.current_time(), ".png");
+		Png_output::Filename name(node.type(),"_" ,_rtc.current_time(), ".png");
 
 		log("Writing screenshot to ", name);
 		Libc::with_libc([&] () {_output->write_png(name);});
