@@ -2,8 +2,8 @@ genodelabs/src/init
 genodelabs/src/report_rom
 genodelabs/src/libc
 genodelabs/src/sandbox
-genodelabs/src/screenshot_trigger
 genodelabs/src/vfs
 genodelabs/src/zlib
+jschlatow/src/screenshot_trigger
 jschlatow/src/global_keys_handler
 jschlatow/src/libpng

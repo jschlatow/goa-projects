@@ -6,5 +6,5 @@ genodelabs/api/input_session
 genodelabs/api/stdcxx
 genodelabs/api/libc
 genodelabs/api/so
-jschlatow/api/lvgl
+_/api/lvgl
 genodelabs/api/posix

@@ -1,10 +1,9 @@
-genodelabs/pkg/qt5_textedit
+genodelabs/pkg/qt6_textedit
 genodelabs/src/dynamic_rom
 genodelabs/src/jpeg
 genodelabs/src/libdrm
 genodelabs/src/libiconv
 genodelabs/src/libyuv
-genodelabs/src/screenshot_trigger
 genodelabs/src/mesa
 genodelabs/src/vbox6
 genodelabs/src/vfs_lxip
@@ -18,5 +17,6 @@ jschlatow/src/gnumake
 jschlatow/src/grep
 jschlatow/src/less
 jschlatow/src/libpng
+jschlatow/src/screenshot_trigger
 jschlatow/src/which
 jschlatow/src/wireguard

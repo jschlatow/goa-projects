@@ -2,5 +2,5 @@ genodelabs/src/posix
 genodelabs/src/libc
 genodelabs/src/vfs
 genodelabs/src/stdcxx
-jschlatow/src/lvgl
-jschlatow/src/lvgl_support
+_/src/lvgl
+_/src/lvgl_support
