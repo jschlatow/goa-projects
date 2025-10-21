@@ -58,12 +58,3 @@ install/include/src/draw/sdl/
 install/include/src/draw/stm32_dma2d/
 install/include/src/core/
 install/include/src/hal/
-install/include/demos/
-install/include/demos/stress/
-install/include/demos/widgets/
-install/include/demos/widgets/assets/
-install/include/demos/music/
-install/include/demos/music/assets/
-install/include/demos/benchmark/
-install/include/demos/benchmark/assets/
-install/include/demos/keypad_encoder/
