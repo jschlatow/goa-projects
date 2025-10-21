@@ -33,6 +33,8 @@ genodelabs/src/posix
 genodelabs/src/qt5_base
 genodelabs/src/qt5_component
 genodelabs/src/qt5_svg
+genodelabs/src/qt6_base
+genodelabs/src/qt6_component
 genodelabs/src/report_rom
 genodelabs/src/rom_filter
 genodelabs/src/rom_reporter
