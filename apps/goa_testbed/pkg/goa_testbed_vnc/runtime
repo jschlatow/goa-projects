@@ -58,8 +58,7 @@
 
 		<default caps="300"/>
 
-		<start name="vnc_server" caps="300">
-			<resource name="RAM" quantum="50M"/>
+		<start name="vnc_server" caps="300" ram="50M">
 			<route>
 				<service name="Nic">
 					<parent label="vnc"/>
@@ -86,8 +85,7 @@
 			</config>
 		</start>
 
-		<start name="event_filter" caps="100">
-			<resource name="RAM" quantum="1M"/>
+		<start name="event_filter" caps="100" ram="1M">
 			<provides>
 				<service name="Event"/>
 			</provides>
@@ -105,11 +103,12 @@
 			</route>
 		</start>
 
-		<start name="report_rom" caps="100">
-			<resource name="RAM" quantum="1M"/>
+		<start name="report_rom" caps="100" ram="1M">
 			<provides> <service name="Report"/> <service name="ROM"/> </provides>
 			<config verbose="no">
 				<policy label_prefix="focus_rom" report="nitpicker -> hover"/>
+				<policy label="clipboard" report="clipboard"/>
+				<policy label="capslock"  report="dummy"/>
 			</config>
 			<route>
 				<service name="PD">  <parent/> </service>
@@ -119,9 +118,8 @@
 			</route>
 		</start>
 
-		<start name="focus_rom" caps="100">
+		<start name="focus_rom" caps="100" ram="1M">
 			<binary name="rom_filter"/>
-			<resource name="RAM" quantum="1M"/>
 			<provides> <service name="ROM"/> </provides>
 			<config>
 				<input name="hovered_label" rom="hover" node="hover">
@@ -140,8 +138,7 @@
 			</route>
 		</start>
 
-		<start name="nitpicker" caps="100">
-			<resource name="RAM" quantum="4M"/>
+		<start name="nitpicker" caps="100" ram="4M">
 			<provides>
 				<service name="Gui"/> <service name="Capture"/> <service name="Event"/>
 			</provides>
@@ -165,8 +162,8 @@
 			</config>
 		</start>
 
-		<start name="pointer" caps="100">
-			<resource name="RAM" quantum="1M"/>
+		<start name="pointer" caps="100" ram="1M">
+			<provides> <service name="Report"/> </provides>
 			<route>
 				<service name="PD">  <parent/> </service>
 				<service name="CPU"> <parent/> </service>
@@ -174,12 +171,11 @@
 				<service name="ROM"> <parent/> </service>
 				<service name="Gui"> <child name="nitpicker"/> </service>
 			</route>
-			<config/>
+			<config shapes="yes"/>
 		</start>
 
-		<start name="testbed" caps="5000">
+		<start name="testbed" caps="5000" ram="1G">
 			<binary name="init"/>
-			<resource name="RAM" quantum="1G"/>
 			<route>
 				<service name="ROM" label="config">
 					<parent label="testbed.config"/> </service>
@@ -195,6 +191,14 @@
 					<parent label="mesa_gpu.lib.so"/> </service>
 				<service name="ROM" label="platform_info">
 					<parent label="platform_info"/> </service>
+				<service name="ROM" label="clipboard">
+					<child name="report_rom" label="clipboard"/> </service>
+				<service name="ROM" label="capslock">
+					<child name="report_rom" label="capslock"/> </service>
+				<service name="Report" label="shape">
+					<child name="pointer"/> </service>
+				<service name="Report" label="clipboard">
+					<child name="report_rom" label="clipboard"/> </service>
 				<any-service> <parent/> </any-service>
 			</route>
 		</start>
