@@ -1,1 +1,2 @@
 set versions_from_genode_dir ../../genode
+set search_dir ~/repos/genode-world
