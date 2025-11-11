@@ -36,6 +36,8 @@ index
   |     arch: x86_64
   + pkg path: falkon_qt6-jemalloc
         info: Falkon Browser with Emoji support and 150% scaling
+  + pkg path: file_vault
+        info: File vault with added e2fsck
 
 + index Shells
   |     arch: x86_64
