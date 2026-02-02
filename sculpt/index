@@ -64,7 +64,7 @@ index
   + pkg path: keepass@vbox6
   |     info: TinyCore VM with KeePassXC
   + pkg path: thunderbird@vbox6
-        info: TinyCore VM with Thunderbird
+  |     info: TinyCore VM with Thunderbird
   + pkg path: custom@vbox6
   |     info: TinyCore VM with persistent home for customisation
 

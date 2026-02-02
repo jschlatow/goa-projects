@@ -24,7 +24,7 @@ switch [set sculpt_version] {
 		set  version(jschlatow/pkg/sntp_client)              2025-10-29
 		set  version(jschlatow/pkg/system_clock_rw-pc)       2025-10-29
 		set  version(jschlatow/pkg/system_info)              2025-10-29
-		set  version(jschlatow/pkg/thunderbird@vbox6)        2025-10-30
+		set  version(jschlatow/pkg/thunderbird@vbox6)        2026-01-29-a
 		set  version(jschlatow/pkg/custom@vbox6)             2026-01-29
 		set  version(jschlatow/pkg/trace_recorder)           2025-10-28
 		set  version(jschlatow/pkg/unix_shell)               2025-10-29
